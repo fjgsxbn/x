@@ -12,7 +12,7 @@ android {
     defaultConfig {
         applicationId "com.example.tvlive"
         minSdkVersion 21  // 最低支持Android 5.0
-        targetSdkVersion 28
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
 
