@@ -3,3 +3,11 @@ rootProject.name = "MyAndroidApp"
 
 // 声明包含的模块（安卓项目通常有一个:app模块）
 include ':app'
+
+
+pluginManagement {
+     repositories {
+         google() // 必须添加，包含 AGP 插件的仓库
+         mavenCentral() // 可选，用于下载其他依赖
+     }
+}
