@@ -1,22 +1,25 @@
 pluginManagement {
-     repositories {
-         google() // 必须添加，包含 AGP 插件的仓库
-         mavenCentral() // 可选，用于下载其他依赖
-     }
+    repositories {
+        // 插件仓库（用于下载 AGP、Kotlin 等插件）
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+    // 统一声明插件版本（模块中无需重复写 version）
+    plugins {
+        id 'com.android.application' version '8.2.0' apply false
+        id 'org.jetbrains.kotlin.android' version '1.9.0' apply false
+    }
 }
+
 dependencyResolutionManagement {
-     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-     repositories {
-         // 依赖仓库（用于下载 AndroidX、第三方库等）
-         google()
-         mavenCentral()
-     }
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        // 依赖仓库（用于下载 AndroidX、第三方库等）
+        google()
+        mavenCentral()
+    }
 }
 
-// 项目名称（可自定义，如你的应用名）
-rootProject.name = "MyAndroidApp"
-
-// 声明包含的模块（安卓项目通常有一个:app模块）
+// 声明项目包含的模块（这里包含 app 模块）
 include ':app'
-
-
