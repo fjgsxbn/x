@@ -47,7 +47,9 @@ jobs:
         uses: softprops/action-gh-release@v1  # 官方推荐的上传工具
         with:
            # 指定 APK 路径（根据实际生成路径修改，默认是这个路径）
-          files: app/build/outputs/apk/release/*.apk
+          files: |
+            app/build/outputs/apk/release/*.apk
+            app/build/outputs/apk/debug/*.apk
           name: Release ${{ github.event.inputs.version }}
           tag_name: v${{ github.event.inputs.version }}  # 显式指定 tag_name
           body: 手动构建的 Release 版本，版本号：${{ github.event.inputs.version }}
