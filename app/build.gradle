@@ -1,7 +1,9 @@
+// 顶部声明插件
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id 'com.android.application' version '8.2.0' // AGP 版本，需与 Gradle 兼容
+    id 'org.jetbrains.kotlin.android' version '1.9.0' // 若用 Kotlin 需添加
 }
+
 
 dependencyResolutionManagement {
      repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
