@@ -8,7 +8,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/67166748"
+        android:icon="@mipmap/a8"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.TvLive">
