@@ -1,3 +1,11 @@
+pluginManagement {
+     repositories {
+         google() // 必须添加，包含 AGP 插件的仓库
+         mavenCentral() // 可选，用于下载其他依赖
+     }
+}
+
+
 // 项目名称（可自定义，如你的应用名）
 rootProject.name = "MyAndroidApp"
 
@@ -5,9 +13,3 @@ rootProject.name = "MyAndroidApp"
 include ':app'
 
 
-pluginManagement {
-     repositories {
-         google() // 必须添加，包含 AGP 插件的仓库
-         mavenCentral() // 可选，用于下载其他依赖
-     }
-}
