@@ -10,8 +10,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var playerView: StyledPlayerView
     private lateinit var playerManager: VideoPlayerManager
     private val channels = listOf(
-        Channel(1, "央视一套", "https://live.cctvnews.cctv.com/live/cctv1.m3u8"),
-        Channel(2, "央视新闻", "https://live.cctvnews.cctv.com/live/cctv13.m3u8"),
+        Channel(1, "央视一套", "http://hbsz.chinashadt.com:2036/live/stream:sztv.stream/playlist.m3u8"),
+        Channel(2, "央视新闻", "https://0472.org/hls/cgtn.m3u8"),
         Channel(3, "北京卫视", "https://btv.btime.com/hls/btv1.m3u8"),
         Channel(4, "湖南卫视", "https://hunantv.cdn.hunantv.com/hls/hunantv.m3u8")
         // 可添加更多频道
