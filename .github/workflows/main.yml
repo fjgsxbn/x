@@ -39,9 +39,12 @@ jobs:
 
       - name: 构建APK
         run: gradle assemble${{ github.event.inputs.buildType }}
-
-      - name: 上传APK产物
-        uses: actions/upload-artifact@v4
+      - name: 上传 APK 到 Release
+        uses: softprops/action-gh-release@v1  # 官方推荐的上传工具
         with:
-          name: app-${{ github.event.inputs.buildType }}-apk
-          path: app/build/outputs/apk/${{ github.event.inputs.buildType }}/*.apk
+           # 指定 APK 路径（根据实际生成路径修改，默认是这个路径）
+          files: app/build/outputs/apk/release/*.apk
+           # Release 标题（自动使用标签名，如 v1.0.0）
+          name: Release ${{ github.ref_name }}
+           # Release 描述（可自定义）
+          body: 自动构建的 Release 版本，标签：${{ github.ref_name }}
