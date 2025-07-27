@@ -1,0 +1,9 @@
+<resources>
+    <!-- 定义 Theme.TvLive 主题 -->
+    <style name="Theme.TvLive" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- 可自定义主题属性 -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+</resources>
