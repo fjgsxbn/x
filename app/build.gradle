@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace 'com.example.tvlive'
-    compileSdkVersion 28
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "com.example.tvlive"
