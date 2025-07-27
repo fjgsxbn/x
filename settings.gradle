@@ -4,7 +4,14 @@ pluginManagement {
          mavenCentral() // 可选，用于下载其他依赖
      }
 }
-
+dependencyResolutionManagement {
+     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+     repositories {
+         // 依赖仓库（用于下载 AndroidX、第三方库等）
+         google()
+         mavenCentral()
+     }
+}
 
 // 项目名称（可自定义，如你的应用名）
 rootProject.name = "MyAndroidApp"
