@@ -6,5 +6,5 @@
     android:textColor="@android:color/white"
     android:textSize="24sp"
     android:focusable="true"
-    android:focusedBackground="@android:color/holo_blue_light"
+    <!--android:focusedBackground="@android:color/holo_blue_light"-->
     android:background="?attr/selectableItemBackground" />
