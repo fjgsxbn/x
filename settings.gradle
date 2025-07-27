@@ -1,0 +1,5 @@
+// 项目名称（可自定义，如你的应用名）
+rootProject.name = "MyAndroidApp"
+
+// 声明包含的模块（安卓项目通常有一个:app模块）
+include ':app'
