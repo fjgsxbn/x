@@ -48,7 +48,6 @@ jobs:
         with:
            # 指定 APK 路径（根据实际生成路径修改，默认是这个路径）
           files: app/build/outputs/apk/release/*.apk
-           # Release 标题（自动使用标签名，如 v1.0.0）
-          name: Release ${{ github.ref_name }}
-           # Release 描述（可自定义）
-          body: 自动构建的 Release 版本，标签：${{ github.ref_name }}
+          name: Release ${{ github.event.inputs.version }}
+          tag_name: v${{ github.event.inputs.version }}  # 显式指定 tag_name
+          body: 手动构建的 Release 版本，版本号：${{ github.event.inputs.version }}
