@@ -39,34 +39,10 @@ jobs:
           STORE_PASSWORD: ${{ secrets.CERT_KEYSTORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.CERT_KEY_PASSWORD }}
 
-      - name: Get repository public key (for encryption)
-        id: get-public-key
+      - name: 提交证书到版本库
         run: |
-          # 调用GitHub API获取仓库公钥（用于加密Secret值）
-          RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.REPO_ACCESS_TOKEN }}" \
-            "https://api.github.com/repos/${{ github.repository }}/secrets/public-key")
-          # 提取公钥和Key ID
-          echo "public_key=$(echo $RESPONSE | jq -r .key)" >> $GITHUB_OUTPUT
-          echo "key_id=$(echo $RESPONSE | jq -r .key_id)" >> $GITHUB_OUTPUT
-
-      - name: Encrypt and save Base64 cert to Secrets
-        run: |
-          # 安装加密工具（用于用公钥加密证书）
-          sudo apt-get install -y openssl
-
-          # 从步骤输出获取Base64证书和公钥
-          BASE64_CERT="${{ steps.generate.outputs.base64_cert }}"
-          PUBLIC_KEY="${{ steps.get-public-key.outputs.public_key }}"
-          KEY_ID="${{ steps.get-public-key.outputs.key_id }}"
-
-          # 将公钥写入临时文件
-          echo "$PUBLIC_KEY" > public_key.pem
-
-          # 用公钥加密Base64证书（符合GitHub Secrets加密要求）
-          ENCRYPTED_VALUE=$(echo -n "$BASE64_CERT" | openssl pkeyutl -encrypt -pubin -inkey public_key.pem | base64 -w 0)
-
-          # 调用API将加密后的值写入Secrets（命名为CERT_BASE64）
-          curl -X PUT -H "Authorization: token ${{ secrets.REPO_ACCESS_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/${{ github.repository }}/secrets/CERT_BASE64" \
-            -d '{"encrypted_value":"'"$ENCRYPTED_VALUE"'", "key_id":"'"$KEY_ID"'"}'
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add keystore/release.p12  # 添加生成的证书
+          git commit -m "Add generated P12 signing key"  # 提交信息
+          git push origin main  # 推送到主分支（根据实际分支名修改）
