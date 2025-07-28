@@ -1,0 +1,72 @@
+name: Generate Cert (Public Repo) and Save to Secrets
+
+on:
+  workflow_dispatch:  # 仅手动触发，避免自动运行
+
+jobs:
+  generate-cert:
+    runs-on: ubuntu-latest
+    environment: production  # 建议启用环境审查（需在仓库设置中配置）
+    steps:
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Generate certificate and encode to Base64
+        id: generate
+        run: |
+          # 生成PKCS12格式证书
+          KEYSTORE_NAME="secure-cert.p12"
+          keytool -genkeypair \
+            -keystore $KEYSTORE_NAME \
+            -storetype PKCS12 \
+            -storepass "$STORE_PASSWORD" \
+            -alias "app-alias" \
+            -keypass "$KEY_PASSWORD" \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 3650 \
+            -dname "CN=PublicApp, OU=Dev, O=Open, L=City, ST=Region, C=XX" \
+            -noprompt
+
+          # 转换为Base64并输出为步骤变量（不打印具体内容）
+          BASE64_CERT=$(base64 -w 0 $KEYSTORE_NAME)
+          echo "base64_cert=$BASE64_CERT" >> $GITHUB_OUTPUT
+        env:
+          # 从Secrets读取密码（提前创建这两个Secret）
+          STORE_PASSWORD: ${{ secrets.CERT_STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.CERT_KEY_PASSWORD }}
+
+      - name: Get repository public key (for encryption)
+        id: get-public-key
+        run: |
+          # 调用GitHub API获取仓库公钥（用于加密Secret值）
+          RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.REPO_ACCESS_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/secrets/public-key")
+          # 提取公钥和Key ID
+          echo "public_key=$(echo $RESPONSE | jq -r .key)" >> $GITHUB_OUTPUT
+          echo "key_id=$(echo $RESPONSE | jq -r .key_id)" >> $GITHUB_OUTPUT
+
+      - name: Encrypt and save Base64 cert to Secrets
+        run: |
+          # 安装加密工具（用于用公钥加密证书）
+          sudo apt-get install -y openssl
+
+          # 从步骤输出获取Base64证书和公钥
+          BASE64_CERT="${{ steps.generate.outputs.base64_cert }}"
+          PUBLIC_KEY="${{ steps.get-public-key.outputs.public_key }}"
+          KEY_ID="${{ steps.get-public-key.outputs.key_id }}"
+
+          # 将公钥写入临时文件
+          echo "$PUBLIC_KEY" > public_key.pem
+
+          # 用公钥加密Base64证书（符合GitHub Secrets加密要求）
+          ENCRYPTED_VALUE=$(echo -n "$BASE64_CERT" | openssl pkeyutl -encrypt -pubin -inkey public_key.pem | base64 -w 0)
+
+          # 调用API将加密后的值写入Secrets（命名为CERT_BASE64）
+          curl -X PUT -H "Authorization: token ${{ secrets.REPO_ACCESS_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/secrets/CERT_BASE64" \
+            -d '{"encrypted_value":"'"$ENCRYPTED_VALUE"'", "key_id":"'"$KEY_ID"'"}'
