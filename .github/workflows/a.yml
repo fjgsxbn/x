@@ -32,6 +32,7 @@ jobs:
             -storepass "$STORE_PASSWORD" \
             -keypass "$KEY_PASSWORD" \
             -dname "CN=MyApp, OU=Dev, O=MyOrg, L=Beijing, ST=Beijing, C=CN"
+          keytool -list -v -keystore keystore/release.p12 -storepass "$STORE_PASSWORD"
         env:
           # 从 GitHub Secrets 读取密码（需提前配置）
           STORE_PASSWORD: ${{ secrets.CERT_KEYSTORE_PASSWORD }}
