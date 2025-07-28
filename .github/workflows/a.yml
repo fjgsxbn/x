@@ -36,7 +36,7 @@ jobs:
           echo "base64_cert=$BASE64_CERT" >> $GITHUB_OUTPUT
         env:
           # 从Secrets读取密码（提前创建这两个Secret）
-          STORE_PASSWORD: ${{ secrets.CERT_STORE_PASSWORD }}
+          STORE_PASSWORD: ${{ secrets.CERT_KEYSTORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.CERT_KEY_PASSWORD }}
 
       - name: Get repository public key (for encryption)
