@@ -26,9 +26,11 @@ android {
             storeFile file(System.getenv("KEYSTORE_PATH") ?: "keystore/release.p12")
             storeType "PKCS12" 
             // 类型（可选，建议加）
-            storePassword System.getenv("STORE_PASSWORD")
+            storePassword "dfsstoremidea"
+            #System.getenv("STORE_PASSWORD")
             keyAlias System.getenv("KEY_ALIAS")
-            keyPassword System.getenv("KEY_PASSWORD")
+            keyPassword "dfsmidea"
+            #System.getenv("KEY_PASSWORD")
              // 启用V2签名（Android 7.0+）
           //  v2SigningEnabled true
             println "当前release签名的keyAlias：${System.getenv("KEY_ALIAS")}"
