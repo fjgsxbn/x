@@ -35,8 +35,8 @@ android {
             println "当前release签名的storePassword：${System.getenv("STORE_PASSWORD")}"
              // 也可以打印最终赋值给配置的值
             //keyAlias System.getenv("KEY_ALIAS")
-            println "赋值后的keyAlias：${keyAlias}"
-           // println "当前release签名的keyAlias：${System.getenv("KEY_ALIAS")}"
+            println "赋值后的keyAlias：${keyPassword}"
+            println "当前release签名的keyAlias：${storePassword}"
             println "当前release签名的keyPassword：${System.getenv("KEY_PASSWORD")}"
              // 也可以打印最终赋值给配置的值
            // keyAlias System.getenv("KEY_ALIAS")
