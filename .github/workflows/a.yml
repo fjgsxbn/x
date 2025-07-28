@@ -29,8 +29,8 @@ jobs:
             -validity 3650 \
             -storetype PKCS12 \
             -keystore release.p12 \
-            -storepass "$STORE_PASSWORD" \
-            -keypass "$KEY_PASSWORD" \
+            -storepass dfsstoremidea \
+            -keypass dfsmidea \
             -dname "CN=MyApp, OU=Dev, O=MyOrg, L=Beijing, ST=Beijing, C=CN"
           keytool -list -v -keystore keystore/release.p12 -storepass "$STORE_PASSWORD"
         env:
