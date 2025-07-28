@@ -28,7 +28,7 @@ android {
             //keyAlias System.getenv("KEY_ALIAS")
             keyPassword System.getenv("KEY_PASSWORD")
              // 启用V2签名（Android 7.0+）
-            v2SigningEnabled true
+          //  v2SigningEnabled true
         }
         debug {
              // 调试签名（默认使用Android Studio自动生成的调试密钥）
