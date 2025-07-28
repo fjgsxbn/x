@@ -40,7 +40,17 @@ jobs:
 
       - name: 验证Gradle安装
         run: gradle -v
-
+      - name: 解码 Base64 证书为文件
+        run: |
+           # 创建证书存放目录（避免混乱）
+           mkdir -p ./keystore
+           # 将 Base64 字符串解码为文件（CERT_BASE64 是仓库 Secrets 中的 Base64 证书）
+           echo "${{ secrets.CERT_BASE64 }}" | base64 -d > ./keystore/release.p12
+           # 可选：验证文件是否生成（仅调试用，正式环境可删除）
+           ls -l ./keystore
+        env:
+           # 确保 Secrets 中的 Base64 证书已配置
+           CERT_BASE64: ${{ secrets.CERT_BASE64 }}
       - name: 构建APK
         run: gradle assemble${{ github.event.inputs.buildType }}
         env:
