@@ -47,7 +47,7 @@ jobs:
           KEYSTORE_PATH: '../keystore/release.p12'
           STORE_PASSWORD: ${{ secrets.CERT_KEYSTORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.CERT_KEY_PASSWORD }}
-          #KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_ALIAS: 'tvkey'
            # 也可以直接写固定值（非敏感信息）
           APP_VERSION: "1.0.0"
       - name: 上传 APK 到 Release
