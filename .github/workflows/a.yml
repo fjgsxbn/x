@@ -23,15 +23,15 @@ jobs:
           
           # 生成 PKCS12 格式证书（.p12）
           keytool -genkeypair \
-            -alias 'app-alias' \  # 证书别名（需与 build.gradle 中 keyAlias 一致）
-            -keyalg RSA \            # 加密算法
-            -keysize 2048 \          # 密钥长度
-            -validity 3650 \         # 有效期（10年）
-            -storetype PKCS12 \      # 指定格式为 PKCS12
-            -keystore keystore/release.p12 \  # 输出路径和文件名
-            -storepass "$STORE_PASSWORD" \  # 密钥库密码（-storepass）
-            -keypass "$KEY_PASSWORD" \      # 密钥密码（-keypass）
-            -dname "CN=MyApp, OU=Dev, O=MyOrg, L=Beijing, ST=Beijing, C=CN"  # 证书信息
+            -alias 'app-alias' \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 3650 \
+            -storetype PKCS12 \
+            -keystore keystore/release.p12 \
+            -storepass "$STORE_PASSWORD" \
+            -keypass "$KEY_PASSWORD" \
+            -dname "CN=MyApp, OU=Dev, O=MyOrg, L=Beijing, ST=Beijing, C=CN"
         env:
           # 从 GitHub Secrets 读取密码（需提前配置）
           STORE_PASSWORD: ${{ secrets.CERT_STORE_PASSWORD }}
