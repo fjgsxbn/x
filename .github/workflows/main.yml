@@ -44,7 +44,7 @@ jobs:
         run: gradle assemble${{ github.event.inputs.buildType }}
         env:
            # 从 Secrets 读取（需要先在仓库设置中添加对应 Secret）
-          KEYSTORE_PATH: 'keystore/release.p12'
+          KEYSTORE_PATH: '../keystore/release.p12'
           STORE_PASSWORD: ${{ secrets.CERT_KEYSTORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.CERT_KEY_PASSWORD }}
           #KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
