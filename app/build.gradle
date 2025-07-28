@@ -24,6 +24,8 @@ android {
         release {
             // 从环境变量读取密钥信息（安全起见，避免硬编码）
             storeFile file(System.getenv("KEYSTORE_PATH") ?: "keystore/release.p12")
+            storeType "PKCS12" 
+            // 类型（可选，建议加）
             storePassword System.getenv("STORE_PASSWORD")
             keyAlias 'tvkey'
             //System.getenv("KEY_ALIAS")
