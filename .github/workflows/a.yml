@@ -1,42 +1,40 @@
-name: Generate Cert (Public Repo) and Save to Secrets
+name: Generate Android P12 Signing Key
 
 on:
-  workflow_dispatch:  # 仅手动触发，避免自动运行
+  workflow_dispatch:  # 手动触发工作流（点击 GitHub 仓库的 Actions 标签运行）
 
 jobs:
-  generate-cert:
+  generate-p12:
     runs-on: ubuntu-latest
-    environment: production  # 建议启用环境审查（需在仓库设置中配置）
     steps:
-      - name: Set up JDK 17
+      - name: 拉取代码库
+        uses: actions/checkout@v4
+
+      - name: 安装 Java（依赖 keytool）
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Generate certificate and encode to Base64
-        id: generate
+      - name: 生成 P12 格式签名证书
         run: |
-          # 生成PKCS12格式证书
-          KEYSTORE_NAME="secure-cert.p12"
+          # 创建存放证书的目录（如 keystore）
+          mkdir -p keystore
+          
+          # 生成 PKCS12 格式证书（.p12）
           keytool -genkeypair \
-            -keystore $KEYSTORE_NAME \
-            -storetype PKCS12 \
-            -storepass "$STORE_PASSWORD" \
-            -alias "app-alias" \
-            -keypass "$KEY_PASSWORD" \
-            -keyalg RSA \
-            -keysize 2048 \
-            -validity 3650 \
-            -dname "CN=PublicApp, OU=Dev, O=Open, L=City, ST=Region, C=XX" \
-            -noprompt
-
-          # 转换为Base64并输出为步骤变量（不打印具体内容）
-          BASE64_CERT=$(base64 -w 0 $KEYSTORE_NAME)
-          echo "base64_cert=$BASE64_CERT" >> $GITHUB_OUTPUT
+            -alias myapp-keyalias \  # 证书别名（需与 build.gradle 中 keyAlias 一致）
+            -keyalg RSA \            # 加密算法
+            -keysize 2048 \          # 密钥长度
+            -validity 3650 \         # 有效期（10年）
+            -storetype PKCS12 \      # 指定格式为 PKCS12
+            -keystore keystore/release.p12 \  # 输出路径和文件名
+            -storepass ${{ secrets.STORE_PASSWORD }} \  # 密钥库密码（-storepass）
+            -keypass ${{ secrets.KEY_PASSWORD }} \      # 密钥密码（-keypass）
+            -dname "CN=MyApp, OU=Dev, O=MyOrg, L=Beijing, ST=Beijing, C=CN"  # 证书信息
         env:
-          # 从Secrets读取密码（提前创建这两个Secret）
-          STORE_PASSWORD: ${{ secrets.CERT_KEYSTORE_PASSWORD }}
+          # 从 GitHub Secrets 读取密码（需提前配置）
+          STORE_PASSWORD: ${{ secrets.CERT_STORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.CERT_KEY_PASSWORD }}
 
       - name: 提交证书到版本库
