@@ -34,7 +34,7 @@ jobs:
             -dname "CN=MyApp, OU=Dev, O=MyOrg, L=Beijing, ST=Beijing, C=CN"
         env:
           # 从 GitHub Secrets 读取密码（需提前配置）
-          STORE_PASSWORD: ${{ secrets.CERT_STORE_PASSWORD }}
+          STORE_PASSWORD: ${{ secrets.CERT_KEYSTORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.CERT_KEY_PASSWORD }}
 
       - name: 提交证书到版本库
