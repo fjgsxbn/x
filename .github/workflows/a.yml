@@ -1,4 +1,4 @@
-name: Generate Android P12 Signing Key
+name: Generate Android P12 Signing Key1
 
 on:
   workflow_dispatch:  # 手动触发工作流（点击 GitHub 仓库的 Actions 标签运行）
