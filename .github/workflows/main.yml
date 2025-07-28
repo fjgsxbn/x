@@ -43,6 +43,13 @@ jobs:
 
       - name: 构建APK
         run: gradle assemble${{ github.event.inputs.buildType }}
+        env:
+           # 从 Secrets 读取（需要先在仓库设置中添加对应 Secret）
+          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+           # 也可以直接写固定值（非敏感信息）
+          APP_VERSION: "1.0.0"
       - name: 上传 APK 到 Release
         uses: softprops/action-gh-release@v1  # 官方推荐的上传工具
         with:
