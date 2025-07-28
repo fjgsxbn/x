@@ -29,8 +29,8 @@ jobs:
             -validity 3650 \         # 有效期（10年）
             -storetype PKCS12 \      # 指定格式为 PKCS12
             -keystore keystore/release.p12 \  # 输出路径和文件名
-            -storepass ${{ secrets.CERT_STORE_PASSWORD }} \  # 密钥库密码（-storepass）
-            -keypass ${{ secrets.CERT_KEY_PASSWORD }} \      # 密钥密码（-keypass）
+            -storepass "$STORE_PASSWORD \  # 密钥库密码（-storepass）
+            -keypass "$KEY_PASSWORD" \      # 密钥密码（-keypass）
             -dname "CN=MyApp, OU=Dev, O=MyOrg, L=Beijing, ST=Beijing, C=CN"  # 证书信息
         env:
           # 从 GitHub Secrets 读取密码（需提前配置）
