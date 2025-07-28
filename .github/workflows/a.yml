@@ -42,6 +42,6 @@ jobs:
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          git add keystore/release.p12  # 添加生成的证书
+          git add release.p12  # 添加生成的证书
           git commit -m "Add generated P12 signing key"  # 提交信息
           git push origin main  # 推送到主分支（根据实际分支名修改）
