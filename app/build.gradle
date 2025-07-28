@@ -19,6 +19,26 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // 签名配置（用于正式打包签名）
+    signingConfigs {
+        release {
+            // 从环境变量读取密钥信息（安全起见，避免硬编码）
+            storeFile file(System.getenv("KEYSTORE_PATH") ?: "keystore/release.keystore")
+            storePassword System.getenv("STORE_PASSWORD")
+            keyAlias System.getenv("KEY_ALIAS")
+            keyPassword System.getenv("KEY_PASSWORD")
+             // 启用V2签名（Android 7.0+）
+            v2SigningEnabled true
+        }
+        debug {
+             // 调试签名（默认使用Android Studio自动生成的调试密钥）
+            storeFile file(System.getenv("DEBUG_KEYSTORE") ?: "${System.getProperty('user.home')}/.android/debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+      }
+  }
+
     buildTypes {
         release {
             minifyEnabled false
