@@ -25,7 +25,7 @@ android {
             // 从环境变量读取密钥信息（安全起见，避免硬编码）
             storeFile file(System.getenv("KEYSTORE_PATH") ?: "keystore/release.keystore")
             storePassword System.getenv("STORE_PASSWORD")
-            keyAlias System.getenv("KEY_ALIAS")
+            //keyAlias System.getenv("KEY_ALIAS")
             keyPassword System.getenv("KEY_PASSWORD")
              // 启用V2签名（Android 7.0+）
             v2SigningEnabled true
