@@ -13,7 +13,7 @@ jobs:
       - name: 安装 Java（依赖 keytool）
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '8'
           distribution: 'temurin'
 
       - name: 生成 P12 格式签名证书
