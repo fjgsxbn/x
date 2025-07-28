@@ -23,7 +23,7 @@ jobs:
           
           # 生成 PKCS12 格式证书（.p12）
           keytool -genkeypair \
-            -alias app-alias \
+            -alias tvkey \
             -keyalg RSA \
             -keysize 2048 \
             -validity 3650 \
