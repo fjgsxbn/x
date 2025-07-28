@@ -23,7 +23,7 @@ android {
     signingConfigs {
         release {
             // 从环境变量读取密钥信息（安全起见，避免硬编码）
-            storeFile file(System.getenv("KEYSTORE_PATH") ?: "keystore/release.keystore")
+            storeFile file(System.getenv("KEYSTORE_PATH") ?: "keystore/release.p12")
             storePassword System.getenv("STORE_PASSWORD")
             keyAlias 'app-alias'
             //System.getenv("KEY_ALIAS")
