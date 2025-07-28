@@ -9,8 +9,8 @@ on:
         default: 'release'
         type: choice
         options:
-          - release
-          - debug
+          - Release
+          - Debug
       version:
          description: '请输入版本号'
          required: true
