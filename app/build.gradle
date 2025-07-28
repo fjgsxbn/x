@@ -27,10 +27,10 @@ android {
             storeType "PKCS12" 
             // 类型（可选，建议加）
             storePassword "dfsstoremidea"
-            #System.getenv("STORE_PASSWORD")
+            //System.getenv("STORE_PASSWORD")
             keyAlias System.getenv("KEY_ALIAS")
             keyPassword "dfsmidea"
-            #System.getenv("KEY_PASSWORD")
+            //System.getenv("KEY_PASSWORD")
              // 启用V2签名（Android 7.0+）
           //  v2SigningEnabled true
             println "当前release签名的keyAlias：${System.getenv("KEY_ALIAS")}"
