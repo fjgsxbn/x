@@ -23,7 +23,7 @@ jobs:
             -keyalg RSA \
             -keysize 2048 \
             -validity 3650 \
-            -keystore app/release.jks \  # 文件名设为release.jks
+            -keystore release.jks \  # 文件名设为release.jks
             -storepass dfssstoremida \   # 全小写storepass
             -keypass dfsmida \           # 全小写keypass
             -dname "CN=TestApp, OU=Android, O=TestOrg, L=Beijing, ST=Beijing, C=CN"
@@ -32,6 +32,6 @@ jobs:
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          git add app/release.jks  # 添加名为release.jks的证书
+          git add release.jks  # 添加名为release.jks的证书
           git commit -m "Auto-generate JKS certificate (filename: release.jks)"
           git push
