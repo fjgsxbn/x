@@ -27,7 +27,7 @@ class ChannelListDialog(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.WRAP_CONTENT
             )
-            setGravity(android.view.Gravity.BOTTOM) // 列表显示在底部
+            setGravity(android.view.Gravity.LEFT) // 列表显示在底部
         }
 
         listView = findViewById(R.id.lv_channels)
