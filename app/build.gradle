@@ -23,12 +23,12 @@ android {
     signingConfigs {
         release {
             // 从环境变量读取密钥信息（安全起见，避免硬编码）
-            storeFile file(System.getenv("KEYSTORE_PATH") ?: "keystore/release.p12")
+            storeFile file("release.jks")
             storeType "PKCS12" 
             // 类型（可选，建议加）
             storePassword "dfsstoremidea"
             //System.getenv("STORE_PASSWORD")
-            keyAlias System.getenv("KEY_ALIAS")
+            keyAlias "androidcert"
             keyPassword "dfsmidea"
             //System.getenv("KEY_PASSWORD")
              // 启用V2签名（Android 7.0+）
