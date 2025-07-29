@@ -41,7 +41,7 @@ jobs:
       - name: 验证Gradle安装
         run: gradle -v
       - name: 构建APK
-        run: gradle assemble${{ github.event.inputs.buildType }}
+        run: gradle assemble${{ github.event.inputs.buildType }} --info
         env:
            # 从 Secrets 读取（需要先在仓库设置中添加对应 Secret）
           KEYSTORE_PATH: '../release.p12'
