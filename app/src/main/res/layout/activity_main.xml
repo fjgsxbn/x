@@ -11,6 +11,6 @@
         android:layout_height="match_parent"
         app:use_controller="false"
         android:keepScreenOn="true"
-        android:background="@android:color/black"/>
+        android:background="@color/custom_black"/>
 
 </LinearLayout>
