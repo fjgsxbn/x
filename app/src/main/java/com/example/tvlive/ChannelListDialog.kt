@@ -24,7 +24,7 @@ class ChannelListDialog(
         setContentView(R.layout.dialog_channel_list)
         window?.apply {
             setLayout(
-                WindowManager.LayoutParams.WRAP-CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.MATCH_PARENT
             )
             setGravity(android.view.Gravity.LEFT) // 列表显示在底部
