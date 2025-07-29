@@ -48,12 +48,12 @@ class MainActivity : AppCompatActivity() {
             }
             // 上键切换上一个频道
             KeyEvent.KEYCODE_DPAD_UP -> {
-                switchToChannel(currentChannelIndex - 1)
+                switchToChannel(if(currentChannelIndex=channels.size-1) 0 else currentChannelIndex + 1)
                 true
             }
             // 下键切换下一个频道
             KeyEvent.KEYCODE_DPAD_DOWN -> {
-                switchToChannel(currentChannelIndex + 1)
+                switchToChannel(if(currentChannelIndex=0) channels.size-1 else currentChannelIndex - 1)
                 true
             }
             KeyEvent.KEYCODE_BACK -> {
