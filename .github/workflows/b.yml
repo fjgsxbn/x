@@ -23,9 +23,9 @@ jobs:
             -keyalg RSA \
             -keysize 2048 \
             -validity 3650 \
-            -keystore release.jks \  # 文件名设为release.jks
-            -storepass dfssstoremida \   # 全小写storepass
-            -keypass dfsmida \           # 全小写keypass
+            -keystore release.jks \
+            -storepass dfssstoremida \
+            -keypass dfsmida \
             -dname "CN=TestApp, OU=Android, O=TestOrg, L=Beijing, ST=Beijing, C=CN"
 
       - name: 提交证书到代码库
