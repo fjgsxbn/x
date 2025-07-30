@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         Channel(1, "央视一套", "http://hbsz.chinashadt.com:2036/live/stream:sztv.stream/playlist.m3u8"),
         Channel(2, "央视新闻", "https://0472.org/hls/cgtn.m3u8"),
         Channel(3, "北京卫视", "https://btv.btime.com/hls/btv1.m3u8"),
-        Channel(4, "湖南卫视", "https://hunantv.cdn.hunantv.com/hls/hunantv.m3u8")
+        Channel(4, "湖南卫视", "https://hunantv.cdn.hunantv.com/hls/hunantv.m3u8"),
         // 可添加更多频道
     )
     private var currentChannelIndex = 0
@@ -48,12 +48,12 @@ class MainActivity : AppCompatActivity() {
             }
             // 上键切换上一个频道
             KeyEvent.KEYCODE_DPAD_UP -> {
-                switchToChannel(if(currentChannelIndex==channels.size-1) 0 else currentChannelIndex + 1)
+                switchToChannel(if (currentChannelIndex == channels.size - 1) 0 else currentChannelIndex + 1)
                 true
             }
             // 下键切换下一个频道
             KeyEvent.KEYCODE_DPAD_DOWN -> {
-                switchToChannel(if(currentChannelIndex==0) channels.size-1 else currentChannelIndex - 1)
+                switchToChannel(if (currentChannelIndex == 0) channels.size - 1 else currentChannelIndex - 1)
                 true
             }
             KeyEvent.KEYCODE_BACK -> {

@@ -13,7 +13,7 @@ class ChannelListDialog(
     context: Context,
     private val channels: List<Channel>,
     private val currentPosition: Int,
-    private val onChannelSelected: (Int) -> Unit
+    private val onChannelSelected: (Int) -> Unit,
 ) : Dialog(context, android.R.style.Theme_NoTitleBar_Fullscreen) {
 
     private lateinit var listView: ListView
@@ -25,7 +25,7 @@ class ChannelListDialog(
         window?.apply {
             setLayout(
                 WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.MATCH_PARENT
+                WindowManager.LayoutParams.MATCH_PARENT,
             )
             setGravity(android.view.Gravity.LEFT) // 列表显示在底部
         }
@@ -34,7 +34,7 @@ class ChannelListDialog(
         val adapter = ArrayAdapter(
             context,
             R.layout.item_channel,
-            channels.map { it.name }
+            channels.map { it.name },
         )
         listView.adapter = adapter
         listView.setSelection(selectedPosition)
