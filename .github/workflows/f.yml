@@ -1,0 +1,55 @@
+# .github/workflows/format-code.yml
+name: Format Kotlin & XML Code
+
+# 触发条件：手动推送或PR时执行，且排除GitHub Actions机器人的提交（避免循环）
+on:
+  push:
+    branches: [ main ]  # 替换为你的主分支
+    if: github.actor != 'github-actions[bot]'  # 忽略机器人提交
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 拉取代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 拉取完整历史，确保提交正常
+
+      # 2. 配置JDK（Spotless依赖Java）
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'temurin'
+          cache: gradle  # 缓存Gradle依赖，加速执行
+
+      # 3. 使用Spotless格式化代码
+      - name: Format code with Spotless
+        uses: spotless/spotless-action@v2
+        with:
+          config: |
+            # 格式化所有Kotlin文件（**匹配项目内所有子目录）
+            kotlin {
+              target '**/*.kt'
+              ktlint('0.50.0')  # 使用最新稳定版ktlint
+                .editorConfig()  # 遵循项目根目录的.editorconfig规则
+            }
+            # 格式化所有XML文件
+            xml {
+              target '**/*.xml'
+              indentWithSpaces(2)  # 自定义XML缩进为2个空格（可选）
+              trimTrailingWhitespace()  # 去除尾部空格
+            }
+          file-system: project
+
+      # 4. 提交格式化后的更改（仅在有修改时执行）
+      - name: Commit formatted changes
+        uses: stefanzweifel/git-commit-push-action@v4
+        with:
+          commit_message: "Auto-format Kotlin & XML files [skip ci]"  # [skip ci]避免再次触发
+          commit_user_name: "github-actions[bot]"  # 提交者名称（固定为机器人）
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"  # 提交者邮箱
