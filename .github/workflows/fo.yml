@@ -1,7 +1,7 @@
 # .github/workflows/format-code.yml
 name: Format Kotlin & XML
 
-# 触发条件：只指定事件，不在这里写if
+
 on:
   push:
     branches: [ main ]
