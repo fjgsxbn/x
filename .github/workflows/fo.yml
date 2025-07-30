@@ -1,0 +1,52 @@
+# .github/workflows/format-code.yml
+name: Format Kotlin & XML
+
+# 触发条件：只指定事件，不在这里写if
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  format:
+    # 关键：在job级别添加if条件，过滤机器人提交
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install ktlint
+        run: |
+          curl -sSLO https://github.com/pinterest/ktlint/releases/download/0.50.0/ktlint
+          chmod a+x ktlint
+          sudo mv ktlint /usr/local/bin/
+
+      - name: Format Kotlin files
+        run: find . -name "*.kt" -exec ktlint --format {} +
+
+      - name: Install xmllint (if missing)
+        run: sudo apt-get install -y libxml2-utils
+
+      - name: Format XML files
+        run: find . -name "*.xml" -exec sh -c 'for file do xmllint --format "$file" -o "$file"; done' sh {} +
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit formatted changes
+        if: steps.check_changes.outputs.has_changes == 'true'
+        uses: stefanzweifel/git-commit-push-action@v4
+        with:
+          commit_message: "Auto-format Kotlin & XML files [skip ci]"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"
