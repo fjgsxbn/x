@@ -7,6 +7,7 @@ import com.example.tvlive.model.Channel
 import com.google.android.exoplayer2.ui.StyledPlayerView
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var playerView: StyledPlayerView
     private lateinit var playerManager: VideoPlayerManager
     private val channels = listOf(
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         // 初始化播放器
         playerManager = VideoPlayerManager(this)
         playerView = findViewById(R.id.player_view)
@@ -42,7 +43,11 @@ class MainActivity : AppCompatActivity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         return when (keyCode) {
             // 菜单键/确定键调出列表
-            KeyEvent.KEYCODE_MENU, KeyEvent.KEYCODE_DPAD_CENTER -> {
+            KeyEvent.KEYCODE_MENU->{
+                showCustomDialog()
+             true
+            } 
+            KeyEvent.KEYCODE_DPAD_CENTER -> {
                 showChannelList()
                 true
             }
@@ -69,6 +74,39 @@ class MainActivity : AppCompatActivity() {
             switchToChannel(position)
         }.show()
     }
+
+    // 显示自定义对话框
+     private fun showCustomDialog() {
+         val builder = AlertDialog.Builder(this)
+         val dialogView: View = layoutInflater.inflate(R.layout.dialog_config, null)
+         builder.setView(dialogView)
+         // 获取控件实例
+         val etCircle = dialogView.findViewById<EditText>(R.id.et_circle)
+         val rbReverse = dialogView.findViewById<RadioButton>(R.id.rb_reverse)
+         val btnCancel = dialogView.findViewById<Button>(R.id.btn_cancel)
+         val btnSave = dialogView.findViewById<Button>(R.id.btn_save)
+         // 回显已保存的数据
+         etCircle.setText(sharedPreferences.getString("circle_text", ""))
+         rbReverse.isChecked = sharedPreferences.getBoolean("reverse_checked", false)
+         val dialog = builder.create()
+         dialog.show()
+         // 取消按钮点击事件
+         btnCancel.setOnClickListener {
+             dialog.dismiss()
+         }
+         // 保存按钮点击事件
+         btnSave.setOnClickListener {
+             val circleText = etCircle.text.toString().trim()
+             val isReverseChecked = rbReverse.isChecked
+             // 保存数据
+             sharedPreferences.edit()
+                 .putString("circle_text", circleText)
+                 .putBoolean("reverse_checked", isReverseChecked)
+                 .apply()
+             Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show()
+             dialog.dismiss()
+         }
+     }
 
     override fun onDestroy() {
         super.onDestroy()
