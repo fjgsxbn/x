@@ -49,10 +49,7 @@ class VideoPlayerManager(context: Context) {
         }
     }
 
-    import com.google.gson.Gson
-import org.mozilla.javascript.Context
-import org.mozilla.javascript.Scriptable
-
+   
 // 函数名改为小写 r，功能不变
 suspend fun r(jsCode: String): List<*>? {
     val context = Context.enter()
@@ -75,19 +72,7 @@ suspend fun r(jsCode: String): List<*>? {
     }
 }
 
-// 使用示例
-fun main() {
-    val jsCode = """
-        // JS 返回一个数组
-        [
-            "测试", 123, true,
-            { name: "rhino", version: "1.7" }
-        ]
-    """.trimIndent()
-    
-    val list = r(jsCode)
-    println("r 函数返回的 List：$list")
-}
+
 
 
     // 加载M3U8直播源
