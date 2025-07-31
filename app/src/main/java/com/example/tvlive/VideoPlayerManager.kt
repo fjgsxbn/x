@@ -11,16 +11,16 @@ class VideoPlayerManager(context: Context) {
 
     fun getPlayer() = exoPlayer
 
-    fun p(addr: String,callback: ()->Unit ){
-context.lifecycleScope.launch {
-     // 1. 启动协程（默认在主线程，但会被 withContext 切换）
-     val result = fetchUrlAsString("https://www.example.com")
-     
-     // 2. 如果需要更新 UI，手动切换到主线程（Dispatchers.Main）
-     withContext(Dispatchers.Main) {
-         textView.text = if (result != null) "请求成功" else "请求失败"
-     }
-}
+    fun p(addr: String, callback: () -> Unit) {
+        context.lifecycleScope.launch {
+            // 1. 启动协程（默认在主线程，但会被 withContext 切换）
+            val result = fetchUrlAsString("https://www.example.com")
+
+            // 2. 如果需要更新 UI，手动切换到主线程（Dispatchers.Main）
+            withContext(Dispatchers.Main) {
+                textView.text = if (result != null) "请求成功" else "请求失败"
+            }
+        }
 
         callback()
     }
