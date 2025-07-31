@@ -32,7 +32,7 @@ jobs:
         run: sudo apt-get install -y libxml2-utils
 
       - name: Format XML files
-        run: find . -name "*.xml" -exec sh -c 'for file do xmllint --format "$file" -o "$file"; done' sh {} +
+        run: find . -name "*.xml" -exec sh -c 'for file do xmllint --format --indent 4 "$file" -o "$file"; done' sh {} +
 
       - name: Check for changes
         id: check_changes
