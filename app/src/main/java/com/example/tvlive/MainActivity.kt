@@ -7,6 +7,7 @@ import android.preference.PreferenceManager
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Button
+import android.widget.Switch
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
