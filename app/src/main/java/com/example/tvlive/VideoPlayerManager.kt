@@ -1,5 +1,10 @@
 package com.example.tvlive
 
+import kotlinx.coroutines.Dispatchers
+ import kotlinx.coroutines.withContext
+ import okhttp3.OkHttpClient
+ import okhttp3.Request
+ import java.io.IOException
 import android.content.Context
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -14,15 +19,33 @@ class VideoPlayerManager(context: Context) {
     fun p(addr: String, callback: () -> Unit) {
         context.lifecycleScope.launch {
             // 1. 启动协程（默认在主线程，但会被 withContext 切换）
-            val result = fetchUrlAsString("https://www.example.com")
+            val client = OkHttpClient()
+         val request = Request.Builder()
+             .url(addr)
+             .build()
+         try {
+             // 发送同步请求（因在 IO 线程，不会阻塞主线程）
+             val response = client.newCall(request).execute()
+             // 响应成功且有内容时，返回字符串
+             if (response.isSuccessful && response.body != null) {
+                 response.body!!.string()
+             } else {
+                 // 响应失败（如 404、500 等）
+                 null
+             }
+         } catch (e: IOException) {
+             // 网络异常（如无网络、连接超时等）
+             e.printStackTrace()
+             null
+         }
 
             // 2. 如果需要更新 UI，手动切换到主线程（Dispatchers.Main）
             withContext(Dispatchers.Main) {
-                textView.text = if (result != null) "请求成功" else "请求失败"
+                callback()
             }
         }
 
-        callback()
+        
     }
 
     // 加载M3U8直播源
