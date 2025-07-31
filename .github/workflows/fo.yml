@@ -28,27 +28,12 @@ jobs:
       - name: Format Kotlin files
         run: find . -name "*.kt" -exec ktlint --format {} +
 
-      - name: Install XMLStarlet
+      - name: Install Prettier and XML plugin
         run: |
-           sudo apt-get update
-           sudo apt-get install -y xmlstarlet
-      - name: Configure indentation
+           npm install -g prettier prettier-plugin-xml
+      - name: Format XML files
         run: |
-           # 设置缩进为2个空格（可改为4个或\t制表符）
-           export XMLLINT_INDENT='  '
-      - name: Format all XML files
-        run: |
-           # 查找所有XML文件，用xmlstarlet直接格式化（覆盖原文件）
-           find . -name "*.xml" -exec sh -c '
-             for file do
-               # 备份原文件（可选，防止意外）
-               cp "$file" "$file.bak"
-               # 用xmlstarlet格式化并覆盖原文件
-               xmlstarlet format "$file.bak" > "$file"
-               # 删除备份（如需保留可注释此行）
-               rm "$file.bak"
-             done
-           ' sh {} +
+           prettier --write "**/*.xml"
 
 
       - name: Check for changes
