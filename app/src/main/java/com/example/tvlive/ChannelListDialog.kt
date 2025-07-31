@@ -14,7 +14,7 @@ class ChannelListDialog(
     private val channels: List<Channel>,
     private val currentPosition: Int,
     private val onChannelSelected: (Int) -> Unit,
-) : Dialog(context, android.R.style.Theme_NoTitleBar_Fullscreen) {
+) : Dialog(context) {
 
     private lateinit var listView: ListView
     private var selectedPosition = currentPosition
