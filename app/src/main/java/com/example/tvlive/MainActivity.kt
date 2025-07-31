@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         builder.setView(dialogView)
         // 获取控件实例
         val etCircle = dialogView.findViewById<EditText>(R.id.et_circle)
-        val rbReverse = dialogView.findViewById<RadioButton>(R.id.rb_reverse)
+        val rbReverse = dialogView.findViewById<Switch>(R.id.switch_btn)
         val btnCancel = dialogView.findViewById<Button>(R.id.btn_cancel)
         val btnSave = dialogView.findViewById<Button>(R.id.btn_save)
         // 回显已保存的数据
