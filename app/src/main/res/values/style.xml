@@ -1,10 +1,23 @@
-<?xml version="1.0"?>
+<?xml
+ 
+  version="1.0"?>
 <resources>
-  <!-- 定义 Theme.TvLive 主题 -->
-  <style name="Theme.TvLive" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-    <!-- 可自定义主题属性 -->
-    <item name="colorPrimary">@color/purple_500</item>
-    <item name="colorPrimaryVariant">@color/purple_700</item>
-    <item name="colorOnPrimary">@color/white</item>
+  <!--
+  定义 Theme.TvLive 主题 -->
+  <style
+ 
+  name="Theme.TvLive"
+  parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <!--
+  可自定义主题属性 -->
+    <item
+ 
+  name="colorPrimary">@color/purple_500</item>
+    <item
+ 
+  name="colorPrimaryVariant">@color/purple_700</item>
+    <item
+ 
+  name="colorOnPrimary">@color/white</item>
   </style>
 </resources>
