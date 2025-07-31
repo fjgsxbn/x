@@ -32,7 +32,7 @@
       android:textSize="16sp"
       android:paddingVertical="8dp"
     />
-  </LinearLayout>
+  
   <!--
   底部按钮 -->
   <LinearLayout
