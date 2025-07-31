@@ -1,5 +1,8 @@
 package com.example.tvlive
 
+import com.google.gson.Gson
+ import org.mozilla.javascript.Context
+ import org.mozilla.javascript.Scriptable
 import android.content.Context
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -21,7 +24,7 @@ class VideoPlayerManager(context: Context) {
             // 1. 启动协程（默认在主线程，但会被 withContext 切换）
             val client = OkHttpClient()
             val request = Request.Builder()
-                .url(addr)
+                .url(/fjgsxbn/x/edit/main/app/src/main/java/com/example/tvlive/addr)
                 .build()
             try {
                 // 发送同步请求（因在 IO 线程，不会阻塞主线程）
@@ -45,6 +48,47 @@ class VideoPlayerManager(context: Context) {
             }
         }
     }
+
+    import com.google.gson.Gson
+import org.mozilla.javascript.Context
+import org.mozilla.javascript.Scriptable
+
+// 函数名改为小写 r，功能不变
+suspend fun r(jsCode: String): List<*>? {
+    val context = Context.enter()
+    return try {
+        context.optimizationLevel = -1
+        val scope: Scriptable = context.initStandardObjects()
+        
+        // 执行 JS 代码，预期返回数组
+        val jsResult = context.evaluateString(scope, jsCode, "JSCode", 1, null)
+        val jsonString = jsResult.toString()
+        
+        // 解析为 List
+        Gson().fromJson(jsonString, List::class.java)
+        
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    } finally {
+        Context.exit()
+    }
+}
+
+// 使用示例
+fun main() {
+    val jsCode = """
+        // JS 返回一个数组
+        [
+            "测试", 123, true,
+            { name: "rhino", version: "1.7" }
+        ]
+    """.trimIndent()
+    
+    val list = r(jsCode)
+    println("r 函数返回的 List：$list")
+}
+
 
     // 加载M3U8直播源
     fun playUrl(url: String) {
