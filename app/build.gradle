@@ -24,25 +24,12 @@ android {
         release {
             // 从环境变量读取密钥信息（安全起见，避免硬编码）
             storeFile file("../release.jks")
-            //storeType "PKCS12" 
+            
             // 类型（可选，建议加）
-            storePassword "dfsstoremidea"
-            //System.getenv("STORE_PASSWORD")
+            storePassword System.getenv("STORE_PASSWORD")
             keyAlias "androidcert"
-            keyPassword "dfsmidea"
-            //System.getenv("KEY_PASSWORD")
-             // 启用V2签名（Android 7.0+）
-          //  v2SigningEnabled true
-            println "当前release签名的keyAlias：${System.getenv("KEY_ALIAS")}"
-            println "当前release签名的storePassword：${System.getenv("STORE_PASSWORD")}"
-             // 也可以打印最终赋值给配置的值
-            //keyAlias System.getenv("KEY_ALIAS")
-            println "赋值后的keyAlias：${keyPassword}"
-            println "当前release签名的keyAlias：${storePassword}"
-            println "当前release签名的keyPassword：${System.getenv("KEY_PASSWORD")}"
-             // 也可以打印最终赋值给配置的值
-           // keyAlias System.getenv("KEY_ALIAS")
-           // println "赋值后的keyAlias：${keyAlias}"
+            keyPassword System.getenv("KEY_PASSWORD")
+            
         }
         debug {
              // 调试签名（默认使用Android Studio自动生成的调试密钥）
