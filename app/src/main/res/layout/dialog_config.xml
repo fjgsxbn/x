@@ -51,12 +51,13 @@
       android:layout_weight="0"
     />
     <Switch
-         android:id="@+id/switch_btn"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:text="启用该功能"
-         android:textSize="16sp"
-         android:paddingVertical="8dp"/>
+      android:id="@+id/switch_btn"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="启用该功能"
+      android:textSize="16sp"
+      android:paddingVertical="8dp"
+    />
   </LinearLayout>
   <!--
   底部按钮 -->
