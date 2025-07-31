@@ -28,12 +28,25 @@ jobs:
       - name: Format Kotlin files
         run: find . -name "*.kt" -exec ktlint --format {} +
 
-      - name: Install Prettier and XML plugin
-        run: |
-           npm install -g prettier prettier-plugin-xml
-      - name: Format XML files
-        run: prettier --plugin=@prettier/plugin-xml --write "**/*.xml"
-
+      # XML 格式化（适配非 npm 项目）
+       - name: Set up Node.js
+         uses: actions/setup-node@v4
+         with:
+           node-version: 20.x
+       - name: Install Prettier and XML plugin (temporary)
+         run: |
+           # 临时创建 package.json，仅用于安装依赖
+           npm init -y
+           # 局部安装依赖（不会影响项目原有文件，除非提交）
+           npm install prettier @prettier/plugin-xml
+       - name: Format XML files
+         run: |
+           # 使用局部 prettier 格式化
+           npx prettier --plugin=@prettier/plugin-xml --write "**/*.xml"
+       # 清理 npm 临时文件（可选，避免提交无关文件）
+       - name: Clean up npm files
+         run: |
+           rm -rf package.json package-lock.json node_modules
 
       - name: Check for changes
         id: check_changes
