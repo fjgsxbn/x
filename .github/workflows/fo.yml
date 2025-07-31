@@ -32,8 +32,7 @@ jobs:
         run: |
            npm install -g prettier prettier-plugin-xml
       - name: Format XML files
-        run: |
-           prettier --write "**/*.xml"
+        run: prettier --plugin=@prettier/plugin-xml --write "**/*.xml"
 
 
       - name: Check for changes
