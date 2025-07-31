@@ -11,27 +11,27 @@
   第一行：圆 + 输入框 -->
   
     <EditText
-      android:id="@+id/et_circle"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:text="u"
-      android:hint="请输入内容"
-      android:inputType="text"
-      android:layout_weight="1"
-    />
+    android:id="@+id/et_circle"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:text="u"
+    android:hint="请输入内容"
+    android:inputType="text"
+    android:layout_weight="1"
+  />
   
   <!--
   第二行：反转 + 单选框 -->
   
     
     <Switch
-      android:id="@+id/switch_btn"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="反转"
-      android:textSize="16sp"
-      android:paddingVertical="8dp"
-    />
+    android:id="@+id/switch_btn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="反转"
+    android:textSize="16sp"
+    android:paddingVertical="8dp"
+  />
   
   <!--
   底部按钮 -->
