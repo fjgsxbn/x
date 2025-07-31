@@ -1,17 +1,17 @@
 package com.example.tvlive
 
-import com.google.gson.Gson
- import org.mozilla.javascript.Context
- import org.mozilla.javascript.Scriptable
 import android.content.Context
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import org.mozilla.javascript.Context
+import org.mozilla.javascript.Scriptable
 import java.io.IOException
 
 class VideoPlayerManager(context: Context) {
@@ -49,31 +49,26 @@ class VideoPlayerManager(context: Context) {
         }
     }
 
-   
 // 函数名改为小写 r，功能不变
-suspend fun r(jsCode: String): List<*>? {
-    val context = Context.enter()
-    return try {
-        context.optimizationLevel = -1
-        val scope: Scriptable = context.initStandardObjects()
-        
-        // 执行 JS 代码，预期返回数组
-        val jsResult = context.evaluateString(scope, jsCode, "JSCode", 1, null)
-        val jsonString = jsResult.toString()
-        
-        // 解析为 List
-        Gson().fromJson(jsonString, List::class.java)
-        
-    } catch (e: Exception) {
-        e.printStackTrace()
-        null
-    } finally {
-        Context.exit()
+    suspend fun r(jsCode: String): List<*>? {
+        val context = Context.enter()
+        return try {
+            context.optimizationLevel = -1
+            val scope: Scriptable = context.initStandardObjects()
+
+            // 执行 JS 代码，预期返回数组
+            val jsResult = context.evaluateString(scope, jsCode, "JSCode", 1, null)
+            val jsonString = jsResult.toString()
+
+            // 解析为 List
+            Gson().fromJson(jsonString, List::class.java)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        } finally {
+            Context.exit()
+        }
     }
-}
-
-
-
 
     // 加载M3U8直播源
     fun playUrl(url: String) {
