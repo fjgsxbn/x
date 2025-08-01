@@ -61,7 +61,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
 
     // ExoPlayer（M3U8 播放支持）
-    def exoPlayerVersion = "2.19.5"
+    def exoPlayerVersion = "2.19.1"
     implementation "com.google.android.exoplayer:exoplayer:$exoPlayerVersion"
     implementation "com.google.android.exoplayer:exoplayer-hls:$exoPlayerVersion"
     implementation "com.google.android.exoplayer:exoplayer-ui:$exoPlayerVersion"
