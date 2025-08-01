@@ -67,10 +67,10 @@ class VideoPlayerManager(context: Context) {
             val jsonString = jsResult.toString()
 
             val gson = Gson()
-            channels = gson.fromJson(jsonStr, Array<Channel>::class.java).toList()
+            channels = gson.fromJson(jsonString, Array<Channel>::class.java).toList()
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            
         } finally {
             Context.exit()
         }
@@ -87,7 +87,7 @@ class VideoPlayerManager(context: Context) {
         exoPlayer.playWhenReady = true
     }
     fun play(num: Int) {
-        playUrl(channels.[num].url)
+        playUrl(channels[num].url)
     }
 
     fun release() {
