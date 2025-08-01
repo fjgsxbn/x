@@ -1,13 +1,13 @@
 package com.example.tvlive
 
 import android.app.AlertDialog
-import android.content.SharedPreferences
-import android.os.Bundle
 import android.content.Intent
- import android.net.Uri
- import android.os.Build
- import android.provider.Settings
+import android.content.SharedPreferences
+import android.net.Uri
+import android.os.Build
+import android.os.Bundle
 import android.preference.PreferenceManager
+import android.provider.Settings
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Button
@@ -36,17 +36,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-
-
-    // 检查是否有悬浮窗权限，没有则申请
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M 
-            && !Settings.canDrawOverlays(this)
+        // 检查是否有悬浮窗权限，没有则申请
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+            !Settings.canDrawOverlays(this)
         ) {
             // 跳转到系统权限设置页
             val intent = Intent(
                 Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                Uri.parse("package:$packageName") // 指定当前APP包名
+                Uri.parse("package:$packageName"), // 指定当前APP包名
             )
             startActivityForResult(intent, OVERLAY_PERMISSION_REQUEST_CODE)
         } else {
@@ -54,14 +51,13 @@ class MainActivity : AppCompatActivity() {
             initDebugLogs()
         }
 
-        
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         // 初始化播放器
         playerManager = VideoPlayerManager(this)
         playerView = findViewById(R.id.player_view)
         playerView.player = playerManager.getPlayer()
         // playCurrentChannel()
-        val u= sharedPreferences.getString("circle_text", "")
+        val u = sharedPreferences.getString("circle_text", "")
         if ("" == u) {
             showCustomDialog()
         } else {
@@ -155,15 +151,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 处理权限申请结果
-     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-         super.onActivityResult(requestCode, resultCode, data)
-         if (requestCode == OVERLAY_PERMISSION_REQUEST_CODE) {
-             // 再次检查权限，已授予则初始化日志
-             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M 
-                 && Settings.canDrawOverlays(this)
-             ) {
-                 initDebugLogs()
-             }
-         }
-     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == OVERLAY_PERMISSION_REQUEST_CODE) {
+            // 再次检查权限，已授予则初始化日志
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                Settings.canDrawOverlays(this)
+            ) {
+                initDebugLogs()
+            }
+        }
+    }
 }
