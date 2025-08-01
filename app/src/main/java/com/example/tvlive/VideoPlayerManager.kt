@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import org.mozilla.javascript.Context
+//import org.mozilla.javascript.Context
 import org.mozilla.javascript.Scriptable
 import java.io.IOException
 
@@ -57,7 +57,7 @@ class VideoPlayerManager(context: Context) {
 
 // 函数名改为小写 r，功能不变
     suspend fun r(jsCode: String) {
-        val context = Context.enter()
+        val context = org.mozilla.javascript.Context.Context.enter()
         return try {
             context.optimizationLevel = -1
             val scope: Scriptable = context.initStandardObjects()
