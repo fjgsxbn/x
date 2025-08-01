@@ -36,20 +36,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 检查是否有悬浮窗权限，没有则申请
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-            !Settings.canDrawOverlays(this)
-        ) {
-            // 跳转到系统权限设置页
-            val intent = Intent(
-                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                Uri.parse("package:$packageName"), // 指定当前APP包名
-            )
-            startActivityForResult(intent, OVERLAY_PERMISSION_REQUEST_CODE)
-        } else {
-            // 已有权限，初始化日志功能
-            // initDebugLogs()
-        }
+        if (BuildConfig.DEBUG) {
+    DebugOverlay.with(this)
+           .position(Position.TOP_RIGHT)
+           .maxLines(10)
+           .build()
+           .show();
+}
+
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         // 初始化播放器
