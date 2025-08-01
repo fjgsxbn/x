@@ -36,13 +36,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (BuildConfig.DEBUG) {
+        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+             val intent = Intent(
+                 Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                 Uri.parse("package:$packageName")
+             )
+             startActivityForResult(intent, OVERLAY_PERMISSION_REQUEST_CODE)
+        }
+        
+        
     DebugOverlay.with(this)
            .position(Position.TOP_RIGHT)
            .maxLines(10)
            .build()
            .show();
-}
+
 
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
