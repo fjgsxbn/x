@@ -20,7 +20,6 @@ import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.hannesdorfmann.debugoverlay.DebugOverlay
 import com.hannesdorfmann.debugoverlay.Position
 
-
 class MainActivity : AppCompatActivity() {
     private val OVERLAY_PERMISSION_REQUEST_CODE = 1001
     private lateinit var sharedPreferences: SharedPreferences
@@ -151,6 +150,4 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         playerManager.release()
     }
-
-    
 }
