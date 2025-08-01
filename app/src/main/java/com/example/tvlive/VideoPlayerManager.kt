@@ -9,6 +9,7 @@ import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -29,7 +30,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
             // 1. 启动协程（默认在主线程，但会被 withContext 切换）
             val client = OkHttpClient()
             val request = Request.Builder()
-                .url(adx)
+                .url(/fjgsxbn/x/edit/main/app/src/main/java/com/example/tvlive/adx)
                 .build()
             try {
                 // 发送同步请求（因在 IO 线程，不会阻塞主线程）
@@ -37,6 +38,8 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                 // 响应成功且有内容时，返回字符串
                 if (response.isSuccessful && response.body != null) {
                     var j = response.body!!.string()
+                    
+                    delay(10000)
                     r(j)
                     withContext(Dispatchers.Main) {
                         play(0)
