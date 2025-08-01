@@ -20,7 +20,7 @@ class VideoPlayerManager(context: Context) {
     fun getPlayer() = exoPlayer
 
     data class Channel(val name: String, val url: String)
-    private lateinit var channels:List<Channel>
+    private lateinit var channels: List<Channel>
 
     fun p(addr1: String, callback: () -> Unit) {
         context.lifecycleScope.launch {
@@ -53,7 +53,7 @@ class VideoPlayerManager(context: Context) {
     }
 
 // 函数名改为小写 r，功能不变
-    suspend fun r(jsCode: String){
+    suspend fun r(jsCode: String) {
         val context = Context.enter()
         return try {
             context.optimizationLevel = -1
@@ -64,7 +64,7 @@ class VideoPlayerManager(context: Context) {
             val jsonString = jsResult.toString()
 
             val gson = Gson()
-    channels = gson.fromJson(jsonStr, Array<Channel>::class.java).toList()
+            channels = gson.fromJson(jsonStr, Array<Channel>::class.java).toList()
         } catch (e: Exception) {
             e.printStackTrace()
             null
