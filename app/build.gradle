@@ -72,7 +72,6 @@ dependencies {
 
     // 其他
     implementation 'org.mozilla:rhino:1.7.14'
-    implementation 'com.hannesdorfmann:debugoverlay:0.4.0'
 
     // 测试库
     testImplementation 'junit:junit:4.13.2'
