@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, OVERLAY_PERMISSION_REQUEST_CODE)
         } else {
             // 已有权限，初始化日志功能
-            initDebugLogs()
+            //initDebugLogs()
         }
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
