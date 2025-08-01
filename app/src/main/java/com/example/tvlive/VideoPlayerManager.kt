@@ -36,7 +36,7 @@ class VideoPlayerManager(context: Context) {
                 if (response.isSuccessful && response.body != null) {
                     var j =response.body!!.string()
                     r(j)
-                    withContext(Dispatchers.IO) {
+                    withContext(Dispatchers.Main) {
                     play(0)
                         }
                 } else {
