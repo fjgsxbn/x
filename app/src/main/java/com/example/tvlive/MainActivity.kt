@@ -15,6 +15,7 @@ import com.example.tvlive.model.Channel
 import com.google.android.exoplayer2.ui.StyledPlayerView
 
 class MainActivity : AppCompatActivity() {
+    private val OVERLAY_PERMISSION_REQUEST_CODE = 1001
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var playerView: StyledPlayerView
     private lateinit var playerManager: VideoPlayerManager
@@ -30,6 +31,26 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+
+
+    // 检查是否有悬浮窗权限，没有则申请
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M 
+            && !Settings.canDrawOverlays(this)
+        ) {
+            // 跳转到系统权限设置页
+            val intent = Intent(
+                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:$packageName") // 指定当前APP包名
+            )
+            startActivityForResult(intent, OVERLAY_PERMISSION_REQUEST_CODE)
+        } else {
+            // 已有权限，初始化日志功能
+            initDebugLogs()
+        }
+
+        
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         // 初始化播放器
         playerManager = VideoPlayerManager(this)
@@ -128,4 +149,17 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         playerManager.release()
     }
+
+    // 处理权限申请结果
+     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+         super.onActivityResult(requestCode, resultCode, data)
+         if (requestCode == OVERLAY_PERMISSION_REQUEST_CODE) {
+             // 再次检查权限，已授予则初始化日志
+             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M 
+                 && Settings.canDrawOverlays(this)
+             ) {
+                 initDebugLogs()
+             }
+         }
+     }
 }
