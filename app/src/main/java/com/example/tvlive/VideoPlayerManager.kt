@@ -72,7 +72,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
-            Context.exit()
+            org.mozilla.javascript.Context.exit()
         }
     }
 
