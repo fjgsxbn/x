@@ -35,12 +35,12 @@ class MainActivity : AppCompatActivity() {
         playerManager = VideoPlayerManager(this)
         playerView = findViewById(R.id.player_view)
         playerView.player = playerManager.getPlayer()
-        //playCurrentChannel()
-        val u =sharedPreferences.getString("circle_text", "")
-        if(""==u){
+        // playCurrentChannel()
+        val u = sharedPreferences.getString("circle_text", "")
+        if ("" == u) {
             showCustomDialog()
         } else {
-            playerManager.p(u){
+            playerManager.p(u) {
                 Toast.makeText(this, "出错", Toast.LENGTH_SHORT).show()
             }
         }

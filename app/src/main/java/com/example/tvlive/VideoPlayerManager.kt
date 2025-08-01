@@ -42,18 +42,16 @@ class VideoPlayerManager(context: Context) {
                 } else {
                     // 响应失败（如 404、500 等）
                     withContext(Dispatchers.Main) {
-         callback()
+                        callback()
                     }
                 }
             } catch (e: IOException) {
                 // 网络异常（如无网络、连接超时等）
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
-         callback()
+                    callback()
                 }
             }
-
-            
         }
     }
 
