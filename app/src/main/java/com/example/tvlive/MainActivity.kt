@@ -1,13 +1,9 @@
 package com.example.tvlive
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.provider.Settings
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Button
@@ -35,7 +31,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         // 初始化播放器
