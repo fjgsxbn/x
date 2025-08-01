@@ -16,6 +16,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.mozilla.javascript.Scriptable
 import java.io.IOException
+import com.hannesdorfmann.debugoverlay.DebugOverlay
 
 class VideoPlayerManager(private val context: AppCompatActivity) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
@@ -30,7 +31,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
             // 1. 启动协程（默认在主线程，但会被 withContext 切换）
             val client = OkHttpClient()
             val request = Request.Builder()
-                .url(/fjgsxbn/x/edit/main/app/src/main/java/com/example/tvlive/adx)
+                .url(adx)
                 .build()
             try {
                 // 发送同步请求（因在 IO 线程，不会阻塞主线程）
@@ -38,7 +39,8 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                 // 响应成功且有内容时，返回字符串
                 if (response.isSuccessful && response.body != null) {
                     var j = response.body!!.string()
-                    
+                    DebugOverlay.add(j)
+                    DebugOverlay.add("返回值")
                     delay(10000)
                     r(j)
                     withContext(Dispatchers.Main) {
@@ -46,12 +48,15 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                     }
                 } else {
                     // 响应失败（如 404、500 等）
+                    DebugOverlay.add("404")
+                    deblay(10000)
                     withContext(Dispatchers.Main) {
                         callback()
                     }
                 }
             } catch (e: IOException) {
                 // 网络异常（如无网络、连接超时等）
+                DebugOverlay.add("网络异常")
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
                     callback()
