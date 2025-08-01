@@ -34,11 +34,11 @@ class VideoPlayerManager(context: Context) {
                 val response = client.newCall(request).execute()
                 // 响应成功且有内容时，返回字符串
                 if (response.isSuccessful && response.body != null) {
-                    var j =response.body!!.string()
+                    var j = response.body!!.string()
                     r(j)
                     withContext(Dispatchers.Main) {
-                    play(0)
-                        }
+                        play(0)
+                    }
                 } else {
                     // 响应失败（如 404、500 等）
                     null
@@ -87,7 +87,7 @@ class VideoPlayerManager(context: Context) {
         exoPlayer.prepare()
         exoPlayer.playWhenReady = true
     }
-    fun play(num: Int){
+    fun play(num: Int) {
         playUrl(channels.[num].url)
     }
 
