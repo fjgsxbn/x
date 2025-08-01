@@ -1,6 +1,7 @@
 package com.example.tvlive
 
 import android.content.Context
+import androidx.lifecycle.lifecycleScope
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
