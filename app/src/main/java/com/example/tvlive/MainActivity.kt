@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tvlive.model.Channel
 import com.google.android.exoplayer2.ui.StyledPlayerView
+import com.hannesdorfmann.debugoverlay.DebugOverlay
 
 class MainActivity : AppCompatActivity() {
     private val OVERLAY_PERMISSION_REQUEST_CODE = 1001
