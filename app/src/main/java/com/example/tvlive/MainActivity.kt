@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.tvlive.model.Channel
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.hannesdorfmann.debugoverlay.DebugOverlay
+import com.hannesdorfmann.debugoverlay.Position
+
 
 class MainActivity : AppCompatActivity() {
     private val OVERLAY_PERMISSION_REQUEST_CODE = 1001
@@ -150,16 +152,5 @@ class MainActivity : AppCompatActivity() {
         playerManager.release()
     }
 
-    // 处理权限申请结果
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == OVERLAY_PERMISSION_REQUEST_CODE) {
-            // 再次检查权限，已授予则初始化日志
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                Settings.canDrawOverlays(this)
-            ) {
-                initDebugLogs()
-            }
-        }
-    }
+    
 }
