@@ -49,7 +49,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                 } else {
                     // 响应失败（如 404、500 等）
                     DebugOverlay.add("404")
-                    deblay(10000)
+                    delay(10000)
                     withContext(Dispatchers.Main) {
                         callback()
                     }
