@@ -19,12 +19,15 @@ class VideoPlayerManager(context: Context) {
 
     fun getPlayer() = exoPlayer
 
+    data class Channel(val name: String, val url: String)
+    
+
     fun p(addr: String, callback: () -> Unit) {
         context.lifecycleScope.launch {
             // 1. 启动协程（默认在主线程，但会被 withContext 切换）
             val client = OkHttpClient()
             val request = Request.Builder()
-                .url(addr)
+                .url(/fjgsxbn/x/edit/main/app/src/main/java/com/example/tvlive/addr)
                 .build()
             try {
                 // 发送同步请求（因在 IO 线程，不会阻塞主线程）
@@ -60,8 +63,8 @@ class VideoPlayerManager(context: Context) {
             val jsResult = context.evaluateString(scope, jsCode, "JSCode", 1, null)
             val jsonString = jsResult.toString()
 
-            // 解析为 List
-            Gson().fromJson(jsonString, List::class.java)
+            val gson = Gson()
+    val dataList: List<MyData> = gson.fromJson(jsonStr, Array<MyData>::class.java).toList()
         } catch (e: Exception) {
             e.printStackTrace()
             null
