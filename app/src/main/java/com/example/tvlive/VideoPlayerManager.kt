@@ -58,7 +58,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
 
 // 函数名改为小写 r，功能不变
     suspend fun r(jsCode: String) {
-        val context = org.mozilla.javascript.Context.Context.enter()
+        val context = org.mozilla.javascript.Context.enter()
         try {
             context.optimizationLevel = -1
             val scope: Scriptable = context.initStandardObjects()
