@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         playerView = findViewById(R.id.player_view)
         playerView.player = playerManager.getPlayer()
         // playCurrentChannel()
-        val u = sharedPreferences.getString("circle_text", "")
+        val u:String = sharedPreferences.getString("circle_text", "")
         if ("" == u) {
             showCustomDialog()
         } else {
