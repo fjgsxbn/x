@@ -70,7 +70,6 @@ class VideoPlayerManager(context: Context) {
             channels = gson.fromJson(jsonString, Array<Channel>::class.java).toList()
         } catch (e: Exception) {
             e.printStackTrace()
-            
         } finally {
             Context.exit()
         }
