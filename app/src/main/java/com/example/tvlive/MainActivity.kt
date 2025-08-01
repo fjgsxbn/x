@@ -3,6 +3,10 @@ package com.example.tvlive
 import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.content.Intent
+ import android.net.Uri
+ import android.os.Build
+ import android.provider.Settings
 import android.preference.PreferenceManager
 import android.view.KeyEvent
 import android.view.View
