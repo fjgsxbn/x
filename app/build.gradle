@@ -61,6 +61,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
     
     // ExoPlayer（播放M3U8）
     implementation "com.google.android.exoplayer:exoplayer:2.19.1"
