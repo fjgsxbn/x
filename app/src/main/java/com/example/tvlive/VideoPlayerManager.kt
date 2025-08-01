@@ -23,11 +23,11 @@ class VideoPlayerManager(context: Context) {
     private lateinit var channels: List<Channel>
 
     fun p(adx: String, callback: () -> Unit) {
-        context.lifecycleScope.launch {
+        context.lifecycleScope.launch(Dispatchers.IO) {
             // 1. 启动协程（默认在主线程，但会被 withContext 切换）
             val client = OkHttpClient()
             val request = Request.Builder()
-                .url(adx)
+                .url(/fjgsxbn/x/edit/main/app/src/main/java/com/example/tvlive/adx)
                 .build()
             try {
                 // 发送同步请求（因在 IO 线程，不会阻塞主线程）
@@ -49,10 +49,7 @@ class VideoPlayerManager(context: Context) {
                 null
             }
 
-            // 2. 如果需要更新 UI，手动切换到主线程（Dispatchers.Main）
-            withContext(Dispatchers.Main) {
-                callback()
-            }
+            
         }
     }
 
