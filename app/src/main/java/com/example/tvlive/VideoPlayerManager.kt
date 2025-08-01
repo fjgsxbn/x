@@ -8,6 +8,7 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.gson.Gson
+import com.hannesdorfmann.debugoverlay.DebugOverlay
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -16,7 +17,6 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.mozilla.javascript.Scriptable
 import java.io.IOException
-import com.hannesdorfmann.debugoverlay.DebugOverlay
 
 class VideoPlayerManager(private val context: AppCompatActivity) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
