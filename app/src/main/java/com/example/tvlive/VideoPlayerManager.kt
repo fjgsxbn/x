@@ -14,7 +14,7 @@ import okhttp3.Request
 import org.mozilla.javascript.Scriptable
 import java.io.IOException
 
-class VideoPlayerManager(context: Context) {
+class VideoPlayerManager(private val context: Context) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
 
     fun getPlayer() = exoPlayer
