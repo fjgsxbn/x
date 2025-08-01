@@ -34,9 +34,9 @@ jobs:
         run: |
           #sudo apt update
           #sudo apt install -y gradle
-          wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -P /tmp
-          sudo unzip -q /tmp/gradle-8.7-bin.zip -d /opt/
-          echo "export PATH=/opt/gradle-8.7/bin:$PATH" >> $GITHUB_ENV  # 配置环境变量
+          wget https://services.gradle.org/distributions/gradle-7.0-bin.zip -P /tmp
+          sudo unzip -q /tmp/gradle-7.0-bin.zip -d /opt/
+          echo "export PATH=/opt/gradle-7.0/bin:$PATH" >> $GITHUB_ENV  # 配置环境变量
 
       - name: 验证Gradle安装
         run: gradle -v
