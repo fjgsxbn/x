@@ -17,8 +17,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tvlive.model.Channel
 import com.google.android.exoplayer2.ui.StyledPlayerView
-import com.hannesdorfmann.debugoverlay.DebugOverlay
-import com.hannesdorfmann.debugoverlay.Position
 
 class MainActivity : AppCompatActivity() {
     private val OVERLAY_PERMISSION_REQUEST_CODE = 1001
@@ -38,19 +36,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val intent = Intent(
-                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                Uri.parse("package:$packageName"),
-            )
-            startActivityForResult(intent, OVERLAY_PERMISSION_REQUEST_CODE)
-        }
-
-        DebugOverlay.with(this)
-            .position(Position.TOP_RIGHT)
-            .maxLines(10)
-            .build()
-            .show()
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         // 初始化播放器
