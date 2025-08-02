@@ -67,7 +67,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
     suspend fun r(jsCode: String) {
         val context2 = org.mozilla.javascript.Context.enter()
         try {
-            context.optimizationLevel = -1
+            context2.optimizationLevel = -1
             val scope: Scriptable = context2.initStandardObjects()
 
             // 执行 JS 代码，预期返回数组
