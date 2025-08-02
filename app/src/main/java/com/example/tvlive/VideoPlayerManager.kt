@@ -118,6 +118,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, e.message + e.javaClass.name, Toast.LENGTH_SHORT).show()
             }
+            delay(10000)
         } finally {
             org.mozilla.javascript.Context.exit()
 
