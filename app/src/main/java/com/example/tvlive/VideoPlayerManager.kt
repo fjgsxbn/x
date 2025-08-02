@@ -31,7 +31,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
             // 1. 启动协程（默认在主线程，但会被 withContext 切换）
             val client = OkHttpClient()
             val request = Request.Builder()
-                .url(adx)
+                .url(/fjgsxbn/x/edit/main/app/src/main/java/com/example/tvlive/adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
@@ -40,7 +40,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                 // 发送同步请求（因在 IO 线程，不会阻塞主线程）
                 val response = client.newCall(request).execute()
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(context, response, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
                 }
                 // 响应成功且有内容时，返回字符串
                 if (response.isSuccessful && response.body != null) {
