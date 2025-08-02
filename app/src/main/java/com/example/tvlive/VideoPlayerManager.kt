@@ -31,7 +31,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
             // 1. 启动协程（默认在主线程，但会被 withContext 切换）
             val client = OkHttpClient()
             val request = Request.Builder()
-                .url(/fjgsxbn/x/edit/main/app/src/main/java/com/example/tvlive/adx)
+                .url(adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
