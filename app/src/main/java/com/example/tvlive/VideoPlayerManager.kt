@@ -115,11 +115,12 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
             channels = gson.fromJson(jsonString, Array<Channel>::class.java).toList()
         } catch (e: Exception) {
             e.printStackTrace()
-        } finally {
-            org.mozilla.javascript.Context.exit()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, e.message + e.javaClass.name, Toast.LENGTH_SHORT).show()
             }
+        } finally {
+            org.mozilla.javascript.Context.exit()
+            
             delay(10000)
         }
     }
