@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.mozilla.javascript.Scriptable
-import java.io.IOException
+import java.lang.Exception
 
 class VideoPlayerManager(private val context: AppCompatActivity) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
@@ -52,7 +52,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                     callback()
                     // }
                 }
-            } catch (e: IOException) {
+            } catch (e: Exception) {
                 // 网络异常（如无网络、连接超时等）
                 Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
                 delay(10000)
