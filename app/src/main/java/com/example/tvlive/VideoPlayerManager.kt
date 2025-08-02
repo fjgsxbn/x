@@ -20,7 +20,9 @@ import java.lang.Exception
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
 import javax.net.ssl.SSLContext
+import javax.net.ssl.SSLSocketFactory // 修正点：添加 SSLSocketFactory 导入
 import javax.net.ssl.X509TrustManager
+import javax.net.ssl.HostnameVerifier // 修正点：添加 HostnameVerifier 导入
 
 class VideoPlayerManager(private val context: AppCompatActivity) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
@@ -39,18 +41,18 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                 .sslSocketFactory(
                     SSLContext.getInstance("TLS").apply {
                         init(null, arrayOf(TrustAllCerts()), SecureRandom())
-                    },
+                    }.socketFactory,
                     TrustAllCerts(),
                 )
                 .hostnameVerifier { _, _ -> true } // 忽略主机名验证
                 .build()
 
-// 辅助类：信任所有证书
-            class TrustAllCerts : X509TrustManager {
-                override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {}
-                override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {}
-                override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
-            }
+// 辅助类：信任所有证
+private class TrustAllCerts : X509TrustManager {
+        override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {}
+        override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {}
+        override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+}
 
             val request = Request.Builder()
                 .url(adx)
