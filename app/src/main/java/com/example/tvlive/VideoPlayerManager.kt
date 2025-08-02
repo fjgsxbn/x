@@ -58,7 +58,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
             callback()
             // }
         }
-        // }
+        }
     }
 
 // 函数名改为小写 r，功能不变
