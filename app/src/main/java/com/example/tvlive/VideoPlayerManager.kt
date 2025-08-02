@@ -108,8 +108,9 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
             // 执行 JS 代码，预期返回数组
             val jsResult = context2.evaluateString(scope, jsCode, "JSCode", 1, null)
             val jsonString = jsResult.toString()
+            withContext(Dispatchers.Main) {
             Toast.makeText(context, "json" + jsonString, Toast.LENGTH_SHORT).show()
-
+                }
             val gson = Gson()
             channels = gson.fromJson(jsonString, Array<Channel>::class.java).toList()
         } catch (e: Exception) {
