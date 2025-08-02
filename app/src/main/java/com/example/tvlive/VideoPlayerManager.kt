@@ -54,7 +54,8 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                 }
             } catch (e: IOException) {
                 // 网络异常（如无网络、连接超时等）
-
+                Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show();
+delay(10000)
                 e.printStackTrace()
                 // withContext(Dispatchers.Main) {
                 callback()
