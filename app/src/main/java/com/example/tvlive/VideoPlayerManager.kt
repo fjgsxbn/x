@@ -33,9 +33,15 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
             val request = Request.Builder()
                 .url(adx)
                 .build()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
+                }
             try {
                 // 发送同步请求（因在 IO 线程，不会阻塞主线程）
                 val response = client.newCall(request).execute()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, response, Toast.LENGTH_SHORT).show()
+                }
                 // 响应成功且有内容时，返回字符串
                 if (response.isSuccessful && response.body != null) {
                     var j = response.body!!.string()
@@ -61,7 +67,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
             } catch (e: Exception) {
                 // 网络异常（如无网络、连接超时等）
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, e.message+e.javaClass.name, Toast.LENGTH_SHORT).show()
                 }
                 delay(10000)
                 e.printStackTrace()
