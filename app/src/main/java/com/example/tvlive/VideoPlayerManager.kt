@@ -120,7 +120,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
             }
         } finally {
             org.mozilla.javascript.Context.exit()
-            
+
             delay(10000)
         }
     }
