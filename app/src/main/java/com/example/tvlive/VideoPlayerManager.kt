@@ -33,7 +33,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
         override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {}
         override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
     }
-    private lateinit var channels: List<Channel>
+    private  var channels: List<Channel> =mutableListOf()
 
     fun p(adx: String, callback: () -> Unit) {
         context.lifecycleScope.launch(Dispatchers.IO) {
