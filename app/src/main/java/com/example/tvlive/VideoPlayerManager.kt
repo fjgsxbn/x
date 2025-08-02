@@ -24,45 +24,45 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
 
     fun p(adx: String, callback: () -> Unit) {
         context.lifecycleScope.launch() {
-        // 1. 启动协程（默认在主线程，但会被 withContext 切换）
-        val client = OkHttpClient()
-        val request = Request.Builder()
-            .url(adx)
-            .build()
-        try {
-            // 发送同步请求（因在 IO 线程，不会阻塞主线程）
-            val response = client.newCall(request).execute()
-            // 响应成功且有内容时，返回字符串
-            if (response.isSuccessful && response.body != null) {
-                var j = response.body!!.string()
-                Toast.makeText(context, "响应" + j, Toast.LENGTH_SHORT).show()
-                delay(10000)
-                r(j)
-                // withContext(Dispatchers.Main) {
-                play(0)
-                // }
-            } else {
-                // 响应失败（如 404、500 等）
-                Toast.makeText(context, "404", Toast.LENGTH_SHORT).show()
+            // 1. 启动协程（默认在主线程，但会被 withContext 切换）
+            val client = OkHttpClient()
+            val request = Request.Builder()
+                .url(adx)
+                .build()
+            try {
+                // 发送同步请求（因在 IO 线程，不会阻塞主线程）
+                val response = client.newCall(request).execute()
+                // 响应成功且有内容时，返回字符串
+                if (response.isSuccessful && response.body != null) {
+                    var j = response.body!!.string()
+                    Toast.makeText(context, "响应" + j, Toast.LENGTH_SHORT).show()
+                    delay(10000)
+                    r(j)
+                    // withContext(Dispatchers.Main) {
+                    play(0)
+                    // }
+                } else {
+                    // 响应失败（如 404、500 等）
+                    Toast.makeText(context, "404", Toast.LENGTH_SHORT).show()
 
-                delay(10000)
+                    delay(10000)
+                    // withContext(Dispatchers.Main) {
+                    callback()
+                    // }
+                }
+            } catch (e: IOException) {
+                // 网络异常（如无网络、连接超时等）
+
+                e.printStackTrace()
                 // withContext(Dispatchers.Main) {
                 callback()
                 // }
             }
-        } catch (e: IOException) {
-            // 网络异常（如无网络、连接超时等）
-
-            e.printStackTrace()
-            // withContext(Dispatchers.Main) {
-            callback()
-            // }
-        }
         }
     }
 
 // 函数名改为小写 r，功能不变
-  suspend  fun r(jsCode: String) {
+    suspend fun r(jsCode: String) {
         val context2 = org.mozilla.javascript.Context.enter()
         try {
             context.optimizationLevel = -1
