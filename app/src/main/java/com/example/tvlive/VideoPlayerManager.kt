@@ -23,7 +23,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
     private lateinit var channels: List<Channel>
 
     fun p(adx: String, callback: () -> Unit) {
-        // context.lifecycleScope.launch(Dispatchers.IO) {
+        context.lifecycleScope.launch() {
         // 1. 启动协程（默认在主线程，但会被 withContext 切换）
         val client = OkHttpClient()
         val request = Request.Builder()
@@ -35,7 +35,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
             // 响应成功且有内容时，返回字符串
             if (response.isSuccessful && response.body != null) {
                 var j = response.body!!.string()
-                Toast.makeText(getApplicationContext(), "响应" + j, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "响应" + j, Toast.LENGTH_SHORT).show()
                 delay(10000)
                 r(j)
                 // withContext(Dispatchers.Main) {
@@ -43,7 +43,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                 // }
             } else {
                 // 响应失败（如 404、500 等）
-                Toast.makeText(getApplicationContext(), "404", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "404", Toast.LENGTH_SHORT).show()
 
                 delay(10000)
                 // withContext(Dispatchers.Main) {
@@ -62,16 +62,16 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
     }
 
 // 函数名改为小写 r，功能不变
-    fun r(jsCode: String) {
-        val context = org.mozilla.javascript.Context.enter()
+  suspend  fun r(jsCode: String) {
+        val context2 = org.mozilla.javascript.Context.enter()
         try {
             context.optimizationLevel = -1
-            val scope: Scriptable = context.initStandardObjects()
+            val scope: Scriptable = context2.initStandardObjects()
 
             // 执行 JS 代码，预期返回数组
-            val jsResult = context.evaluateString(scope, jsCode, "JSCode", 1, null)
+            val jsResult = context2.evaluateString(scope, jsCode, "JSCode", 1, null)
             val jsonString = jsResult.toString()
-            Toast.makeText(getApplicationContext(), "json" + jsonString, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "json" + jsonString, Toast.LENGTH_SHORT).show()
 
             val gson = Gson()
             channels = gson.fromJson(jsonString, Array<Channel>::class.java).toList()
