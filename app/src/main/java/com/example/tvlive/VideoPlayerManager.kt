@@ -28,6 +28,11 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
     fun getPlayer() = exoPlayer
 
     data class Channel(val name: String, val url: String)
+    private class TrustAllCerts : X509TrustManager {
+                override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {}
+                override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {}
+                override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+    }
     private lateinit var channels: List<Channel>
 
     fun p(adx: String, callback: () -> Unit) {
@@ -44,13 +49,6 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                 )
                 .hostnameVerifier { _, _ -> true } // 忽略主机名验证
                 .build()
-
-// 辅助类：信任所有证
-            private class TrustAllCerts : X509TrustManager {
-                override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {}
-                override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {}
-                override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
-            }
 
             val request = Request.Builder()
                 .url(adx)
