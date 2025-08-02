@@ -47,7 +47,8 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                     //}
                 } else {
                     // 响应失败（如 404、500 等）
-                    DebugOverlay.add("404")
+                    Toast.makeText(getApplicationContext(), "404", Toast.LENGTH_SHORT).show();
+
                     delay(10000)
                     //withContext(Dispatchers.Main) {
                         callback()
