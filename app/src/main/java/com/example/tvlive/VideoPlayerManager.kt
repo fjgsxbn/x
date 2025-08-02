@@ -51,7 +51,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                 .build()
 
             val request = Request.Builder()
-                .url(adx)
+                .url(/fjgsxbn/x/edit/main/app/src/main/java/com/example/tvlive/adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
@@ -117,6 +117,9 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
             e.printStackTrace()
         } finally {
             org.mozilla.javascript.Context.exit()
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, e.message+e.javaClass.name, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
