@@ -38,30 +38,33 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                 if (response.isSuccessful && response.body != null) {
                     var j = response.body!!.string()
                     withContext(Dispatchers.Main) {
-                    Toast.makeText(context, "响应" + j, Toast.LENGTH_SHORT).show()}
+                        Toast.makeText(context, "响应" + j, Toast.LENGTH_SHORT).show()
+                    }
                     delay(10000)
                     r(j)
                     withContext(Dispatchers.Main) {
-                    play(0)
+                        play(0)
                     }
                 } else {
                     // 响应失败（如 404、500 等）
                     withContext(Dispatchers.Main) {
-                    Toast.makeText(context, "404", Toast.LENGTH_SHORT).show()}
+                        Toast.makeText(context, "404", Toast.LENGTH_SHORT).show()
+                    }
 
                     delay(10000)
                     withContext(Dispatchers.Main) {
-                    callback()
+                        callback()
                     }
                 }
             } catch (e: Exception) {
                 // 网络异常（如无网络、连接超时等）
                 withContext(Dispatchers.Main) {
-                Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()}
+                    Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                }
                 delay(10000)
                 e.printStackTrace()
                 withContext(Dispatchers.Main) {
-                callback()
+                    callback()
                 }
             }
         }
