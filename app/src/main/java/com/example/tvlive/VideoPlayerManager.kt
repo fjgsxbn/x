@@ -29,9 +29,9 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
 
     data class Channel(val name: String, val url: String)
     private class TrustAllCerts : X509TrustManager {
-                override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {}
-                override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {}
-                override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+        override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {}
+        override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {}
+        override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
     }
     private lateinit var channels: List<Channel>
 
