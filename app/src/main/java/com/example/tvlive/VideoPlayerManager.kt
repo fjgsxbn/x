@@ -17,11 +17,10 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.mozilla.javascript.Scriptable
 import java.lang.Exception
+import java.security.SecureRandom
+import java.security.cert.X509Certificate
 import javax.net.ssl.SSLContext
- import javax.net.ssl.X509TrustManager
- import java.security.SecureRandom
- import java.security.cert.X509Certificate
- import javax.net.ssl.HostnameVerifier
+import javax.net.ssl.X509TrustManager
 
 class VideoPlayerManager(private val context: AppCompatActivity) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
@@ -35,25 +34,23 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
         context.lifecycleScope.launch(Dispatchers.IO) {
             // 1. 启动协程（默认在主线程，但会被 withContext 切换）
 
-
             // 创建忽略证书验证的 OkHttpClient
-val client = OkHttpClient.Builder()
-    .sslSocketFactory(
-        SSLContext.getInstance("TLS").apply {
-            init(null, arrayOf(TrustAllCerts()), SecureRandom())
-        },
-        TrustAllCerts()
-    )
-    .hostnameVerifier { _, _ -> true } // 忽略主机名验证
-    .build()
+            val client = OkHttpClient.Builder()
+                .sslSocketFactory(
+                    SSLContext.getInstance("TLS").apply {
+                        init(null, arrayOf(TrustAllCerts()), SecureRandom())
+                    },
+                    TrustAllCerts(),
+                )
+                .hostnameVerifier { _, _ -> true } // 忽略主机名验证
+                .build()
 
 // 辅助类：信任所有证书
-class TrustAllCerts : X509TrustManager {
-    override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {}
-    override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {}
-    override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
-}
-
+            class TrustAllCerts : X509TrustManager {
+                override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {}
+                override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {}
+                override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+            }
 
             val request = Request.Builder()
                 .url(adx)
