@@ -100,6 +100,9 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
 
 // 函数名改为小写 r，功能不变
     suspend fun r(jsCode: String) {
+        withContext(Dispatchers.Main) {
+                Toast.makeText(context, "js", Toast.LENGTH_SHORT).show()
+        }
         try {
             val context2 = org.mozilla.javascript.Context.enter()
             context2.optimizationLevel = -1
