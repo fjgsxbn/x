@@ -1,12 +1,19 @@
-<!-- assets/test.html -->
 <html>
   <body>
+    <div id="dplayer"></div>
+<script src="dplayer.js"></script>
     <script>
       // 本地 JS 代码
-      function localFunc() {
-        alert("这是本地存储的 JS 代码");
-      }
-      localFunc();
+      const dp = new DPlayer({
+    container: document.getElementById('dplayer'),
+    live: true,
+    danmaku: false,
+    
+    video: {
+        url: 'https://0472.org/hls/cgtn.m3u8',
+        type: 'hls',
+    },
+});
     </script>
   </body>
 </html>
