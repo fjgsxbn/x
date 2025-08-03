@@ -42,7 +42,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                 .build()
 
             val request = Request.Builder()
-                .url(adx)
+                .url(/fjgsxbn/x/edit/main/app/src/main/java/com/example/tvlive/adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
@@ -59,10 +59,10 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(context, "响应" + j, Toast.LENGTH_SHORT).show()
                     }
-                    delay(10000)
+                    
                     r(j)
                     withContext(Dispatchers.Main) {
-                        play(0)
+                        //play(0)
                     }
                 } else {
                     // 响应失败（如 404、500 等）
@@ -91,33 +91,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
 
 // 函数名改为小写 r，功能不变
     suspend fun r(jsCode: String) {
-        withContext(Dispatchers.Main) {
-            Toast.makeText(context, "js", Toast.LENGTH_SHORT).show()
-        }
-        try {
-            val context2 = org.mozilla.javascript.Context.enter()
-            context2.optimizationLevel = -1
-            val scope: Scriptable = context2.initStandardObjects()
-
-            // 执行 JS 代码，预期返回数组
-            val jsResult = context2.evaluateString(scope, jsCode, "JSCode", 1, null)
-            val jsonString = jsResult.toString()
-            withContext(Dispatchers.Main) {
-                Toast.makeText(context, "json" + jsonString, Toast.LENGTH_SHORT).show()
-            }
-            val gson = Gson()
-            channels = gson.fromJson(jsonString, Array<Channel>::class.java).toList()
-        } catch (e: Throwable) {
-            e.printStackTrace()
-            withContext(Dispatchers.Main) {
-                Toast.makeText(context, e.message + e.javaClass.name, Toast.LENGTH_SHORT).show()
-            }
-            delay(10000)
-        } finally {
-            org.mozilla.javascript.Context.exit()
-
-            delay(10000)
-        }
+        
     }
 
     // 加载M3U8直播源
