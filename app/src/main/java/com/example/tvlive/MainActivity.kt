@@ -38,7 +38,13 @@ class MainActivity : AppCompatActivity() {
         // 初始化播放器
         playerManager = VideoPlayerManager(this)
         webView = findViewById(R.id.webView)
-        playerView.player = playerManager.getPlayer()
+        WebSettings webSettings = webView.getSettings();
+         // 必须开启 JavaScript，否则无法执行动态添加内容的逻辑
+         webSettings.setJavaScriptEnabled(true);
+        webView.loadUrl("file:///android_asset/live.html") // 加载 assets 目录下的文件
+
+
+        
         // playCurrentChannel()
         val u = sharedPreferences.getString("circle_text", "")
         if ("" == u) {
