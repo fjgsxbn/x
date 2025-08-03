@@ -17,9 +17,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.mozilla.javascript.Scriptable
 import java.lang.Exception
-import java.security.SecureRandom
 import java.security.cert.X509Certificate
-import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
 
 class VideoPlayerManager(private val context: AppCompatActivity) {
