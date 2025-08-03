@@ -1,6 +1,5 @@
 package com.example.tvlive
 
-import android.content.Context
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -8,14 +7,12 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
-import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import org.mozilla.javascript.Scriptable
 import java.lang.Exception
 import java.security.cert.X509Certificate
 import javax.net.ssl.X509TrustManager
@@ -59,11 +56,11 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(context, "响应" + j, Toast.LENGTH_SHORT).show()
                     }
-                    
+
                     r(j)
-                    //withContext(Dispatchers.Main) {
-                        //play(0)
-                    //}
+                    // withContext(Dispatchers.Main) {
+                    // play(0)
+                    // }
                 } else {
                     // 响应失败（如 404、500 等）
                     withContext(Dispatchers.Main) {
@@ -91,7 +88,6 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
 
 // 函数名改为小写 r，功能不变
     suspend fun r(jsCode: String) {
-        
     }
 
     // 加载M3U8直播源

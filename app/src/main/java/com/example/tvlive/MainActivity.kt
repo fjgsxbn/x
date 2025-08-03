@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.KeyEvent
 import android.view.View
-import android.webkit.WebView
 import android.webkit.WebSettings
+import android.webkit.WebView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
@@ -40,13 +40,11 @@ class MainActivity : AppCompatActivity() {
         playerManager = VideoPlayerManager(this)
         webView = findViewById(R.id.webView)
         val webSettings: WebSettings = webView.settings
-         // 必须开启 JavaScript，否则无法执行动态添加内容的逻辑
-         webSettings.javaScriptEnabled = true // 必须启用 JS，否则动态操作无效
-         webSettings.allowFileAccess = true // 允许访问本地文件
+        // 必须开启 JavaScript，否则无法执行动态添加内容的逻辑
+        webSettings.javaScriptEnabled = true // 必须启用 JS，否则动态操作无效
+        webSettings.allowFileAccess = true // 允许访问本地文件
         webView.loadUrl("file:///android_asset/live.html") // 加载 assets 目录下的文件
 
-
-        
         // playCurrentChannel()
         val u = sharedPreferences.getString("circle_text", "")
         if ("" == u) {
