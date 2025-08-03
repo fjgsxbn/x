@@ -41,13 +41,6 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
 
             // 创建忽略证书验证的 OkHttpClient
             val client = OkHttpClient.Builder()
-                .sslSocketFactory(
-                    SSLContext.getInstance("TLS").apply {
-                        init(null, arrayOf(TrustAllCerts()), SecureRandom())
-                    }.socketFactory,
-                    TrustAllCerts(),
-                )
-                .hostnameVerifier { _, _ -> true } // 忽略主机名验证
                 .build()
 
             val request = Request.Builder()
@@ -116,7 +109,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
             }
             val gson = Gson()
             channels = gson.fromJson(jsonString, Array<Channel>::class.java).toList()
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             e.printStackTrace()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, e.message + e.javaClass.name, Toast.LENGTH_SHORT).show()
