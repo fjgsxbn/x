@@ -6,12 +6,9 @@
   android:layout_height="match_parent"
   android:orientation="vertical"
 >
-  <com.google.android.exoplayer2.ui.StyledPlayerView
-    android:id="@+id/player_view"
+  <WebView
+    android:id="@+id/webView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:use_controller="false"
-    android:keepScreenOn="true"
-    android:background="@color/custom_black"
-  />
+    android:layout_height="match_parent" />
+
 </LinearLayout>
