@@ -6,20 +6,19 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.KeyEvent
 import android.view.View
-import android.webkit.WebSettings
- import android.webkit.WebView
+import android.webkit.WebView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tvlive.model.Channel
-import com.google.android.exoplayer2.ui.StyledPlayerView
 
 class MainActivity : AppCompatActivity() {
     private val OVERLAY_PERMISSION_REQUEST_CODE = 1001
     private lateinit var sharedPreferences: SharedPreferences
-    //private lateinit var playerView: StyledPlayerView
+
+    // private lateinit var playerView: StyledPlayerView
     private lateinit var webView: WebView
     private lateinit var playerManager: VideoPlayerManager
     private val channels = listOf(
