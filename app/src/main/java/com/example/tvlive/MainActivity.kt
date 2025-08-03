@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         // playCurrentChannel()
         val u = sharedPreferences.getString("circle_text", "")
         if ("" == u) {
-           // showCustomDialog()
+            // showCustomDialog()
         } else {
             playerManager.p(u!!) {
                 Toast.makeText(this, "出错", Toast.LENGTH_SHORT).show()
