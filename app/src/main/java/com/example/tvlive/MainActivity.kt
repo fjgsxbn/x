@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.KeyEvent
 import android.view.View
+import android.webkit.WebSettings
+ import android.webkit.WebView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
@@ -17,7 +19,8 @@ import com.google.android.exoplayer2.ui.StyledPlayerView
 class MainActivity : AppCompatActivity() {
     private val OVERLAY_PERMISSION_REQUEST_CODE = 1001
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var playerView: StyledPlayerView
+    //private lateinit var playerView: StyledPlayerView
+    private lateinit var webView: WebView
     private lateinit var playerManager: VideoPlayerManager
     private val channels = listOf(
         Channel(1, "央视一套", "http://hbsz.chinashadt.com:2036/live/stream:sztv.stream/playlist.m3u8"),
@@ -35,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         // 初始化播放器
         playerManager = VideoPlayerManager(this)
-        playerView = findViewById(R.id.player_view)
+        webView = findViewById(R.id.webView)
         playerView.player = playerManager.getPlayer()
         // playCurrentChannel()
         val u = sharedPreferences.getString("circle_text", "")
