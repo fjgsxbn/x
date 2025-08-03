@@ -42,7 +42,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                 .build()
 
             val request = Request.Builder()
-                .url(/fjgsxbn/x/edit/main/app/src/main/java/com/example/tvlive/adx)
+                .url(adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
@@ -61,9 +61,9 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                     }
                     
                     r(j)
-                    withContext(Dispatchers.Main) {
+                    //withContext(Dispatchers.Main) {
                         //play(0)
-                    }
+                    //}
                 } else {
                     // 响应失败（如 404、500 等）
                     withContext(Dispatchers.Main) {
