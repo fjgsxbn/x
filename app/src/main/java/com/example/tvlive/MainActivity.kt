@@ -7,6 +7,7 @@ import android.preference.PreferenceManager
 import android.view.KeyEvent
 import android.view.View
 import android.webkit.WebView
+import android.webkit.WebSettings
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
@@ -38,9 +39,10 @@ class MainActivity : AppCompatActivity() {
         // 初始化播放器
         playerManager = VideoPlayerManager(this)
         webView = findViewById(R.id.webView)
-        WebSettings webSettings = webView.getSettings();
+        val webSettings: WebSettings = webView.settings
          // 必须开启 JavaScript，否则无法执行动态添加内容的逻辑
-         webSettings.setJavaScriptEnabled(true);
+         webSettings.javaScriptEnabled = true // 必须启用 JS，否则动态操作无效
+         webSettings.allowFileAccess = true // 允许访问本地文件
         webView.loadUrl("file:///android_asset/live.html") // 加载 assets 目录下的文件
 
 
