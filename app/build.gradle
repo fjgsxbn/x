@@ -5,11 +5,11 @@ plugins {
 
 android {
     namespace 'com.example.tvlive'
-    compileSdkVersion 34
+    compileSdkVersion 23
 
     defaultConfig {
         applicationId "com.example.tvlive"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 34
         versionCode 1
         versionName "1.0"
