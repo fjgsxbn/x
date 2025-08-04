@@ -26,11 +26,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
     fun getPlayer() = exoPlayer
 
     data class Channel(val name: String, val url: String)
-    private class TrustAllCerts : X509TrustManager {
-        override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {}
-        override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {}
-        override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
-    }
+    
     private var channels: List<Channel> = mutableListOf()
 
     fun p(adx: String, callback: () -> Unit) {
@@ -42,7 +38,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                 .build()
 
             val request = Request.Builder()
-                .url(adx)
+                .url(/fjgsxbn/x/edit/e/app/src/main/java/com/example/tvlive/adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
@@ -93,6 +89,22 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
     suspend fun r(jsCode: String) {
         withContext(Dispatchers.Main) {
             Toast.makeText(context, "js", Toast.LENGTH_SHORT).show()
+            val webSettings: WebSettings = webView.settings
+         webSettings.javaScriptEnabled = true // 必须开启JS支持
+         webSettings.domStorageEnabled = true // 可选：启用DOM存储（部分JS功能需要）
+         // 配置WebViewClient，避免跳转系统浏览器
+         //webView.webViewClient = WebViewClient()
+         // 可选：配置WebChromeClient（处理JS弹窗等）
+         //webView.webChromeClient = WebChromeClient()
+         override fun onReceiveValue(result: String?) {
+                 if (result != null) {
+                     // 处理JS执行结果（result是JS返回的字符串，可能带双引号）
+                     val cleanResult = result.replace("\"", "") // 去除双引号
+                     Toast.makeText(this@WebViewJsCallbackActivity, "JS执行结果: $cleanResult", Toast.LENGTH_LONG).show()
+                 } else {
+                     Toast.makeText(this@WebViewJsCallbackActivity, "JS执行无结果", Toast.LENGTH_SHORT).show()
+                 }
+         }
         }
         try {
             val context2 = org.mozilla.javascript.Context.enter()
