@@ -103,6 +103,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             // 用空HTML容器包裹JS代码（确保JS能被WebView执行）
             val jsWrapper = """
              <html>
+             <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
                  <script>$jsCode</script>
              </html>
             """.trimIndent()
