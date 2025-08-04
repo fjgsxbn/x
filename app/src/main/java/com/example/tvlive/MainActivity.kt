@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.KeyEvent
 import android.view.View
-import android.webkit.WebView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
@@ -35,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         // 初始化播放器
-        playerManager = VideoPlayerManager(this,findViewById(R.id.webView))
+        playerManager = VideoPlayerManager(this, findViewById(R.id.webView))
         playerView = findViewById(R.id.player_view)
         playerView.player = playerManager.getPlayer()
         // playCurrentChannel()

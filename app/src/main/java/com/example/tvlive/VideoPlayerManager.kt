@@ -1,25 +1,19 @@
 package com.example.tvlive
 
-import android.content.Context
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
-import android.webkit.JavascriptInterface
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
-import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import org.mozilla.javascript.Scriptable
 import java.lang.Exception
-import java.security.cert.X509Certificate
-import javax.net.ssl.X509TrustManager
 
 class VideoPlayerManager(private val context: AppCompatActivity) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
@@ -27,7 +21,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
     fun getPlayer() = exoPlayer
 
     data class Channel(val name: String, val url: String)
-    
+
     private var channels: List<Channel> = mutableListOf()
 
     fun p(adx: String, callback: () -> Unit) {
@@ -91,25 +85,23 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
         withContext(Dispatchers.Main) {
             Toast.makeText(context, "js", Toast.LENGTH_SHORT).show()
             val webSettings: WebSettings = webView.settings
-         webSettings.javaScriptEnabled = true // 必须开启JS支持
-         webSettings.domStorageEnabled = true // 可选：启用DOM存储（部分JS功能需要）
-         // 配置WebViewClient，避免跳转系统浏览器
-         //webView.webViewClient = WebViewClient()
-         // 可选：配置WebChromeClient（处理JS弹窗等）
-         //webView.webChromeClient = WebChromeClient()
+            webSettings.javaScriptEnabled = true // 必须开启JS支持
+            webSettings.domStorageEnabled = true // 可选：启用DOM存储（部分JS功能需要）
+            // 配置WebViewClient，避免跳转系统浏览器
+            // webView.webViewClient = WebViewClient()
+            // 可选：配置WebChromeClient（处理JS弹窗等）
+            // webView.webChromeClient = WebChromeClient()
             webView.addJavascriptInterface(AndroidCallback(), "AndroidCallback")
             // 用空HTML容器包裹JS代码（确保JS能被WebView执行）
-         val jsWrapper = """
+            val jsWrapper = """
              <html>
                  <script>$pureJsCode</script>
              </html>
-         """.trimIndent()
-         // 加载仅包含JS的HTML（无任何可视内容）
-         webView.loadDataWithBaseURL(null, jsWrapper, "text/html", "UTF-8", null)
+            """.trimIndent()
+            // 加载仅包含JS的HTML（无任何可视内容）
+            webView.loadDataWithBaseURL(null, jsWrapper, "text/html", "UTF-8", null)
         }
-        
     }
-    
 
     // 加载M3U8直播源
     fun playUrl(url: String) {
