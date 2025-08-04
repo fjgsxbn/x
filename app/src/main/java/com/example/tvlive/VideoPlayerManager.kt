@@ -110,10 +110,11 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
              val messageLevel = it.messageLevel() // 日志级别（如 ERROR、WARNING 等）
              // 重点捕获 ERROR 级别的异常
              if (messageLevel == ConsoleMessage.MessageLevel.ERROR) {
-                 Log.e("WebView JS Error", "Message: $message, Line: $lineNumber, Source: $sourceId")
+                 val all="WebView JS Error", "Message: $message, Line: $lineNumber, Source: $sourceId"
+                 Toast.makeText(context, all, Toast.LENGTH_SHORT).show()
              } else {
                  // 非错误级别的日志（如 log、warn）也可以按需打印
-                 Log.d("WebView JS Log", "[$messageLevel] $message (Line: $lineNumber)")
+                // Log.d("WebView JS Log", "[$messageLevel] $message (Line: $lineNumber)")
              }
          }
          return super.onConsoleMessage(consoleMessage)
