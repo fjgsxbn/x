@@ -20,7 +20,7 @@ import okhttp3.Request
 import java.lang.Exception
 import java.util.*
 
-class VideoPlayerManager(private val context: AppCompatActivity, private webView: WebView) {
+class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
 
     fun getPlayer() = exoPlayer
