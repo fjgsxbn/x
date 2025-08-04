@@ -2,6 +2,7 @@ package com.example.tvlive
 
 import android.webkit.WebSettings
 import android.webkit.WebView
+import android.webkit.JavascriptInterface
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
