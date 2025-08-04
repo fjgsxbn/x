@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         // 初始化播放器
-        val webView: WebView =findViewById(R.id.webView)
+        val webView: WebView = findViewById(R.id.webView)
         playerManager = VideoPlayerManager(this, webView)
         playerView = findViewById(R.id.player_view)
         playerView.player = playerManager.getPlayer()
