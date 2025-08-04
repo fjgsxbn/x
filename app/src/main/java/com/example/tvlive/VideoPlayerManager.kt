@@ -1,5 +1,6 @@
 package com.example.tvlive
 
+import android.webkit.WebView
 import android.webkit.WebSettings
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +20,7 @@ import okhttp3.Request
 import java.lang.Exception
 import java.util.*
 
-class VideoPlayerManager(private val context: AppCompatActivity) {
+class VideoPlayerManager(private val context: AppCompatActivity,private webView: WebView) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
 
     fun getPlayer() = exoPlayer
@@ -119,7 +120,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
             // 由于Kotlin泛型擦除，需要通过TypeToken指定List<Channel>类型
             val type = object : TypeToken<List<Channel>>() {}.type
             // 转换JSON字符串为List<Channel>
-            channels = gson.fromJson(jsonStr, type)
+            channels = gson.fromJson(message, type)
             // 打印结果
         }
     }
