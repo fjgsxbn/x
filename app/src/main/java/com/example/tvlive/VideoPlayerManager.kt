@@ -39,7 +39,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 .build()
 
             val request = Request.Builder()
-                .url(adx)
+                .url(/fjgsxbn/x/edit/e/app/src/main/java/com/example/tvlive/adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
@@ -110,7 +110,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
              val messageLevel = it.messageLevel() // 日志级别（如 ERROR、WARNING 等）
              // 重点捕获 ERROR 级别的异常
              if (messageLevel == ConsoleMessage.MessageLevel.ERROR) {
-                 val all="WebView JS Error", "Message: $message, Line: $lineNumber, Source: $sourceId"
+                 val all= "Message: $message, Line: $lineNumber, Source: $sourceId"
                  Toast.makeText(context, all, Toast.LENGTH_SHORT).show()
              } else {
                  // 非错误级别的日志（如 log、warn）也可以按需打印
