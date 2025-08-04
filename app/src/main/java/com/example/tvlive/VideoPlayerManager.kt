@@ -97,6 +97,10 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             val webSettings: WebSettings = webView.settings
             webSettings.javaScriptEnabled = true // 必须开启JS支持
             webSettings.domStorageEnabled = true // 可选：启用DOM存储（部分JS功能需要）
+            // 注意：此方法在 Android 4.1+ 有效，但会降低安全性，生产环境禁止使用！
+webView.settings.allowUniversalAccessFromFileURLs = true
+webView.settings.allowFileAccessFromFileURLs = true
+
             // 配置WebViewClient，避免跳转系统浏览器
             // webView.webViewClient = WebViewClient()
             // 可选：配置WebChromeClient（处理JS弹窗等）
