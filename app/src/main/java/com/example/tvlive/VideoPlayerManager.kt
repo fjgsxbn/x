@@ -38,7 +38,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                 .build()
 
             val request = Request.Builder()
-                .url(adx)
+                .url(/fjgsxbn/x/edit/e/app/src/main/java/com/example/tvlive/adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
@@ -96,6 +96,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
          //webView.webViewClient = WebViewClient()
          // 可选：配置WebChromeClient（处理JS弹窗等）
          //webView.webChromeClient = WebChromeClient()
+            webView.evaluateJavascript(jsCode, object : ValueCallback<String> {
          override fun onReceiveValue(result: String?) {
                  if (result != null) {
                      // 处理JS执行结果（result是JS返回的字符串，可能带双引号）
