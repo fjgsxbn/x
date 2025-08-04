@@ -38,7 +38,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                 .build()
 
             val request = Request.Builder()
-                .url(adx)
+                .url(/fjgsxbn/x/edit/e/app/src/main/java/com/example/tvlive/adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
@@ -96,16 +96,15 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
          //webView.webViewClient = WebViewClient()
          // 可选：配置WebChromeClient（处理JS弹窗等）
          //webView.webChromeClient = WebChromeClient()
-            webView.evaluateJavascript(jsCode, object : ValueCallback<String> {
-         override fun onReceiveValue(result: String?) {
-                 if (result != null) {
-                     // 处理JS执行结果（result是JS返回的字符串，可能带双引号）
-                     val cleanResult = result.replace("\"", "") // 去除双引号
-                     Toast.makeText(this@WebViewJsCallbackActivity, "JS执行结果: $cleanResult", Toast.LENGTH_LONG).show()
-                 } else {
-                     Toast.makeText(this@WebViewJsCallbackActivity, "JS执行无结果", Toast.LENGTH_SHORT).show()
-                 }
-         }
+            webView.addJavascriptInterface(AndroidCallback(), "AndroidCallback")
+            // 用空HTML容器包裹JS代码（确保JS能被WebView执行）
+         val jsWrapper = """
+             <html>
+                 <script>$pureJsCode</script>
+             </html>
+         """.trimIndent()
+         // 加载仅包含JS的HTML（无任何可视内容）
+         webView.loadDataWithBaseURL(null, jsWrapper, "text/html", "UTF-8", null)
         }
         try {
             val context2 = org.mozilla.javascript.Context.enter()
@@ -132,6 +131,22 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
             delay(10000)
         }
     }
+    // 原生回调接口类
+     inner class AndroidCallback {
+         @JavascriptInterface
+         fun onTimerUpdate(message: String) {
+             // JS定时回调（子线程，需切换到主线程更新UI）
+             runOnUiThread {
+                 callbackText.text = "JS回调：$message"
+             }
+         }
+         @JavascriptInterface
+         fun onTimerStop(message: String) {
+             runOnUiThread {
+                 Toast.makeText(this@PureJsIntervalActivity, message, Toast.LENGTH_LONG).show()
+             }
+         }
+     }
 
     // 加载M3U8直播源
     fun playUrl(url: String) {
