@@ -4,9 +4,9 @@ name: Format Kotlin & XML
 
 on:
   push:
-    branches: [ main ]
+    branches: [ e ]
   pull_request:
-    branches: [ main ]
+    branches: [ e ]
 
 jobs:
   format:
