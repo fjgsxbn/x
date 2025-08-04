@@ -1,7 +1,7 @@
 package com.example.tvlive
 
-import android.webkit.WebView
 import android.webkit.WebSettings
+import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -20,7 +20,7 @@ import okhttp3.Request
 import java.lang.Exception
 import java.util.*
 
-class VideoPlayerManager(private val context: AppCompatActivity,private webView: WebView) {
+class VideoPlayerManager(private val context: AppCompatActivity, private webView: WebView) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
 
     fun getPlayer() = exoPlayer
