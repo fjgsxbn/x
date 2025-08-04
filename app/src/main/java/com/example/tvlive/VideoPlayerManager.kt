@@ -56,7 +56,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                     withContext(Dispatchers.Main) {
                         Toast.makeText(context, "响应" + j, Toast.LENGTH_SHORT).show()
                     }
-                    
+
                     r(j)
                     withContext(Dispatchers.Main) {
                         if (channels.size != 0) {
@@ -100,26 +100,26 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             // 可选：配置WebChromeClient（处理JS弹窗等）
             // webView.webChromeClient = WebChromeClient()
             // 配置 WebView 并设置异常监听
- webView.webChromeClient = object : WebChromeClient() {
-     // 监听 JS 的 console 输出（包括 error 级别）
-     override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
-         consoleMessage?.let {
-             val message = it.message()
-             val sourceId = it.sourceId() // 出错的 JS 文件路径
-             val lineNumber = it.lineNumber() // 出错的行号
-             val messageLevel = it.messageLevel() // 日志级别（如 ERROR、WARNING 等）
-             // 重点捕获 ERROR 级别的异常
-             if (messageLevel == ConsoleMessage.MessageLevel.ERROR) {
-                 val all= "Message: $message, Line: $lineNumber, Source: $sourceId"
-                 Toast.makeText(context, all, Toast.LENGTH_SHORT).show()
-             } else {
-                 // 非错误级别的日志（如 log、warn）也可以按需打印
-                // Log.d("WebView JS Log", "[$messageLevel] $message (Line: $lineNumber)")
-             }
-         }
-         return super.onConsoleMessage(consoleMessage)
-     }
- }
+            webView.webChromeClient = object : WebChromeClient() {
+                // 监听 JS 的 console 输出（包括 error 级别）
+                override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
+                    consoleMessage?.let {
+                        val message = it.message()
+                        val sourceId = it.sourceId() // 出错的 JS 文件路径
+                        val lineNumber = it.lineNumber() // 出错的行号
+                        val messageLevel = it.messageLevel() // 日志级别（如 ERROR、WARNING 等）
+                        // 重点捕获 ERROR 级别的异常
+                        if (messageLevel == ConsoleMessage.MessageLevel.ERROR) {
+                            val all = "Message: $message, Line: $lineNumber, Source: $sourceId"
+                            Toast.makeText(context, all, Toast.LENGTH_SHORT).show()
+                        } else {
+                            // 非错误级别的日志（如 log、warn）也可以按需打印
+                            // Log.d("WebView JS Log", "[$messageLevel] $message (Line: $lineNumber)")
+                        }
+                    }
+                    return super.onConsoleMessage(consoleMessage)
+                }
+            }
             webView.addJavascriptInterface(AndroidCallback(), "AndroidCallback")
             // 用空HTML容器包裹JS代码（确保JS能被WebView执行）
             val jsWrapper = """
