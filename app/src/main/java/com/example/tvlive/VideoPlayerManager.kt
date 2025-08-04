@@ -7,6 +7,8 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -14,9 +16,7 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.lang.Exception
-import com.google.gson.Gson
- import com.google.gson.reflect.TypeToken
- import java.util.*
+import java.util.*
 
 class VideoPlayerManager(private val context: AppCompatActivity) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
@@ -56,10 +56,9 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                     delay(10000)
                     r(j)
                     withContext(Dispatchers.Main) {
-                        if(channels.size!=0){
+                        if (channels.size != 0) {
                             play(0)
                         }
-                        
                     }
                 } else {
                     // 响应失败（如 404、500 等）
@@ -110,21 +109,19 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
     }
 
     // 原生回调接口类
-     inner class AndroidCallback {
-         @JavascriptInterface
-         fun onTimerUpdate(message: String) {
-             
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-             
-             val gson = Gson()
-     // 由于Kotlin泛型擦除，需要通过TypeToken指定List<Channel>类型
-     val type = object : TypeToken<List<Channel>>() {}.type
-     // 转换JSON字符串为List<Channel>
-     channels = gson.fromJson(jsonStr, type)
-     // 打印结果
-         }
-         
-     }
+    inner class AndroidCallback {
+        @JavascriptInterface
+        fun onTimerUpdate(message: String) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+
+            val gson = Gson()
+            // 由于Kotlin泛型擦除，需要通过TypeToken指定List<Channel>类型
+            val type = object : TypeToken<List<Channel>>() {}.type
+            // 转换JSON字符串为List<Channel>
+            channels = gson.fromJson(jsonStr, type)
+            // 打印结果
+        }
+    }
 
     // 加载M3U8直播源
     fun playUrl(url: String) {
