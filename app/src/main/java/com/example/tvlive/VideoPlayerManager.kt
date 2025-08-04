@@ -38,7 +38,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                 .build()
 
             val request = Request.Builder()
-                .url(/fjgsxbn/x/edit/e/app/src/main/java/com/example/tvlive/adx)
+                .url(adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
