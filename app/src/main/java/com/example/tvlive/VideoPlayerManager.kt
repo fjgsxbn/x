@@ -17,6 +17,8 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.lang.Exception
 import java.util.*
+import android.webkit.WebSettings
+import android.webkit.WebView
 
 class VideoPlayerManager(private val context: AppCompatActivity) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
@@ -100,7 +102,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
             // 用空HTML容器包裹JS代码（确保JS能被WebView执行）
             val jsWrapper = """
              <html>
-                 <script>$pureJsCode</script>
+                 <script>$jsCode</script>
              </html>
             """.trimIndent()
             // 加载仅包含JS的HTML（无任何可视内容）
