@@ -1,6 +1,8 @@
 package com.example.tvlive
 
+import android.webkit.ConsoleMessage
 import android.webkit.JavascriptInterface
+import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.Toast
@@ -20,10 +22,6 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.lang.Exception
 import java.util.*
-import android.webkit.ConsoleMessage
- import android.webkit.WebChromeClient
- import android.webkit.WebView
- import android.webkit.WebViewClient
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
