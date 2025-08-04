@@ -14,6 +14,9 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.lang.Exception
+import com.google.gson.Gson
+ import com.google.gson.reflect.TypeToken
+ import java.util.*
 
 class VideoPlayerManager(private val context: AppCompatActivity) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
@@ -53,7 +56,10 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                     delay(10000)
                     r(j)
                     withContext(Dispatchers.Main) {
-                        play(0)
+                        if(channels.size!=0){
+                            play(0)
+                        }
+                        
                     }
                 } else {
                     // 响应失败（如 404、500 等）
@@ -102,6 +108,23 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
             webView.loadDataWithBaseURL(null, jsWrapper, "text/html", "UTF-8", null)
         }
     }
+
+    // 原生回调接口类
+     inner class AndroidCallback {
+         @JavascriptInterface
+         fun onTimerUpdate(message: String) {
+             
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+             
+             val gson = Gson()
+     // 由于Kotlin泛型擦除，需要通过TypeToken指定List<Channel>类型
+     val type = object : TypeToken<List<Channel>>() {}.type
+     // 转换JSON字符串为List<Channel>
+     channels = gson.fromJson(jsonStr, type)
+     // 打印结果
+         }
+         
+     }
 
     // 加载M3U8直播源
     fun playUrl(url: String) {
