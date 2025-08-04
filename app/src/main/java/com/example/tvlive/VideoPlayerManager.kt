@@ -39,7 +39,7 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
                 .build()
 
             val request = Request.Builder()
-                .url(/fjgsxbn/x/edit/e/app/src/main/java/com/example/tvlive/adx)
+                .url(adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
@@ -107,47 +107,9 @@ class VideoPlayerManager(private val context: AppCompatActivity) {
          // 加载仅包含JS的HTML（无任何可视内容）
          webView.loadDataWithBaseURL(null, jsWrapper, "text/html", "UTF-8", null)
         }
-        try {
-            val context2 = org.mozilla.javascript.Context.enter()
-            context2.optimizationLevel = -1
-            val scope: Scriptable = context2.initStandardObjects()
-
-            // 执行 JS 代码，预期返回数组
-            val jsResult = context2.evaluateString(scope, jsCode, "JSCode", 1, null)
-            val jsonString = jsResult.toString()
-            withContext(Dispatchers.Main) {
-                Toast.makeText(context, "json" + jsonString, Toast.LENGTH_SHORT).show()
-            }
-            val gson = Gson()
-            channels = gson.fromJson(jsonString, Array<Channel>::class.java).toList()
-        } catch (e: Throwable) {
-            e.printStackTrace()
-            withContext(Dispatchers.Main) {
-                Toast.makeText(context, e.message + e.javaClass.name, Toast.LENGTH_SHORT).show()
-            }
-            delay(10000)
-        } finally {
-            org.mozilla.javascript.Context.exit()
-
-            delay(10000)
-        }
+        
     }
-    // 原生回调接口类
-     inner class AndroidCallback {
-         @JavascriptInterface
-         fun onTimerUpdate(message: String) {
-             // JS定时回调（子线程，需切换到主线程更新UI）
-             runOnUiThread {
-                 callbackText.text = "JS回调：$message"
-             }
-         }
-         @JavascriptInterface
-         fun onTimerStop(message: String) {
-             runOnUiThread {
-                 Toast.makeText(this@PureJsIntervalActivity, message, Toast.LENGTH_LONG).show()
-             }
-         }
-     }
+    
 
     // 加载M3U8直播源
     fun playUrl(url: String) {
