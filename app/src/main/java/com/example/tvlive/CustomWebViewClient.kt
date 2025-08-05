@@ -22,7 +22,7 @@ class CustomWebViewClient : WebViewClient() {
 
     override fun shouldInterceptRequest(
         view: WebView?,
-        request: WebResourceRequest
+        request: WebResourceRequest,
     ): WebResourceResponse? {
         // 只处理 HTTP/HTTPS 请求
         val scheme = request.url.scheme
@@ -69,7 +69,7 @@ class CustomWebViewClient : WebViewClient() {
             WebResourceResponse(
                 okResponse.body?.contentType()?.toString(), // 响应类型
                 okResponse.header("Content-Encoding", "UTF-8"), // 编码
-                okResponse.body?.byteStream() // 响应体
+                okResponse.body?.byteStream(), // 响应体
             )
         } catch (e: Exception) {
             e.printStackTrace()
