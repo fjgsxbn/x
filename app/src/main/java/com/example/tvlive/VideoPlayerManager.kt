@@ -100,6 +100,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             // 注意：此方法在 Android 4.1+ 有效，但会降低安全性，生产环境禁止使用！
             webView.settings.allowUniversalAccessFromFileURLs = true
             webView.settings.allowFileAccessFromFileURLs = true
+            webView.setWebViewClient()CustomWebViewClient()
 
             // 配置WebViewClient，避免跳转系统浏览器
             // webView.webViewClient = WebViewClient()
