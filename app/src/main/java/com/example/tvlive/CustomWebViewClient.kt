@@ -1,4 +1,4 @@
-package com.example.tvlive  // 包名必须在第一行
+package com.example.tvlive // 包名必须在第一行
 
 import android.os.Build
 import android.webkit.WebResourceRequest
@@ -23,7 +23,7 @@ class CustomWebViewClient : WebViewClient() {
 
     override fun shouldInterceptRequest(
         view: WebView?,
-        request: WebResourceRequest
+        request: WebResourceRequest,
     ): WebResourceResponse? {
         val scheme = request.url.scheme
         if (scheme == null || !scheme.equals("http", ignoreCase = true) && !scheme.equals("https", ignoreCase = true)) {
@@ -67,7 +67,7 @@ class CustomWebViewClient : WebViewClient() {
             WebResourceResponse(
                 okResponse.body?.contentType()?.toString(),
                 okResponse.header("Content-Encoding", "UTF-8"),
-                okResponse.body?.byteStream()
+                okResponse.body?.byteStream(),
             )
         } catch (e: Exception) {
             e.printStackTrace()
