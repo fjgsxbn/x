@@ -38,7 +38,7 @@ class CustomWebViewClient : WebViewClient() {
             val bodyInputStream = request.body
 
             // 2. 构建 OkHttp 请求
-            val requestBuilder = Request.Builder().url(/fjgsxbn/x/edit/e/app/src/main/java/com/example/tvlive/url)
+            val requestBuilder = Request.Builder().url(url)
 
             // 3. 添加请求头
             headers.forEach { (key, value) ->
