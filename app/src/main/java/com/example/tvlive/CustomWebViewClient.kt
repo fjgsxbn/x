@@ -12,8 +12,10 @@ import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.util.concurrent.TimeUnit
 
+// 确保类名与文件名一致，且在正确的包名下
+package com.example.tvlive
+
 class CustomWebViewClient : WebViewClient() {
-    // 初始化 OkHttp 客户端（适配 4+ 版本）
     private val okHttpClient = OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS)
         .readTimeout(10, TimeUnit.SECONDS)
@@ -22,62 +24,56 @@ class CustomWebViewClient : WebViewClient() {
 
     override fun shouldInterceptRequest(
         view: WebView?,
-        request: WebResourceRequest,
+        request: WebResourceRequest
     ): WebResourceResponse? {
-        // 只处理 HTTP/HTTPS 请求
         val scheme = request.url.scheme
         if (scheme == null || !scheme.equals("http", ignoreCase = true) && !scheme.equals("https", ignoreCase = true)) {
             return super.shouldInterceptRequest(view, request)
         }
 
         return try {
-            // 解析请求基本信息
             val url = request.url.toString()
             val method = request.method
             val headers = request.requestHeaders
 
-            // 处理请求体（兼容 API 21+，低版本无 body 支持）
-            val bodyInputStream = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                request.body // API 21+ 才支持 getBody()
-            } else {
-                null // 低版本返回 null，不处理 body
+            // 修复：明确处理 API 版本，避免 body 引用错误
+            var bodyInputStream: InputStream? = null
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                bodyInputStream = request.body // 仅 API 21+ 支持
             }
 
-            // 构建 OkHttp 请求
             val requestBuilder = Request.Builder().url(url)
 
-            // 添加请求头（原样传递）
+            // 添加请求头
             headers.forEach { (key, value) ->
                 if (!value.isNullOrEmpty()) {
                     requestBuilder.addHeader(key, value)
                 }
             }
 
-            // 处理非 GET 方法的请求体
+            // 修复：检查 bodyInputStream 非空，避免智能转换错误
             if (method != "GET" && bodyInputStream != null) {
                 val bodyBytes = inputStreamToBytes(bodyInputStream)
                 val mediaType = getMediaTypeFromHeaders(headers)
-                // 构建请求体（兼容 OkHttp 4+）
                 val requestBody = mediaType?.let { RequestBody.create(it, bodyBytes) }
                 requestBuilder.method(method, requestBody)
             }
 
-            // 发起网络请求
+            // 发起请求
             val okResponse: Response = okHttpClient.newCall(requestBuilder.build()).execute()
 
-            // 封装响应返回给 WebView
+            // 构建响应
             WebResourceResponse(
-                okResponse.body?.contentType()?.toString(), // 响应类型
-                okResponse.header("Content-Encoding", "UTF-8"), // 编码
-                okResponse.body?.byteStream(), // 响应体
+                okResponse.body?.contentType()?.toString(),
+                okResponse.header("Content-Encoding", "UTF-8"),
+                okResponse.body?.byteStream()
             )
         } catch (e: Exception) {
             e.printStackTrace()
-            null // 异常时让 WebView 自行处理
+            null
         }
     }
 
-    // 工具方法：InputStream 转字节数组（读取请求体内容）
     private fun inputStreamToBytes(inputStream: InputStream): ByteArray {
         val outputStream = ByteArrayOutputStream()
         val buffer = ByteArray(1024)
@@ -89,14 +85,25 @@ class CustomWebViewClient : WebViewClient() {
         return outputStream.toByteArray()
     }
 
-    // 工具方法：从请求头获取 Content-Type（适配 OkHttp 4+ 的扩展函数）
+    // 修复：兼容 OkHttp 3.x 和 4.x 的 MediaType 处理
     private fun getMediaTypeFromHeaders(headers: Map<String, String>): MediaType? {
         headers.forEach { (key, value) ->
             if (key.equals("Content-Type", ignoreCase = true)) {
-                return value.toMediaTypeOrNull() // 替代 MediaType.parse()
+                // 同时兼容 OkHttp 3.x（parse）和 4.x（toMediaTypeOrNull）
+                return try {
+                    // 尝试 OkHttp 4.x 方法
+                    value.toMediaTypeOrNull()
+                } catch (e: NoSuchMethodError) {
+                    //  fallback 到 OkHttp 3.x 方法
+                    MediaType.parse(value)
+                }
             }
         }
-        // 默认类型（二进制流）
-        return "application/octet-stream".toMediaTypeOrNull()
+        // 默认类型
+        return try {
+            "application/octet-stream".toMediaTypeOrNull()
+        } catch (e: NoSuchMethodError) {
+            MediaType.parse("application/octet-stream")
+        }
     }
 }
