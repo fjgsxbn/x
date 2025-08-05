@@ -1,3 +1,5 @@
+package com.example.tvlive  // 包名必须放在文件第一行
+
 import android.os.Build
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -11,9 +13,6 @@ import okhttp3.Response
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.util.concurrent.TimeUnit
-
-// 确保类名与文件名一致，且在正确的包名下
-package com.example.tvlive
 
 class CustomWebViewClient : WebViewClient() {
     private val okHttpClient = OkHttpClient.Builder()
@@ -36,10 +35,11 @@ class CustomWebViewClient : WebViewClient() {
             val method = request.method
             val headers = request.requestHeaders
 
-            // 修复：明确处理 API 版本，避免 body 引用错误
+            // 处理请求体（严格API版本判断）
             var bodyInputStream: InputStream? = null
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                bodyInputStream = request.body // 仅 API 21+ 支持
+                // 仅API 21+支持request.body
+                bodyInputStream = request.body
             }
 
             val requestBuilder = Request.Builder().url(url)
@@ -51,7 +51,7 @@ class CustomWebViewClient : WebViewClient() {
                 }
             }
 
-            // 修复：检查 bodyInputStream 非空，避免智能转换错误
+            // 处理非GET请求的body
             if (method != "GET" && bodyInputStream != null) {
                 val bodyBytes = inputStreamToBytes(bodyInputStream)
                 val mediaType = getMediaTypeFromHeaders(headers)
@@ -59,10 +59,8 @@ class CustomWebViewClient : WebViewClient() {
                 requestBuilder.method(method, requestBody)
             }
 
-            // 发起请求
+            // 发起请求并返回响应
             val okResponse: Response = okHttpClient.newCall(requestBuilder.build()).execute()
-
-            // 构建响应
             WebResourceResponse(
                 okResponse.body?.contentType()?.toString(),
                 okResponse.header("Content-Encoding", "UTF-8"),
@@ -85,25 +83,13 @@ class CustomWebViewClient : WebViewClient() {
         return outputStream.toByteArray()
     }
 
-    // 修复：兼容 OkHttp 3.x 和 4.x 的 MediaType 处理
+    // 适配OkHttp 4+的MediaType处理
     private fun getMediaTypeFromHeaders(headers: Map<String, String>): MediaType? {
         headers.forEach { (key, value) ->
             if (key.equals("Content-Type", ignoreCase = true)) {
-                // 同时兼容 OkHttp 3.x（parse）和 4.x（toMediaTypeOrNull）
-                return try {
-                    // 尝试 OkHttp 4.x 方法
-                    value.toMediaTypeOrNull()
-                } catch (e: NoSuchMethodError) {
-                    //  fallback 到 OkHttp 3.x 方法
-                    MediaType.parse(value)
-                }
+                return value.toMediaTypeOrNull()  // 仅OkHttp 4+支持
             }
         }
-        // 默认类型
-        return try {
-            "application/octet-stream".toMediaTypeOrNull()
-        } catch (e: NoSuchMethodError) {
-            MediaType.parse("application/octet-stream")
-        }
+        return "application/octet-stream".toMediaTypeOrNull()
     }
 }
