@@ -1,11 +1,11 @@
-package com.example.tvlive  // 必须放在文件第一行，无其他内容
+package com.example.tvlive // 必须放在文件第一行，无其他内容
 
 import android.os.Build
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import okhttp3.MediaType.Companion.toMediaTypeOrNull  // 关键：显式导入扩展函数
+import okhttp3.MediaType.Companion.toMediaTypeOrNull // 关键：显式导入扩展函数
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
@@ -21,10 +21,10 @@ class CustomWebViewClient : WebViewClient() {
         .writeTimeout(10, TimeUnit.SECONDS)
         .build()
 
-    @Suppress("DEPRECATION")  // 允许低版本API使用
+    @Suppress("DEPRECATION") // 允许低版本API使用
     override fun shouldInterceptRequest(
         view: WebView?,
-        request: WebResourceRequest
+        request: WebResourceRequest,
     ): WebResourceResponse? {
         val scheme = request.url.scheme
         if (scheme == null || !scheme.equals("http", ignoreCase = true) && !scheme.equals("https", ignoreCase = true)) {
@@ -65,7 +65,7 @@ class CustomWebViewClient : WebViewClient() {
             WebResourceResponse(
                 okResponse.body?.contentType()?.toString(),
                 okResponse.header("Content-Encoding", "UTF-8"),
-                okResponse.body?.byteStream()
+                okResponse.body?.byteStream(),
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -89,9 +89,9 @@ class CustomWebViewClient : WebViewClient() {
     private fun getMediaTypeFromHeaders(headers: Map<String, String>): MediaType? {
         headers.forEach { (key, value) ->
             if (key.equals("Content-Type", ignoreCase = true)) {
-                return value.toMediaTypeOrNull()  // 使用扩展函数
+                return value.toMediaTypeOrNull() // 使用扩展函数
             }
         }
-        return "application/octet-stream".toMediaTypeOrNull()  // 默认类型
+        return "application/octet-stream".toMediaTypeOrNull() // 默认类型
     }
 }
