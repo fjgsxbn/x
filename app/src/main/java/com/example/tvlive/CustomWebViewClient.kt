@@ -8,7 +8,6 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.Response
 import java.io.ByteArrayOutputStream
-import java.io.IOException
 import java.io.InputStream
 import java.util.concurrent.TimeUnit
 
@@ -22,7 +21,7 @@ class CustomWebViewClient : WebViewClient() {
 
     override fun shouldInterceptRequest(
         view: WebView?,
-        request: WebResourceRequest
+        request: WebResourceRequest,
     ): WebResourceResponse? {
         // 只处理 HTTP/HTTPS 请求
         val scheme = request.url.scheme
@@ -62,7 +61,7 @@ class CustomWebViewClient : WebViewClient() {
             WebResourceResponse(
                 okResponse.body?.contentType()?.toString(),
                 okResponse.header("Content-Encoding", "UTF-8"),
-                okResponse.body?.byteStream()
+                okResponse.body?.byteStream(),
             )
         } catch (e: Exception) {
             e.printStackTrace()
