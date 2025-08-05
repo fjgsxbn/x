@@ -1,19 +1,19 @@
-package com.example.tvlive
-
-import android.net.Uri
-import android.os.Build
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import okhttp3.*
+import okhttp3.MediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.Response
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
 import java.util.concurrent.TimeUnit
 
 class CustomWebViewClient : WebViewClient() {
-    // 初始化 OkHttp 客户端
+    // 初始化 OkHttp 客户端（使用具体类导入）
     private val okHttpClient = OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS)
         .readTimeout(10, TimeUnit.SECONDS)
@@ -37,7 +37,7 @@ class CustomWebViewClient : WebViewClient() {
             val headers = request.requestHeaders
             val bodyInputStream = request.body
 
-            // 2. 构建 OkHttp 请求
+            // 2. 构建 OkHttp 请求（使用 Request.Builder 具体类）
             val requestBuilder = Request.Builder().url(url)
 
             // 3. 添加请求头
@@ -47,7 +47,7 @@ class CustomWebViewClient : WebViewClient() {
                 }
             }
 
-            // 4. 处理请求体（非 GET 方法）
+            // 4. 处理请求体（使用 RequestBody 具体类）
             if (method != "GET" && bodyInputStream != null) {
                 val bodyBytes = inputStreamToBytes(bodyInputStream)
                 val mediaType = getMediaTypeFromHeaders(headers)
@@ -55,8 +55,8 @@ class CustomWebViewClient : WebViewClient() {
                 requestBuilder.method(method, requestBody)
             }
 
-            // 5. 发起原生请求
-            val okResponse = okHttpClient.newCall(requestBuilder.build()).execute()
+            // 5. 发起原生请求（使用 Response 具体类）
+            val okResponse: Response = okHttpClient.newCall(requestBuilder.build()).execute()
 
             // 6. 封装响应并返回给 WebView
             WebResourceResponse(
@@ -82,7 +82,7 @@ class CustomWebViewClient : WebViewClient() {
         return outputStream.toByteArray()
     }
 
-    // 工具方法：从请求头获取 Content-Type
+    // 工具方法：从请求头获取 Content-Type（使用 MediaType 具体类）
     private fun getMediaTypeFromHeaders(headers: Map<String, String>): MediaType? {
         headers.forEach { (key, value) ->
             if (key.equals("Content-Type", ignoreCase = true)) {
