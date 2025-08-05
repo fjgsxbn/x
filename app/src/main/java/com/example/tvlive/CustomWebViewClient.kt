@@ -1,11 +1,11 @@
-package com.example.tvlive // 包名必须放在文件第一行
+package com.example.tvlive  // 必须放在文件第一行，无其他内容
 
 import android.os.Build
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull  // 关键：显式导入扩展函数
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
@@ -21,9 +21,10 @@ class CustomWebViewClient : WebViewClient() {
         .writeTimeout(10, TimeUnit.SECONDS)
         .build()
 
+    @Suppress("DEPRECATION")  // 允许低版本API使用
     override fun shouldInterceptRequest(
         view: WebView?,
-        request: WebResourceRequest,
+        request: WebResourceRequest
     ): WebResourceResponse? {
         val scheme = request.url.scheme
         if (scheme == null || !scheme.equals("http", ignoreCase = true) && !scheme.equals("https", ignoreCase = true)) {
@@ -35,10 +36,10 @@ class CustomWebViewClient : WebViewClient() {
             val method = request.method
             val headers = request.requestHeaders
 
-            // 处理请求体（严格API版本判断）
+            // 修复：严格处理 request.body 的 API 兼容性
             var bodyInputStream: InputStream? = null
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                // 仅API 21+支持request.body
+                // 仅 API 21+ 支持 request.body，低版本直接忽略
                 bodyInputStream = request.body
             }
 
@@ -51,7 +52,7 @@ class CustomWebViewClient : WebViewClient() {
                 }
             }
 
-            // 处理非GET请求的body
+            // 处理非 GET 请求的 body（仅当 body 存在时）
             if (method != "GET" && bodyInputStream != null) {
                 val bodyBytes = inputStreamToBytes(bodyInputStream)
                 val mediaType = getMediaTypeFromHeaders(headers)
@@ -64,7 +65,7 @@ class CustomWebViewClient : WebViewClient() {
             WebResourceResponse(
                 okResponse.body?.contentType()?.toString(),
                 okResponse.header("Content-Encoding", "UTF-8"),
-                okResponse.body?.byteStream(),
+                okResponse.body?.byteStream()
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -72,6 +73,7 @@ class CustomWebViewClient : WebViewClient() {
         }
     }
 
+    // 工具方法：InputStream 转字节数组
     private fun inputStreamToBytes(inputStream: InputStream): ByteArray {
         val outputStream = ByteArrayOutputStream()
         val buffer = ByteArray(1024)
@@ -83,13 +85,13 @@ class CustomWebViewClient : WebViewClient() {
         return outputStream.toByteArray()
     }
 
-    // 适配OkHttp 4+的MediaType处理
+    // 修复：获取 MediaType（适配 OkHttp 4+）
     private fun getMediaTypeFromHeaders(headers: Map<String, String>): MediaType? {
         headers.forEach { (key, value) ->
             if (key.equals("Content-Type", ignoreCase = true)) {
-                return value.toMediaTypeOrNull() // 仅OkHttp 4+支持
+                return value.toMediaTypeOrNull()  // 使用扩展函数
             }
         }
-        return "application/octet-stream".toMediaTypeOrNull()
+        return "application/octet-stream".toMediaTypeOrNull()  // 默认类型
     }
 }
