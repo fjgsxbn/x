@@ -1,3 +1,4 @@
+import android.os.Build
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -12,7 +13,7 @@ import java.io.InputStream
 import java.util.concurrent.TimeUnit
 
 class CustomWebViewClient : WebViewClient() {
-    // 初始化 OkHttp 客户端（使用具体类导入）
+    // 初始化 OkHttp 客户端（适配 4+ 版本）
     private val okHttpClient = OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS)
         .readTimeout(10, TimeUnit.SECONDS)
@@ -21,7 +22,7 @@ class CustomWebViewClient : WebViewClient() {
 
     override fun shouldInterceptRequest(
         view: WebView?,
-        request: WebResourceRequest,
+        request: WebResourceRequest
     ): WebResourceResponse? {
         // 只处理 HTTP/HTTPS 请求
         val scheme = request.url.scheme
@@ -30,46 +31,53 @@ class CustomWebViewClient : WebViewClient() {
         }
 
         return try {
-            // 1. 解析请求参数
+            // 解析请求基本信息
             val url = request.url.toString()
             val method = request.method
             val headers = request.requestHeaders
-            val bodyInputStream = request.body
 
-            // 2. 构建 OkHttp 请求（使用 Request.Builder 具体类）
+            // 处理请求体（兼容 API 21+，低版本无 body 支持）
+            val bodyInputStream = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                request.body // API 21+ 才支持 getBody()
+            } else {
+                null // 低版本返回 null，不处理 body
+            }
+
+            // 构建 OkHttp 请求
             val requestBuilder = Request.Builder().url(url)
 
-            // 3. 添加请求头
+            // 添加请求头（原样传递）
             headers.forEach { (key, value) ->
                 if (!value.isNullOrEmpty()) {
                     requestBuilder.addHeader(key, value)
                 }
             }
 
-            // 4. 处理请求体（使用 RequestBody 具体类）
+            // 处理非 GET 方法的请求体
             if (method != "GET" && bodyInputStream != null) {
                 val bodyBytes = inputStreamToBytes(bodyInputStream)
                 val mediaType = getMediaTypeFromHeaders(headers)
-                val requestBody = RequestBody.create(mediaType, bodyBytes)
+                // 构建请求体（兼容 OkHttp 4+）
+                val requestBody = mediaType?.let { RequestBody.create(it, bodyBytes) }
                 requestBuilder.method(method, requestBody)
             }
 
-            // 5. 发起原生请求（使用 Response 具体类）
+            // 发起网络请求
             val okResponse: Response = okHttpClient.newCall(requestBuilder.build()).execute()
 
-            // 6. 封装响应并返回给 WebView
+            // 封装响应返回给 WebView
             WebResourceResponse(
-                okResponse.body?.contentType()?.toString(),
-                okResponse.header("Content-Encoding", "UTF-8"),
-                okResponse.body?.byteStream(),
+                okResponse.body?.contentType()?.toString(), // 响应类型
+                okResponse.header("Content-Encoding", "UTF-8"), // 编码
+                okResponse.body?.byteStream() // 响应体
             )
         } catch (e: Exception) {
             e.printStackTrace()
-            null // 异常时返回 null，让 WebView 自行处理
+            null // 异常时让 WebView 自行处理
         }
     }
 
-    // 工具方法：InputStream 转字节数组（读取请求体）
+    // 工具方法：InputStream 转字节数组（读取请求体内容）
     private fun inputStreamToBytes(inputStream: InputStream): ByteArray {
         val outputStream = ByteArrayOutputStream()
         val buffer = ByteArray(1024)
@@ -81,13 +89,14 @@ class CustomWebViewClient : WebViewClient() {
         return outputStream.toByteArray()
     }
 
-    // 工具方法：从请求头获取 Content-Type（使用 MediaType 具体类）
+    // 工具方法：从请求头获取 Content-Type（适配 OkHttp 4+ 的扩展函数）
     private fun getMediaTypeFromHeaders(headers: Map<String, String>): MediaType? {
         headers.forEach { (key, value) ->
             if (key.equals("Content-Type", ignoreCase = true)) {
-                return MediaType.parse(value)
+                return value.toMediaTypeOrNull() // 替代 MediaType.parse()
             }
         }
-        return MediaType.parse("application/octet-stream") // 默认类型
+        // 默认类型（二进制流）
+        return "application/octet-stream".toMediaTypeOrNull()
     }
 }
