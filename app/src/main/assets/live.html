@@ -1,20 +1,108 @@
-<html>
-  <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dplayer/1.27.1/DPlayer.min.js"></script>
-  </head>
-  <body>gggggg
-    <div id="dplayer"></div>
-    <script>
-      // 本地 JS 代码
-      const dp = new DPlayer({
-    container: document.getElementById('dplayer'),
-    live: true,
-    danmaku: false,
-    video: {
-        url: 'https://0472.org/hls/cgtn.m3u8',
-        type: 'hls'
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>HLS 播放 M3U8 示例</title>
+  <style>
+    /* 播放器容器样式 */
+    .player-container {
+      width: 800px;
+      margin: 20px auto;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      overflow: hidden;
     }
-});
-    </script>
-  </body>
+    video {
+      width: 100%;
+      height: auto;
+    }
+    .status {
+      padding: 10px;
+      text-align: center;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="player-container">
+    <!-- 视频播放元素 -->
+    <video id="hls-player" controls autoplay></video>
+    <div class="status" id="status">准备加载视频...</div>
+  </div>
+
+  <!-- 引入 hls.js 库（使用 jsDelivr CDN） -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.4.12/dist/hls.min.js"></script>
+
+  <script>
+    // 获取视频元素和状态元素
+    const video = document.getElementById('hls-player');
+    const statusEl = document.getElementById('status');
+
+    // M3U8 视频地址（示例地址，实际使用时替换为你的地址）
+    const m3u8Url = 'https://0472.org/hls/cgtn.m3u8';
+
+    // 检查浏览器是否原生支持 HLS（如 Safari、部分安卓浏览器）
+    if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      // 原生支持 HLS，直接设置视频源
+      video.src = m3u8Url;
+      statusEl.textContent = '使用浏览器原生 HLS 播放';
+    } else if (Hls.isSupported()) {
+      // 浏览器不原生支持，使用 hls.js 解析
+      const hls = new Hls({
+        maxBufferLength: 30, // 最大缓冲长度（秒）
+        maxMaxBufferLength: 60, // 网络差时的最大缓冲长度
+      });
+
+      // 绑定视频元素和 HLS 实例
+      hls.loadSource(m3u8Url);
+      hls.attachMedia(video);
+
+      // 监听 HLS 事件
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        statusEl.textContent = '视频加载完成，开始播放';
+        video.play().catch(err => {
+          statusEl.textContent = `自动播放失败：${err.message}，请手动点击播放`;
+        });
+      });
+
+      // 错误处理
+      hls.on(Hls.Events.ERROR, (event, data) => {
+        let errorMsg = '';
+        if (data.fatal) {
+          switch(data.type) {
+            case Hls.ErrorTypes.NETWORK_ERROR:
+              errorMsg = '网络错误，尝试重试...';
+              hls.startLoad(); // 重试加载
+              break;
+            case Hls.ErrorTypes.MEDIA_ERROR:
+              errorMsg = '媒体格式错误，尝试恢复...';
+              hls.recoverMediaError(); // 恢复媒体错误
+              break;
+            default:
+              errorMsg = `致命错误：${data.type}，无法恢复`;
+              destroyHls(); // 销毁实例
+              break;
+          }
+        } else {
+          errorMsg = `非致命错误：${data.type}`;
+        }
+        statusEl.textContent = errorMsg;
+        console.error('HLS 错误：', data);
+      });
+
+      // 销毁 HLS 实例的函数
+      function destroyHls() {
+        if (hls) {
+          hls.destroy();
+        }
+      }
+
+      // 页面关闭时销毁实例
+      window.addEventListener('beforeunload', destroyHls);
+    } else {
+      // 既不原生支持也不支持 hls.js（如非常老旧的浏览器）
+      statusEl.textContent = '您的浏览器不支持 HLS 视频播放';
+    }
+  </script>
+</body>
 </html>
