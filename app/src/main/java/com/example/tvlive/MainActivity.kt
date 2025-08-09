@@ -44,11 +44,11 @@ class MainActivity : AppCompatActivity() {
         webSettings.javaScriptEnabled = true // 必须启用 JS，否则动态操作无效
         webSettings.allowFileAccess = true // 允许访问本地文件
         webSettings.mediaPlaybackRequiresUserGesture = false
-         
-         // 3. 可选：允许混合内容（如果视频资源是 http，页面是 https 时需要）
-         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-             webSettings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-         }
+
+        // 3. 可选：允许混合内容（如果视频资源是 http，页面是 https 时需要）
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            webSettings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+        }
         webView.loadUrl("file:///android_asset/live.html") // 加载 assets 目录下的文件
 
         // playCurrentChannel()
