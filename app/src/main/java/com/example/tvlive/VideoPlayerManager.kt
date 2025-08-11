@@ -1,9 +1,6 @@
 package com.example.tvlive
 
-import android.webkit.ConsoleMessage
 import android.webkit.JavascriptInterface
-import android.webkit.WebChromeClient
-import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -93,7 +90,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 // 函数名改为小写 r，功能不变
     suspend fun r(jsCode: String) {
         withContext(Dispatchers.Main) {
-            }
+        }
     }
 
     // 原生回调接口类
