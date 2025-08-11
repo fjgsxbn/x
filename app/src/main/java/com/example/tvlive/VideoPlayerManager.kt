@@ -95,14 +95,6 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         }
         // 在子线程初始化 QuickJS 和 fetch
 
-        jsContext = QuickJS.createJSContext().apply {
-            // 初始化 fetch 方法
-            FetchInitializer(context).init(this)
-            // 测试 fetch 请求
-
-            // 执行测试代码
-            evaluate(jsCode, "test.js")
-        }
     }
 
     // 原生回调接口类
