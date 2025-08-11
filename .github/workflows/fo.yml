@@ -19,14 +19,24 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install ktlint
-        run: |
-          curl -sSLO https://github.com/pinterest/ktlint/releases/download/0.50.0/ktlint
-          chmod a+x ktlint
-          sudo mv ktlint /usr/local/bin/
+      - name: 设置JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
-      - name: Format Kotlin files
-        run: find . -name "*.kt" -exec ktlint --format {} +
+      - name: 安装Gradle
+        run: |
+          #sudo apt update
+          #sudo apt install -y gradle
+          wget https://services.gradle.org/distributions/gradle-8.7-bin.zip -P /tmp
+          sudo unzip -q /tmp/gradle-8.7-bin.zip -d /opt/
+          echo "export PATH=/opt/gradle-8.7/bin:$PATH" >> $GITHUB_ENV  # 配置环境变量
+
+      - name: 验证Gradle安装
+        run: gradle -v
+      - name: 格式化kt
+        run: gradle ktlintFormat
 
       # XML 格式化（适配非 npm 项目）
       - name: Set up Node.js
