@@ -11,6 +11,7 @@ import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.taoweiji.quickjs.JSContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -19,7 +20,6 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.lang.Exception
 import java.util.*
-import com.taoweiji.quickjs.JSContext
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
@@ -94,16 +94,15 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         withContext(Dispatchers.Main) {
         }
         // 在子线程初始化 QuickJS 和 fetch
-         
-             jsContext = QuickJS.createJSContext().apply {
-                 // 初始化 fetch 方法
-                 FetchInitializer(context).init(this)
-                 // 测试 fetch 请求
-                
-                 // 执行测试代码
-                 evaluate(jsCode, "test.js")
-             }
-        
+
+        jsContext = QuickJS.createJSContext().apply {
+            // 初始化 fetch 方法
+            FetchInitializer(context).init(this)
+            // 测试 fetch 请求
+
+            // 执行测试代码
+            evaluate(jsCode, "test.js")
+        }
     }
 
     // 原生回调接口类

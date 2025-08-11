@@ -1,7 +1,6 @@
 package com.example.tvlive
 
 import com.taoweiji.quickjs.JSContext
-import com.taoweiji.quickjs.QuickJS
 
 class FetchInitializer(private val context: Context) {
     fun init(jsContext: JSContext) {
