@@ -15,9 +15,11 @@ android {
         versionCode 1
         versionName "1.0"
 
-        abiFilters "armeabi - v7a", "arm64 - v8a"//可根据需求添加或减少架构，如添加"x86"则支持模拟器等x86架构设备
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+             // 注意：架构名称中间不要加空格（去掉 "armeabi - v7a" 中的空格）
+             abiFilters "armeabi-v7a", "arm64-v8a"
+        }
     }
 
     signingConfigs {
