@@ -93,51 +93,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 // 函数名改为小写 r，功能不变
     suspend fun r(jsCode: String) {
         withContext(Dispatchers.Main) {
-            Toast.makeText(context, "js", Toast.LENGTH_SHORT).show()
-            val webSettings: WebSettings = webView.settings
-            webSettings.javaScriptEnabled = true // 必须开启JS支持
-            webSettings.domStorageEnabled = true // 可选：启用DOM存储（部分JS功能需要）
-            // 注意：此方法在 Android 4.1+ 有效，但会降低安全性，生产环境禁止使用！
-            webView.settings.allowUniversalAccessFromFileURLs = true
-            webView.settings.allowFileAccessFromFileURLs = true
-            webView.setWebViewClient(CustomWebViewClient())
-
-            // 配置WebViewClient，避免跳转系统浏览器
-            // webView.webViewClient = WebViewClient()
-            // 可选：配置WebChromeClient（处理JS弹窗等）
-            // webView.webChromeClient = WebChromeClient()
-            // 配置 WebView 并设置异常监听
-            webView.webChromeClient = object : WebChromeClient() {
-                // 监听 JS 的 console 输出（包括 error 级别）
-                override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
-                    consoleMessage?.let {
-                        val message = it.message()
-                        val sourceId = it.sourceId() // 出错的 JS 文件路径
-                        val lineNumber = it.lineNumber() // 出错的行号
-                        val messageLevel = it.messageLevel() // 日志级别（如 ERROR、WARNING 等）
-                        // 重点捕获 ERROR 级别的异常
-                        if (messageLevel == ConsoleMessage.MessageLevel.ERROR) {
-                            val all = "Message: $message, Line: $lineNumber, Source: $sourceId"
-                            Toast.makeText(context, all, Toast.LENGTH_SHORT).show()
-                        } else {
-                            // 非错误级别的日志（如 log、warn）也可以按需打印
-                            // Log.d("WebView JS Log", "[$messageLevel] $message (Line: $lineNumber)")
-                        }
-                    }
-                    return super.onConsoleMessage(consoleMessage)
-                }
             }
-            webView.addJavascriptInterface(AndroidCallback(), "AndroidCallback")
-            // 用空HTML容器包裹JS代码（确保JS能被WebView执行）
-            val jsWrapper = """
-             <html>
-             <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
-                 <script>$jsCode</script>
-             </html>
-            """.trimIndent()
-            // 加载仅包含JS的HTML（无任何可视内容）
-            webView.loadDataWithBaseURL(null, jsWrapper, "text/html", "UTF-8", null)
-        }
     }
 
     // 原生回调接口类
