@@ -125,6 +125,6 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
     fun release() {
         exoPlayer.release()
-        jsContext?.close()
+        
     }
 }
