@@ -24,7 +24,6 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
 
     fun getPlayer() = exoPlayer
-    
 
     data class Channel(val name: String, val url: String)
 
