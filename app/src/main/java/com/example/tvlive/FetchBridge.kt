@@ -1,3 +1,5 @@
+package com.example.tvlive
+
 import android.content.Context
 import com.squareup.okhttp3.*
 import com.taoweiji.quickjs.JSFunction
@@ -34,7 +36,7 @@ class FetchBridge(private val context: Context) {
         }
 
         // 2. 构建请求
-        val requestBuilder = Request.Builder().url(url).method(method, requestBody)
+        val requestBuilder = Request.Builder().url(/fjgsxbn/x/edit/e/app/src/main/java/com/example/tvlive/url).method(method, requestBody)
         // 添加请求头（解析 JSON 字符串）
         headers?.takeIf { it.isNotBlank() }?.let {
             try {
