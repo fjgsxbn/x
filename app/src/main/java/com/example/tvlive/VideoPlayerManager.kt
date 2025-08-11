@@ -11,7 +11,6 @@ import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.taoweiji.quickjs.JSContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -25,7 +24,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
 
     fun getPlayer() = exoPlayer
-    private var jsContext: JSContext? = null
+    
 
     data class Channel(val name: String, val url: String)
 
@@ -40,7 +39,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 .build()
 
             val request = Request.Builder()
-                .url(adx)
+                .url(/fjgsxbn/x/edit/e/app/src/main/java/com/example/tvlive/adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
