@@ -18,6 +18,7 @@ dependencyResolutionManagement {
         // 依赖仓库（用于下载 AndroidX、第三方库等）
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 }
 
