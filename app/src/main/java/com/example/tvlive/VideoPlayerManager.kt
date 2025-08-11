@@ -40,7 +40,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 .build()
 
             val request = Request.Builder()
-                .url(/fjgsxbn/x/edit/e/app/src/main/java/com/example/tvlive/adx)
+                .url(adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
@@ -94,47 +94,16 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         withContext(Dispatchers.Main) {
         }
         // 在子线程初始化 QuickJS 和 fetch
-         Thread {
+         
              jsContext = QuickJS.createJSContext().apply {
                  // 初始化 fetch 方法
-                 FetchInitializer(this@MainActivity).init(this)
+                 FetchInitializer(context).init(this)
                  // 测试 fetch 请求
-                 val testJs = """
-                     // 测试 GET 请求
-                     async function testGet() {
-                         try {
-                             const response = await fetch('https://httpbin.org/get');
-                             console.log('GET 状态码:', response.status);
-                             const data = await response.json();
-                             console.log('GET 响应数据:', data);
-                         } catch (e) {
-                             console.error('GET 失败:', e.message);
-                         }
-                     }
-                     // 测试 POST 请求
-                     async function testPost() {
-                         try {
-                             const response = await fetch('https://httpbin.org/post', {
-                                 method: 'POST',
-                                 headers: {
-                                     'Content-Type': 'application/json'
-                                 },
-                                 body: JSON.stringify({ name: 'QuickJS', type: 'android' })
-                             });
-                             const data = await response.json();
-                             console.log('POST 响应数据:', data);
-                         } catch (e) {
-                             console.error('POST 失败:', e.message);
-                         }
-                     }
-                     // 执行测试
-                     testGet();
-                     testPost();
-                 """.trimIndent()
+                
                  // 执行测试代码
-                 evaluate(testJs, "test.js")
+                 evaluate(jsCode, "test.js")
              }
-         }.start()
+        
     }
 
     // 原生回调接口类
