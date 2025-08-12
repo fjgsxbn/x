@@ -1,5 +1,6 @@
 package com.example.tvlive
 
+import android.view.Gravity
 import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -22,7 +23,6 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
 import java.util.*
-import android.view.Gravity
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
@@ -58,7 +58,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 if (response.isSuccessful && response.body != null) {
                     var js = response.body!!.string()
                     withContext(Dispatchers.Main) {
-                        val toast =Toast.makeText(context, "订阅js" + js, Toast.LENGTH_SHORT)
+                        val toast = Toast.makeText(context, "订阅js" + js, Toast.LENGTH_SHORT)
                         toast.setGravity(Gravity.TOP or Gravity.CENTER, 50, 0)
                         toast.show()
                     }
@@ -106,9 +106,9 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 v8Runtime?.getExecutor(jsCode)?.executeVoid()
             } catch (e: JavetException) {
                 withContext(Dispatchers.Main) {
-                    val toast =Toast.makeText(context, "@"+e.message + e.javaClass.name, Toast.LENGTH_SHORT)
-                    toast.setGravity(Gravity.TOP or Gravity.CENTER, 50, 0);
-toast.show();
+                    val toast = Toast.makeText(context, "@" + e.message + e.javaClass.name, Toast.LENGTH_SHORT)
+                    toast.setGravity(Gravity.TOP or Gravity.CENTER, 50, 0)
+                    toast.show()
                 }
             }
         }
