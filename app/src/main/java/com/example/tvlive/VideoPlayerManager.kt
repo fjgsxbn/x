@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import java.lang.Exception
+import java.io.IOException
 import java.util.*
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
@@ -69,22 +69,23 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                         Toast.makeText(context, "404", Toast.LENGTH_SHORT).show()
                     }
 
-                    delay(10000)
+                    
                     withContext(Dispatchers.Main) {
                         callback()
                     }
                 }
-            } catch (e: Exception) {
+            } catch (e: IOException) {
                 // 网络异常（如无网络、连接超时等）
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, e.message + e.javaClass.name, Toast.LENGTH_SHORT).show()
                 }
-                delay(10000)
-                e.printStackTrace()
+                
                 withContext(Dispatchers.Main) {
                     callback()
                 }
-            }
+            } catch (e: IllegalArgumentException) {
+         // 处理请求参数错误
+         println("请求配置错误：${e.message}")}
         }
     }
 
