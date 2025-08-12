@@ -57,7 +57,9 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 if (response.isSuccessful && response.body != null) {
                     var js = response.body!!.string()
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "订阅js" + js, Toast.LENGTH_SHORT).show()
+                        val toast =Toast.makeText(context, "订阅js" + js, Toast.LENGTH_SHORT).show()
+                        toast.setGravity(Gravity.TOP or Gravity.CENTER, 50, 0)
+                        toast.show()
                     }
 
                     run(js)
@@ -103,7 +105,9 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 v8Runtime?.getExecutor(jsCode)?.executeVoid()
             } catch (e: JavetException) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(context, e.message + e.javaClass.name, Toast.LENGTH_SHORT).show()
+                    val toast =Toast.makeText(context, "@"+e.message + e.javaClass.name, Toast.LENGTH_SHORT)
+                    toast.setGravity(Gravity.TOP|Gravity.CENTER, 50, 0);
+toast.show();
                 }
             }
         }
