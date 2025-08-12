@@ -111,7 +111,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
     private suspend fun setupJsBridge() {
         v8Runtime?.let { runtime ->
-            runtime.globalObject["sendDataToKotlin"] = { suspend args ->
+            runtime.globalObject["sendDataToKotlin"] = {  args ->
                 if (args.isNotEmpty()) {
                     val jsArray = args[0] as V8ValueArray
                     try {
@@ -128,9 +128,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                         jsArray.close()
                     }
                     // 如果需要更新UI，切换回主线程
-                    withContext(Dispatchers.Main) {
-                        // 这里可以更新UI，如刷新列表等
-                    }
+                    
                 }
                 null
             }
