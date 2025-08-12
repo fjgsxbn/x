@@ -78,6 +78,7 @@ dependencies {
     // 其他
     //implementation 'io.github.taoweiji.quickjs:quickjs-android:1.3.0'
     implementation 'com.caoccao.javet:javet-android:2.1.1' // Android Node (arm64 and x86_64)
+    implementation 'com.github.pedrovgs:lynx:1.1.0'
     
     // 测试库
     testImplementation 'junit:junit:4.13.2'
