@@ -57,7 +57,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 if (response.isSuccessful && response.body != null) {
                     var js = response.body!!.string()
                     withContext(Dispatchers.Main) {
-                        val toast =Toast.makeText(context, "订阅js" + js, Toast.LENGTH_SHORT).show()
+                        val toast =Toast.makeText(context, "订阅js" + js, Toast.LENGTH_SHORT)
                         toast.setGravity(Gravity.TOP or Gravity.CENTER, 50, 0)
                         toast.show()
                     }
