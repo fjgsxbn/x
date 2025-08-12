@@ -38,7 +38,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 .build()
 
             val request = Request.Builder()
-                .url(/fjgsxbn/x/edit/e/app/src/main/java/com/example/tvlive/adx)
+                .url(adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
@@ -107,11 +107,20 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         v8Runtime?.let { runtime ->
             runtime.globalObject["sendDataToKotlin"] = { args ->
                 if (args.isNotEmpty()) {
-                    val jsList = args[0]
-                    val kotlinList = mutableListOf<String>()
-                    for (i in 0 until jsList.length) {
-                        kotlinList.add(jsList.get(i).toString())
-                    }
+                    val jsArray = args[0] as? V8ValueArray ?: return null
+ try {
+     // 2. 将 JS 数组转换为 JSON 字符串
+     val jsonString = jsArray.toJsonString()
+     // 3. 用 Gson 将 JSON 字符串解析为 List<User>
+     val gson = Gson()
+     val type = object : TypeToken<List<Channel>>() {}.type // 声明泛型类型
+     channels = gson.fromJson(jsonString, type)
+     // 转换完成！直接使用 userList
+     println(userList) // [User(id=1, name=张三), User(id=2, name=李四)]
+ } finally {
+     // 释放资源（必须执行）
+     jsArray.close()
+ }
                     // 如果需要更新UI，切换回主线程
                     withContext(Dispatchers.Main) {
                         
