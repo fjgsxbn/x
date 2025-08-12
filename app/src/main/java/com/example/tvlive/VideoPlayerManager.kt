@@ -19,6 +19,9 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.lang.Exception
 import java.util.*
+import com.caoccao.javet.exceptions.JavetException
+import com.caoccao.javet.interop.V8Host
+import com.caoccao.javet.interop.runtime.V8Runtime
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
@@ -28,6 +31,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     data class Channel(val name: String, val url: String)
 
     private var channels: List<Channel> = mutableListOf()
+    private var v8Runtime: V8Runtime?=null
 
     fun p(adx: String, callback: () -> Unit) {
         context.lifecycleScope.launch(Dispatchers.IO) {
@@ -90,24 +94,39 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 // 函数名改为小写 r，功能不变
     suspend fun r(jsCode: String) {
         withContext(Dispatchers.Main) {
+            try {
+                 // 初始化 Node.js 引擎（耗时操作，放后台）
+                 v8Runtime = V8Host.getNodeInstance().createV8Runtime()
+                 setupJsBridge()
+                 v8Runtime?.executeString(jsCode)
+             } catch (e: JavetException) {
+                 Log.e("JsTask", "初始化失败：${e.message}")
+            }
         }
         // 在子线程初始化 QuickJS 和 fetch
     }
 
-    // 原生回调接口类
-    inner class AndroidCallback {
-        @JavascriptInterface
-        fun onTimerUpdate(message: String) {
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-
-            val gson = Gson()
-            // 由于Kotlin泛型擦除，需要通过TypeToken指定List<Channel>类型
-            val type = object : TypeToken<List<Channel>>() {}.type
-            // 转换JSON字符串为List<Channel>
-            channels = gson.fromJson(message, type)
-            // 打印结果
-        }
+    private fun setupJsBridge() {
+         v8Runtime?.let { runtime ->
+             runtime.globalObject["sendDataToKotlin"] = { args ->
+                 if (args.isNotEmpty()) {
+                     val jsList = args[0]
+                     val kotlinList = mutableListOf<String>()
+                     for (i in 0 until jsList.length) {
+                         kotlinList.add(jsList.get(i).toString())
+                     }
+                     // 如果需要更新UI，切换回主线程
+                     lifecycleScope.launch(Dispatchers.Main) {
+                         Log.d("JsTask", "Kotlin收到数据：$kotlinList")
+                         // 这里可以更新UI，如刷新列表等
+                     }
+                 }
+                 null
+             }
+         }
     }
+
+    
 
     // 加载M3U8直播源
     fun playUrl(url: String) {
@@ -125,5 +144,9 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
     fun release() {
         exoPlayer.release()
+        context.lifecycleScope.launch(Dispatchers.IO) {
+             v8Runtime?.close()
+             v8Runtime = null
+        }
     }
 }
