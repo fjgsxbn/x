@@ -99,7 +99,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 // 初始化 Node.js 引擎（耗时操作，放后台）
                 v8Runtime = V8Host.getNodeInstance().createV8Runtime()
                 setupJsBridge()
-                v8Runtime?.executeString(jsCode)
+                v8Runtime?.getExecutor(jsCode).executeVoid()
             } catch (e: JavetException) {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, e.message + e.javaClass.name, Toast.LENGTH_SHORT).show()
@@ -111,7 +111,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
     private suspend fun setupJsBridge() {
         v8Runtime?.let { runtime ->
-            runtime.globalObject["sendDataToKotlin"] = { args ->
+            runtime.globalObject["sendDataToKotlin"] = { suspend args ->
                 if (args.isNotEmpty()) {
                     val jsArray = args[0] as V8ValueArray
                     try {
