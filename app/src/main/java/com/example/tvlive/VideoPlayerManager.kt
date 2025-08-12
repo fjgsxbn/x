@@ -107,7 +107,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             } catch (e: JavetException) {
                 withContext(Dispatchers.Main) {
                     val toast =Toast.makeText(context, "@"+e.message + e.javaClass.name, Toast.LENGTH_SHORT)
-                    toast.setGravity(Gravity.TOP|Gravity.CENTER, 50, 0);
+                    toast.setGravity(Gravity.TOP or Gravity.CENTER, 50, 0);
 toast.show();
                 }
             }
