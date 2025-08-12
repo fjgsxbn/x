@@ -12,7 +12,6 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -69,7 +68,6 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                         Toast.makeText(context, "404", Toast.LENGTH_SHORT).show()
                     }
 
-                    
                     withContext(Dispatchers.Main) {
                         callback()
                     }
@@ -79,13 +77,14 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, e.message + e.javaClass.name, Toast.LENGTH_SHORT).show()
                 }
-                
+
                 withContext(Dispatchers.Main) {
                     callback()
                 }
             } catch (e: IllegalArgumentException) {
-         // 处理请求参数错误
-         println("请求配置错误：${e.message}")}
+                // 处理请求参数错误
+                println("请求配置错误：${e.message}")
+            }
         }
     }
 
