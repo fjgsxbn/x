@@ -85,7 +85,9 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 }
             } catch (e: IllegalArgumentException) {
                 // 处理请求参数错误
-                println("请求配置错误：${e.message}")
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, e.message + e.javaClass.name, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -98,7 +100,9 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 setupJsBridge()
                 v8Runtime?.executeString(jsCode)
             } catch (e: JavetException) {
-                Log.e("JsTask", "初始化失败：${e.message}")
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, e.message + e.javaClass.name, Toast.LENGTH_SHORT).show()
+                }
             }
         }
         // 在子线程初始化 QuickJS 和 fetch
@@ -117,7 +121,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                         val type = object : TypeToken<List<Channel>>() {}.type // 声明泛型类型
                         channels = gson.fromJson(jsonString, type)
                         // 转换完成！直接使用 userList
-                        println(userList) // [User(id=1, name=张三), User(id=2, name=李四)]
+                        // [User(id=1, name=张三), User(id=2, name=李四)]
                     } finally {
                         // 释放资源（必须执行）
                         jsArray.close()
