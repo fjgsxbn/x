@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.caoccao.javet.exceptions.JavetException
 import com.caoccao.javet.interop.V8Host
-import com.caoccao.javet.interop.runtime.V8Runtime
+import com.caoccao.javet.interop.V8Runtime
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
