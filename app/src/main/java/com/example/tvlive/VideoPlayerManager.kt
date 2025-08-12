@@ -59,7 +59,11 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                     var js = response.body!!.string()
                     withContext(Dispatchers.Main) {
                         val toast = Toast.makeText(context, "订阅js" + js, Toast.LENGTH_SHORT)
-                        toast.setGravity(Gravity.TOP or Gravity.CENTER, 50, 0)
+                        //toast.setGravity(Gravity.TOP or Gravity.CENTER, 50, 0)
+                        val textView = toast.view.findViewById<TextView>(android.R.id.message)
+// 取消省略号，允许多行显示
+textView.ellipsize = null // 不显示省略号
+textView.maxLines = Int.MAX_VALUE // 不限制最大行数
                         toast.show()
                     }
 
@@ -107,7 +111,11 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             } catch (e: JavetException) {
                 withContext(Dispatchers.Main) {
                     val toast = Toast.makeText(context, "@" + e.message + e.javaClass.name, Toast.LENGTH_SHORT)
-                    toast.setGravity(Gravity.TOP or Gravity.CENTER, 50, 0)
+                    //toast.setGravity(Gravity.TOP or Gravity.CENTER, 50, 0)
+                    val textView = toast.view.findViewById<TextView>(android.R.id.message)
+// 取消省略号，允许多行显示
+textView.ellipsize = null // 不显示省略号
+textView.maxLines = Int.MAX_VALUE // 不限制最大行数
                     toast.show()
                 }
             }
