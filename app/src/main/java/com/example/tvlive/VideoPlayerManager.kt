@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import com.caoccao.javet.exceptions.JavetException
 import com.caoccao.javet.interop.V8Host
 import com.caoccao.javet.interop.V8Runtime
+import com.caoccao.javet.values.reference.V8ValueArray
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
@@ -112,7 +113,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         v8Runtime?.let { runtime ->
             runtime.globalObject["sendDataToKotlin"] = { args ->
                 if (args.isNotEmpty()) {
-                    val jsArray = args[0] as? V8ValueArray ?: return null
+                    val jsArray = args[0] as V8ValueArray
                     try {
                         // 2. 将 JS 数组转换为 JSON 字符串
                         val jsonString = jsArray.toJsonString()
