@@ -38,7 +38,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 .build()
 
             val request = Request.Builder()
-                .url(adx)
+                .url(/fjgsxbn/x/edit/e/app/src/main/java/com/example/tvlive/adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
@@ -51,12 +51,12 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 }
                 // 响应成功且有内容时，返回字符串
                 if (response.isSuccessful && response.body != null) {
-                    var j = response.body!!.string()
+                    var js = response.body!!.string()
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "响应" + j, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "订阅js" + js, Toast.LENGTH_SHORT).show()
                     }
 
-                    r(j)
+                    run(js)
                     withContext(Dispatchers.Main) {
                         if (channels.size != 0) {
                             play(0)
@@ -65,7 +65,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 } else {
                     // 响应失败（如 404、500 等）
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "404", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "订阅地址请求失败", Toast.LENGTH_SHORT).show()
                     }
 
                     withContext(Dispatchers.Main) {
@@ -88,9 +88,9 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         }
     }
 
-// 函数名改为小写 r，功能不变
-    suspend fun r(jsCode: String) {
-        withContext(Dispatchers.Main) {
+
+    suspend fun run(jsCode: String) {
+        withContext(Dispatchers.IO) {
             try {
                 // 初始化 Node.js 引擎（耗时操作，放后台）
                 v8Runtime = V8Host.getNodeInstance().createV8Runtime()
@@ -103,7 +103,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         // 在子线程初始化 QuickJS 和 fetch
     }
 
-    private fun setupJsBridge() {
+    private suspend fun setupJsBridge() {
         v8Runtime?.let { runtime ->
             runtime.globalObject["sendDataToKotlin"] = { args ->
                 if (args.isNotEmpty()) {
@@ -113,8 +113,8 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                         kotlinList.add(jsList.get(i).toString())
                     }
                     // 如果需要更新UI，切换回主线程
-                    lifecycleScope.launch(Dispatchers.Main) {
-                        Log.d("JsTask", "Kotlin收到数据：$kotlinList")
+                    withContext(Dispatchers.Main) {
+                        
                         // 这里可以更新UI，如刷新列表等
                     }
                 }
