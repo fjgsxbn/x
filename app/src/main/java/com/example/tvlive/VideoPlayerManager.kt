@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.caoccao.javet.interop.V8Host
 import com.caoccao.javet.interop.V8Runtime
+import com.caoccao.javet.values.reference.V8ValueFunction
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
@@ -109,7 +110,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     }
 
     private suspend fun setupJsBridge() {
-        try {
+        
             // 改用 V8Runtime 的 createV8ValueFunction 方法创建函数
             val sendToAndroidFunc: V8ValueFunction = v8Runtime.createV8ValueFunction { receiver, parameters ->
                 val dataFromJS = parameters[0].toString()
@@ -120,9 +121,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             }
             // 将函数绑定到全局对象
             v8Runtime.globalObject.set("sendDataToKotlin", sendToAndroidFunc)
-        } catch (e: JavetException) {
-            e.printStackTrace()
-        }
+        
     }
 
     // 加载M3U8直播源
