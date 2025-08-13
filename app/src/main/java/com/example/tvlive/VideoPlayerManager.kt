@@ -148,14 +148,14 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     }
     inner class Xtv{
         @V8Function
-        fun update(json:String){
+        fun update(json: String){
             val gson = Gson()
     
     // 关键：通过 TypeToken 指定泛型类型 List<Channel>
     val type = object : TypeToken<List<Channel>>() {}.type
     
     // 直接解析为 List<Channel>
-    channels = gson.fromJson(jsonString, type)
+    channels = gson.fromJson(json, type)
         }
     }
 }
