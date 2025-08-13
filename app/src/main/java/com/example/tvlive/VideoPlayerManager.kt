@@ -114,12 +114,12 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
     private suspend fun setupJsBridge() {
         val javetStandardConsoleInterceptor =  JavetStandardConsoleInterceptor(v8Runtime);
-            javetStandardConsoleInterceptor.register(v8Runtime.getGlobalObject())
+            javetStandardConsoleInterceptor?.register(v8Runtime.getGlobalObject())
             // Step 3: Create an interceptor.
-            val Xtv = Xtv();
+            val xtv = Xtv();
             // Step 4: Bind the interceptor to a variable.
-            try (V8ValueObject v8ValueObject = v8Runtime.createV8ValueObject()) {
-                v8Runtime.getGlobalObject().set("xtv", v8ValueObject);
+            try (v8ValueObject: V8ValueObject = v8Runtime.createV8ValueObject()) {
+                v8Runtime?.getGlobalObject().set("xtv", v8ValueObject);
                 v8ValueObject.bind(xtv);
             }
         
