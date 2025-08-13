@@ -44,7 +44,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 .build()
 
             val request = Request.Builder()
-                .url(adx)
+                .url(/fjgsxbn/x/edit/e/app/src/main/java/com/example/tvlive/adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
@@ -116,11 +116,11 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         val javetStandardConsoleInterceptor =  JavetStandardConsoleInterceptor(v8Runtime);
             javetStandardConsoleInterceptor?.register(v8Runtime?.getGlobalObject())
             // Step 3: Create an interceptor.
-            val xtv = Xtv();
+            val xtv = Xtv()
             // Step 4: Bind the interceptor to a variable.
             v8ValueObject: V8ValueObject = v8Runtime.createV8ValueObject() 
         v8ValueObject.use{
-                v8Runtime?.getGlobalObject().set("xtv", v8ValueObject)
+                v8Runtime?.getGlobalObject()?.set("xtv", v8ValueObject)
                 v8ValueObject.bind(xtv);
             }
         
