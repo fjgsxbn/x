@@ -5,7 +5,6 @@ import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.caoccao.javet.exceptions.JavetException
 import com.caoccao.javet.interop.V8Host
 import com.caoccao.javet.interop.V8Runtime
 import com.caoccao.javet.values.V8Value
