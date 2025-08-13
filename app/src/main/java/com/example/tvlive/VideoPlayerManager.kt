@@ -105,7 +105,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 setupJsBridge()
                 v8Runtime?.getExecutor(jsCode)?.executeVoid()
             } catch (e: JavetException) {
-                Log.e("播放管理","runjs", e)
+                Log.e("播放管理", "runjs", e)
             }
         }
         // 在子线程初始化 QuickJS 和 fetch
