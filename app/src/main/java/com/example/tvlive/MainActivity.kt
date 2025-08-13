@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val lynxShakeDetector = LynxShakeDetector(this)
-         lynxShakeDetector.init()
+        lynxShakeDetector.init()
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         // 初始化播放器
         val webView: WebView = findViewById(R.id.webView)
