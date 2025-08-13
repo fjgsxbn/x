@@ -110,18 +110,16 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     }
 
     private suspend fun setupJsBridge() {
-        
-            // 改用 V8Runtime 的 createV8ValueFunction 方法创建函数
-            val sendToAndroidFunc: V8ValueFunction = v8Runtime.createV8ValueFunction { receiver, parameters ->
-                val dataFromJS = parameters[0].toString()
-                val gson = Gson()
-                val type = object : TypeToken<List<Channel>>() {}.type // 声明泛型类型
-                channels = gson.fromJson(jsonString, type)
-                null
-            }
-            // 将函数绑定到全局对象
-            v8Runtime.globalObject.set("sendDataToKotlin", sendToAndroidFunc)
-        
+        // 改用 V8Runtime 的 createV8ValueFunction 方法创建函数
+        val sendToAndroidFunc: V8ValueFunction = v8Runtime.createV8ValueFunction { receiver, parameters ->
+            val dataFromJS = parameters[0].toString()
+            val gson = Gson()
+            val type = object : TypeToken<List<Channel>>() {}.type // 声明泛型类型
+            channels = gson.fromJson(jsonString, type)
+            null
+        }
+        // 将函数绑定到全局对象
+        v8Runtime.globalObject.set("sendDataToKotlin", sendToAndroidFunc)
     }
 
     // 加载M3U8直播源
