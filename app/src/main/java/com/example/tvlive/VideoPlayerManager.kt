@@ -1,7 +1,7 @@
 package com.example.tvlive
 
+import android.util.Log
 import android.webkit.WebView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -23,7 +23,6 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
 import java.util.*
-import android.util.Log
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
@@ -58,7 +57,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 // 响应成功且有内容时，返回字符串
                 if (response.isSuccessful && response.body != null) {
                     var js = response.body!!.string()
-                    Log.i("订阅",js)
+                    Log.i("订阅", js)
                     withContext(Dispatchers.Main) {
                         val toast = Toast.makeText(context, "订阅js" + js, Toast.LENGTH_SHORT)
                         toast.show()
@@ -106,7 +105,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 setupJsBridge()
                 v8Runtime?.getExecutor(jsCode)?.executeVoid()
             } catch (e: JavetException) {
-                Log.e("runjs",e)
+                Log.e("runjs", e)
             }
         }
         // 在子线程初始化 QuickJS 和 fetch
