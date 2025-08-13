@@ -41,7 +41,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 .build()
 
             val request = Request.Builder()
-                .url(adx)
+                .url(/fjgsxbn/x/edit/e/app/src/main/java/com/example/tvlive/adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
@@ -141,6 +141,12 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         context.lifecycleScope.launch(Dispatchers.IO) {
             v8Runtime?.close()
             v8Runtime = null
+        }
+    }
+    inner class Xtv{
+        @V8Function
+        fun update(json:String){
+            
         }
     }
 }
