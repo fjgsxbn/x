@@ -111,28 +111,25 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     }
 
     private suspend fun setupJsBridge() {
-        v8Runtime?.let { runtime ->
-            runtime.globalObject["sendDataToKotlin"] = { args: Array<V8Value> ->
-                if (args.isNotEmpty()) {
-                    val jsArray = args[0] as V8ValueArray
-                    try {
-                        // 2. 将 JS 数组转换为 JSON 字符串
-                        val jsonString = jsArray.toJsonString()
-                        // 3. 用 Gson 将 JSON 字符串解析为 List<User>
-                        val gson = Gson()
+        
+
+
+
+
+        try {
+     // 改用 V8Runtime 的 createV8ValueFunction 方法创建函数
+     val sendToAndroidFunc: V8ValueFunction = v8Runtime.createV8ValueFunction { receiver, parameters ->
+         val dataFromJS = parameters[0].toString()
+         val gson = Gson()
                         val type = object : TypeToken<List<Channel>>() {}.type // 声明泛型类型
                         channels = gson.fromJson(jsonString, type)
-                        // 转换完成！直接使用 userList
-                        // [User(id=1, name=张三), User(id=2, name=李四)]
-                    } finally {
-                        // 释放资源（必须执行）
-                        jsArray.close()
-                    }
-                    // 如果需要更新UI，切换回主线程
-                }
-                null
+         null
+     }
+     // 将函数绑定到全局对象
+     v8Runtime.globalObject.set("sendDataToKotlin", sendToAndroidFunc)
+ } catch (e: JavetException) {
+     e.printStackTrace()
             }
-        }
     }
 
     // 加载M3U8直播源
