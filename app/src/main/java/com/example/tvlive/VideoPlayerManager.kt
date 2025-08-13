@@ -8,6 +8,8 @@ import androidx.lifecycle.lifecycleScope
 import com.caoccao.javet.interop.V8Host
 import com.caoccao.javet.interop.V8Runtime
 import com.caoccao.javet.values.reference.V8ValueFunction
+import com.caoccao.javet.interception.logging.JavetStandardConsoleInterceptor
+import com.caoccao.javet.values.reference.V8ValueObject
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
@@ -41,7 +43,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 .build()
 
             val request = Request.Builder()
-                .url(/fjgsxbn/x/edit/e/app/src/main/java/com/example/tvlive/adx)
+                .url(adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
@@ -110,16 +112,16 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     }
 
     private suspend fun setupJsBridge() {
-        // 改用 V8Runtime 的 createV8ValueFunction 方法创建函数
-        val sendToAndroidFunc: V8ValueFunction = v8Runtime.createV8ValueFunction { receiver, parameters ->
-            val dataFromJS = parameters[0].toString()
-            val gson = Gson()
-            val type = object : TypeToken<List<Channel>>() {}.type // 声明泛型类型
-            channels = gson.fromJson(jsonString, type)
-            null
-        }
-        // 将函数绑定到全局对象
-        v8Runtime.globalObject.set("sendDataToKotlin", sendToAndroidFunc)
+        val javetStandardConsoleInterceptor =  JavetStandardConsoleInterceptor(v8Runtime);
+            javetStandardConsoleInterceptor.register(v8Runtime.getGlobalObject())
+            // Step 3: Create an interceptor.
+            val Xtv = Xtv();
+            // Step 4: Bind the interceptor to a variable.
+            try (V8ValueObject v8ValueObject = v8Runtime.createV8ValueObject()) {
+                v8Runtime.getGlobalObject().set("xtv", v8ValueObject);
+                v8ValueObject.bind(xtv);
+            }
+        
     }
 
     // 加载M3U8直播源
