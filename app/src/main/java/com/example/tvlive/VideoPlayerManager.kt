@@ -10,6 +10,7 @@ import com.caoccao.javet.interop.V8Runtime
 import com.caoccao.javet.values.reference.V8ValueFunction
 import com.caoccao.javet.interception.logging.JavetStandardConsoleInterceptor
 import com.caoccao.javet.values.reference.V8ValueObject
+import com.caoccao.javet.annotations.V8Function
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
