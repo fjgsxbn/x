@@ -5,12 +5,11 @@ import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.caoccao.javet.annotations.V8Function
+import com.caoccao.javet.interception.logging.JavetStandardConsoleInterceptor
 import com.caoccao.javet.interop.V8Host
 import com.caoccao.javet.interop.V8Runtime
-import com.caoccao.javet.values.reference.V8ValueFunction
-import com.caoccao.javet.interception.logging.JavetStandardConsoleInterceptor
 import com.caoccao.javet.values.reference.V8ValueObject
-import com.caoccao.javet.annotations.V8Function
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
@@ -113,17 +112,15 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     }
 
     private suspend fun setupJsBridge() {
-        val javetStandardConsoleInterceptor =  JavetStandardConsoleInterceptor(v8Runtime);
-            javetStandardConsoleInterceptor?.register(v8Runtime?.getGlobalObject())
-            // Step 3: Create an interceptor.
-            val xtv = Xtv()
-            // Step 4: Bind the interceptor to a variable.
-            val v8ValueObject: V8ValueObject = v8Runtime.createV8ValueObject() 
-        v8ValueObject.use{
-                v8Runtime?.getGlobalObject()?.set("xtv", v8ValueObject)
-                v8ValueObject.bind(xtv);
-            }
-        
+        val javetStandardConsoleInterceptor = JavetStandardConsoleInterceptor(v8Runtime)
+        javetStandardConsoleInterceptor?.register(v8Runtime?.getGlobalObject())
+        // Step 3: Create an interceptor.
+        val xtv = Xtv()
+        // Step 4: Bind the interceptor to a variable.
+        val v8ValueObject: V8ValueObject = v8Runtime.createV8ValueObject() v8ValueObject.use {
+            v8Runtime?.getGlobalObject()?.set("xtv", v8ValueObject)
+            v8ValueObject.bind(xtv)
+        }
     }
 
     // 加载M3U8直播源
@@ -147,16 +144,16 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             v8Runtime = null
         }
     }
-    inner class Xtv{
+    inner class Xtv {
         @V8Function
-        fun update(json: String){
+        fun update(json: String) {
             val gson = Gson()
-    
-    // 关键：通过 TypeToken 指定泛型类型 List<Channel>
-    val type = object : TypeToken<List<Channel>>() {}.type
-    
-    // 直接解析为 List<Channel>
-    channels = gson.fromJson(json, type)
+
+            // 关键：通过 TypeToken 指定泛型类型 List<Channel>
+            val type = object : TypeToken<List<Channel>>() {}.type
+
+            // 直接解析为 List<Channel>
+            channels = gson.fromJson(json, type)
         }
     }
 }
