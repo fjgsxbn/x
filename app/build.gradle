@@ -18,7 +18,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
              // 注意：架构名称中间不要加空格（去掉 "armeabi - v7a" 中的空格）
-             abiFilters "armeabi-v7a"//, "arm64-v8a"
+             abiFilters "armeabi-v7a", "arm64-v8a"
         }
     }
 
