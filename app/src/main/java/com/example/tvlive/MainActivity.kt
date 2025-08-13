@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tvlive.model.Channel
 import com.google.android.exoplayer2.ui.StyledPlayerView
+import com.pedrogomez.lynx.LynxShakeDetector
 
 class MainActivity : AppCompatActivity() {
     private val OVERLAY_PERMISSION_REQUEST_CODE = 1001
@@ -33,6 +34,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val lynxShakeDetector = LynxShakeDetector(this)
+         lynxShakeDetector.init()
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         // 初始化播放器
         val webView: WebView = findViewById(R.id.webView)
