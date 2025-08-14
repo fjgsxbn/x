@@ -5,12 +5,9 @@ import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.caoccao.javet.annotations.V8Function
-import com.caoccao.javet.interception.logging.JavetStandardConsoleInterceptor
+import com.caoccao.javet.converters.JavetProxyConverter
 import com.caoccao.javet.interop.V8Host
 import com.caoccao.javet.interop.V8Runtime
-import com.caoccao.javet.values.reference.V8ValueObject
-import com.caoccao.javet.converters.JavetProxyConverter
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
@@ -106,7 +103,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 // 初始化 Node.js 引擎（耗时操作，放后台）
                 v8Runtime = V8Host.getNodeInstance().createV8Runtime()
                 setupJsBridge()
-                //v8Runtime?.getExecutor(jsCode)?.executeVoid()
+                // v8Runtime?.getExecutor(jsCode)?.executeVoid()
                 nodeRuntime?.executeScript(jsCode)
             } catch (e: Exception) {
                 Log.e("播放管理", "runjs", e)
@@ -117,18 +114,12 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
     private suspend fun setupJsBridge() {
         // 2. 配置转换器，支持 Kotlin 与 JS 互操作
-             val converter = JavetProxyConverter()
-             nodeRuntime?.setConverter(converter)
-             // 3. 创建 Kotlin 接收者实例，并注入到 Node.js 全局对象
-             val xtv = Xtv()
-             nodeRuntime?.globalObject?.set("xtv", xtv)
-             // 4. 在 Node.js 环境中执行 JS 代码，传递字符串给 Kotlin
-             
-             
-
-
-        
-        
+        val converter = JavetProxyConverter()
+        nodeRuntime?.setConverter(converter)
+        // 3. 创建 Kotlin 接收者实例，并注入到 Node.js 全局对象
+        val xtv = Xtv()
+        nodeRuntime?.globalObject?.set("xtv", xtv)
+        // 4. 在 Node.js 环境中执行 JS 代码，传递字符串给 Kotlin
     }
 
     // 加载M3U8直播源
@@ -153,7 +144,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         }
     }
     inner class Xtv {
-        //@V8Function
+        // @V8Function
         fun update(json: String) {
             Log.i("json", json)
             val gson = Gson()
