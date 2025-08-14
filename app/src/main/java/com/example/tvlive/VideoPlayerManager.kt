@@ -103,8 +103,8 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 // 初始化 Node.js 引擎（耗时操作，放后台）
                 v8Runtime = V8Host.getNodeInstance().createV8Runtime()
                 setupJsBridge()
-                // v8Runtime?.getExecutor(jsCode)?.executeVoid()
-                v8Runtime?.executeScript(jsCode)
+                v8Runtime?.getExecutor(jsCode)?.executeVoid()
+                //v8Runtime?.executeScript(jsCode)
             } catch (e: Exception) {
                 Log.e("播放管理", "runjs", e)
             }
