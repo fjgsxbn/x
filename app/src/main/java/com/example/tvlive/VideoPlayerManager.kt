@@ -150,7 +150,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     inner class Xtv {
         @V8Function
         fun update(json: String) {
-            Log.i("json",json)
+            Log.i("json", json)
             val gson = Gson()
 
             // 关键：通过 TypeToken 指定泛型类型 List<Channel>
