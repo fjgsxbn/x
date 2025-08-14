@@ -41,7 +41,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 .build()
 
             val request = Request.Builder()
-                .url(/fjgsxbn/x/edit/e/app/src/main/java/com/example/tvlive/adx)
+                .url(adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
@@ -119,7 +119,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         // 3. 创建 Kotlin 接收者实例，并注入到 Node.js 全局对象
         val xtv = Xtv()
         v8Runtime?.globalObject?.set("xtv", xtv)
-        // 4. 在 Node.js 环境中执行 JS 代码，传递字符串给 Kotlin
+        
     }
 
     // 加载M3U8直播源
