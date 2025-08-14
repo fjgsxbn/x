@@ -106,8 +106,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 // setupJsBridge()
                 // v8Runtime?.getExecutor(jsCode)?.executeVoid()
                 v8Runtime!!.getExecutor(jsCode)
-                    .execute() // 执行 JS，返回 V8ValuePromise
-                    ?.use { v8ValuePromise -> // Kotlin use 函数：自动关闭 V8ValuePromise（释放资源）
+                    .execute()?.use { v8ValuePromise -> // Kotlin use 函数：自动关闭 V8ValuePromise（释放资源）
                         v8ValuePromise.register(callback) // 注册回调
                         v8Runtime.await() // 等待 Promise 完成（阻塞到回调触发）
                     }
