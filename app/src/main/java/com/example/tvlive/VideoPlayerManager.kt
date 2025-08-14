@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.caoccao.javet.interop.V8Host
 import com.caoccao.javet.interop.V8Runtime
+import com.caoccao.javet.values.reference.V8ValueError
 import com.caoccao.javet.values.reference.IV8ValuePromise
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -41,7 +42,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 .build()
 
             val request = Request.Builder()
-                .url(adx)
+                .url(/fjgsxbn/x/edit/e/app/src/main/java/com/example/tvlive/adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
