@@ -7,8 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.caoccao.javet.interop.V8Host
 import com.caoccao.javet.interop.V8Runtime
-import com.caoccao.javet.runtime.V8Runtime
-import com.caoccao.javet.values.promise.IV8ValuePromise
+import com.caoccao.javet.values.reference.IV8ValuePromise
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
@@ -180,4 +179,5 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
              println("Promise 主动拒绝，原因：${v8Value.toString()}")
              v8Value.close() // 释放资源
          }
+        }
 }
