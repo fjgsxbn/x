@@ -102,15 +102,14 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             try {
                 // 初始化 Node.js 引擎（耗时操作，放后台）
                 v8Runtime = V8Host.getNodeInstance().createV8Runtime()
-                //setupJsBridge()
-                //v8Runtime?.getExecutor(jsCode)?.executeVoid()
+                // setupJsBridge()
+                // v8Runtime?.getExecutor(jsCode)?.executeVoid()
                 v8Runtime!!.getExecutor(jsCode)
-             .execute() // 执行 JS，返回 V8ValuePromise
-             ?.use { v8ValuePromise -> // Kotlin use 函数：自动关闭 V8ValuePromise（释放资源）
-                 v8ValuePromise.register(callback) // 注册回调
-                 v8Runtime.await() // 等待 Promise 完成（阻塞到回调触发）
-             }
-                
+                    .execute() // 执行 JS，返回 V8ValuePromise
+                    ?.use { v8ValuePromise -> // Kotlin use 函数：自动关闭 V8ValuePromise（释放资源）
+                        v8ValuePromise.register(callback) // 注册回调
+                        v8Runtime.await() // 等待 Promise 完成（阻塞到回调触发）
+                    }
             } catch (e: Exception) {
                 Log.e("播放管理", "runjs", e)
             }
@@ -162,22 +161,22 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         }
     }
     private val callback = object : IV8ValuePromise.ICallback {
-         override fun onCatch(v8Value: V8Value) {
-             // 处理 Promise 内部未捕获的异常（如 JS 代码报错）
-             //assertTrue(v8Value is V8ValueError)
-             val error = v8Value as V8ValueError
-             println("Promise 捕获异常：${error.message}")
-             v8Value.close() // 释放 V8 资源（避免内存泄漏）
-         }
-         override fun onFulfilled(v8Value: V8Value) {
-             // 处理 Promise 成功（resolve 触发）
-             Log.i("收到promise",v8Value.toString())
-             v8Value.close() // 释放资源
-         }
-         override fun onRejected(v8Value: V8Value) {
-             // 处理 Promise 主动失败（reject 触发）
-             println("Promise 主动拒绝，原因：${v8Value.toString()}")
-             v8Value.close() // 释放资源
-         }
+        override fun onCatch(v8Value: V8Value) {
+            // 处理 Promise 内部未捕获的异常（如 JS 代码报错）
+            // assertTrue(v8Value is V8ValueError)
+            val error = v8Value as V8ValueError
+            println("Promise 捕获异常：${error.message}")
+            v8Value.close() // 释放 V8 资源（避免内存泄漏）
         }
+        override fun onFulfilled(v8Value: V8Value) {
+            // 处理 Promise 成功（resolve 触发）
+            Log.i("收到promise", v8Value.toString())
+            v8Value.close() // 释放资源
+        }
+        override fun onRejected(v8Value: V8Value) {
+            // 处理 Promise 主动失败（reject 触发）
+            println("Promise 主动拒绝，原因：$v8Value")
+            v8Value.close() // 释放资源
+        }
+    }
 }
