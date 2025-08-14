@@ -43,7 +43,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 .build()
 
             val request = Request.Builder()
-                .url(/fjgsxbn/x/edit/e/app/src/main/java/com/example/tvlive/adx)
+                .url(adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
@@ -93,6 +93,8 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, e.message + e.javaClass.name, Toast.LENGTH_SHORT).show()
                 }
+            }c atch (e: Exception) {
+                Log.e("播放管理", "兜底", e)
             }
         }
     }
