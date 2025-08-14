@@ -5,9 +5,9 @@ import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.caoccao.javet.interop.converters.JavetProxyConverter
 import com.caoccao.javet.interop.V8Host
 import com.caoccao.javet.interop.V8Runtime
+import com.caoccao.javet.interop.converters.JavetProxyConverter
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
@@ -119,7 +119,6 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         // 3. 创建 Kotlin 接收者实例，并注入到 Node.js 全局对象
         val xtv = Xtv()
         v8Runtime?.globalObject?.set("xtv", xtv)
-        
     }
 
     // 加载M3U8直播源
