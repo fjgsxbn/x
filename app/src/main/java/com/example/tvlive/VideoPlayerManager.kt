@@ -174,6 +174,13 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         override fun onFulfilled(v8Value: V8Value) {
             // 处理 Promise 成功（resolve 触发）
             Log.i("收到promise", v8Value.toString())
+            val gson = Gson()
+
+            // 关键：通过 TypeToken 指定泛型类型 List<Channel>
+            val type = object : TypeToken<List<Channel>>() {}.type
+
+            // 直接解析为 List<Channel>
+            channels = gson.fromJson(v8Value.toString(), type)
             v8Value.close() // 释放资源
         }
         override fun onRejected(v8Value: V8Value) {
