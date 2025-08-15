@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.caoccao.javet.interop.V8Host
 import com.caoccao.javet.interop.V8Runtime
 import com.caoccao.javet.values.reference.IV8ValuePromise
+import com.caoccao.javet.values.reference.IV8ValuePromise.ICallback
 import com.caoccao.javet.values.reference.V8ValueError
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
