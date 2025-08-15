@@ -9,6 +9,7 @@ import com.caoccao.javet.annotations.V8Function
 import com.caoccao.javet.interop.V8Host
 import com.caoccao.javet.interop.V8Runtime
 import com.caoccao.javet.values.V8Value
+import com.caoccao.javet.values.reference.V8ValueObject
 import com.caoccao.javet.values.reference.IV8ValuePromise
 import com.caoccao.javet.values.reference.IV8ValuePromise.IListener
 import com.caoccao.javet.values.reference.V8ValueError
@@ -127,7 +128,9 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         // v8Runtime?.setConverter(converter)
         // 3. 创建 Kotlin 接收者实例，并注入到 Node.js 全局对象
         val xtv = Xtv()
-        v8Runtime!!.globalObject!!.set("xtv", xtv)
+        v8ValueObject: V8ValueObject  = v8Runtime!!.createV8ValueObject()
+        v8Runtime!!.globalObject!!.set("xtv", v8ValueObject)
+        v8ValueObject.bind(xtv)
     }
 
     // 加载M3U8直播源
