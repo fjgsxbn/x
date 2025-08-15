@@ -8,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.caoccao.javet.interop.V8Host
 import com.caoccao.javet.interop.V8Runtime
 import com.caoccao.javet.values.V8Value
-import com.caoccao.javet.values.reference.IV8ValuePromise
+import com.caoccao.javet.values.reference.V8ValuePromise
 import com.caoccao.javet.values.reference.IV8ValuePromise.IListener
 import com.caoccao.javet.values.reference.V8ValueError
 import com.google.android.exoplayer2.ExoPlayer
@@ -44,7 +44,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 .build()
 
             val request = Request.Builder()
-                .url(/fjgsxbn/x/edit/e/app/src/main/java/com/example/tvlive/adx)
+                .url(adx)
                 .build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
@@ -108,7 +108,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 // setupJsBridge()
                 // v8Runtime?.getExecutor(jsCode)?.executeVoid()
                 v8Runtime!!.getExecutor(jsCode)
-                    .execute<IV8ValuePromise>()?.use { v8ValuePromise -> // Kotlin use 函数：自动关闭 V8ValuePromise（释放资源）
+                    .execute<V8ValuePromise>()?.use { v8ValuePromise -> // Kotlin use 函数：自动关闭 V8ValuePromise（释放资源）
                         v8ValuePromise.register(callback) // 注册回调
                         v8Runtime!!.await() // 等待 Promise 完成（阻塞到回调触发）
                     }
