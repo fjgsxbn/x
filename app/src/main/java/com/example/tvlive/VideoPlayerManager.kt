@@ -12,6 +12,7 @@ import com.caoccao.javet.values.reference.IV8ValuePromise
 import com.caoccao.javet.values.reference.IV8ValuePromise.IListener
 import com.caoccao.javet.values.reference.V8ValueError
 import com.caoccao.javet.values.reference.V8ValuePromise
+import com.caoccao.javet.annotations.V8Function
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
@@ -106,7 +107,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             try {
                 // 初始化 Node.js 引擎（耗时操作，放后台）
                 v8Runtime = V8Host.getNodeInstance().createV8Runtime()
-                // setupJsBridge()
+                setupJsBridge()
                 // v8Runtime?.getExecutor(jsCode)?.executeVoid()
                 v8Runtime!!.getExecutor(jsCode)
                     .execute<V8ValuePromise>()?.use { v8ValuePromise -> // Kotlin use 函数：自动关闭 V8ValuePromise（释放资源）
@@ -151,7 +152,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         }
     }
     inner class Xtv {
-        // @V8Function
+        @V8Function(name="update")
         fun update(json: String) {
             Log.i("json", json)
             val gson = Gson()
