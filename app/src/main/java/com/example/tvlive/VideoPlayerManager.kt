@@ -96,7 +96,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, e.message + e.javaClass.name, Toast.LENGTH_SHORT).show()
                 }
-            } catch (e: Exception) {
+            } catch (e: Throwable) {
                 Log.e("播放管理", "兜底", e)
             }
         }
