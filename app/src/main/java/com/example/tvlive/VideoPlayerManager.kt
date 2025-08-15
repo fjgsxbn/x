@@ -7,8 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.caoccao.javet.interop.V8Host
 import com.caoccao.javet.interop.V8Runtime
+import com.caoccao.javet.values.V8Values
 import com.caoccao.javet.values.reference.IV8ValuePromise
-import com.caoccao.javet.values.reference.IV8ValuePromise.ICallback
+import com.caoccao.javet.values.reference.IV8ValuePromise.IListener
 import com.caoccao.javet.values.reference.V8ValueError
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -161,7 +162,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             channels = gson.fromJson(json, type)
         }
     }
-    private val callback = object : IV8ValuePromise.ICallback {
+    private val callback = object : IV8ValuePromise.IListener {
         override fun onCatch(v8Value: V8Value) {
             // 处理 Promise 内部未捕获的异常（如 JS 代码报错）
             // assertTrue(v8Value is V8ValueError)
