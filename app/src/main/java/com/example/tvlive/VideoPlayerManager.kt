@@ -5,6 +5,7 @@ import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.caoccao.javet.annotations.V8Function
 import com.caoccao.javet.interop.V8Host
 import com.caoccao.javet.interop.V8Runtime
 import com.caoccao.javet.values.V8Value
@@ -12,7 +13,6 @@ import com.caoccao.javet.values.reference.IV8ValuePromise
 import com.caoccao.javet.values.reference.IV8ValuePromise.IListener
 import com.caoccao.javet.values.reference.V8ValueError
 import com.caoccao.javet.values.reference.V8ValuePromise
-import com.caoccao.javet.annotations.V8Function
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
@@ -152,7 +152,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         }
     }
     inner class Xtv {
-        @V8Function(name="update")
+        @V8Function(name = "update")
         fun update(json: String) {
             Log.i("json", json)
             val gson = Gson()
