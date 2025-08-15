@@ -128,7 +128,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         // v8Runtime?.setConverter(converter)
         // 3. 创建 Kotlin 接收者实例，并注入到 Node.js 全局对象
         val xtv = Xtv()
-        v8ValueObject: V8ValueObject  = v8Runtime!!.createV8ValueObject()
+        val v8ValueObject: V8ValueObject  = v8Runtime!!.createV8ValueObject()
         v8Runtime!!.globalObject!!.set("xtv", v8ValueObject)
         v8ValueObject.bind(xtv)
     }
