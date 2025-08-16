@@ -159,7 +159,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     }
     inner class Xtv {
         @V8Function(name = "update")
-        fun update(json: String) {
+        suspend fun update(json: String) {
             Log.i("json", json)
             val gson = Gson()
 
