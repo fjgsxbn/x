@@ -168,7 +168,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
             // 直接解析为 List<Channel>
 
-            if (channels.size() == 0) {
+            if (channels.size == 0) {
                 channels = gson.fromJson(json, type)
                 withContext(Dispatchers.Main) {
                     if (channels.size != 0) {
