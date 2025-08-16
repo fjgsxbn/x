@@ -22,6 +22,7 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.delay
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
@@ -112,7 +113,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 v8Runtime!!.getExecutor(jsCode).executeVoid()
                 launch{
                     while(true){
-                        v8Runtime!!await()
+                        v8Runtime!!.await()
                         delay(10000)
                     }
                 }
