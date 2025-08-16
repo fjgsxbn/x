@@ -170,7 +170,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
             if (channels.size == 0) {
                 channels = gson.fromJson(json, type)
-                withContext(Dispatchers.Main) {
+                context.lifecycleScope.launch{
                     if (channels.size != 0) {
                         play(0)
                     }
