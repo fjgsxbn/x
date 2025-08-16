@@ -110,6 +110,12 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 setupJsBridge()
                 // v8Runtime?.getExecutor(jsCode)?.executeVoid()
                 v8Runtime!!.getExecutor(jsCode).executeVoid()
+                launch{
+                    while(true){
+                        v8Runtime!!await()
+                        delay(10000)
+                    }
+                }
                 v8Runtime!!.await()
             } catch (e: Exception) {
                 Log.e("播放管理", "runjs", e)
