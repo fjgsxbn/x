@@ -37,7 +37,6 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
     private var channels: List<Channel> = mutableListOf()
     private var v8Runtime: V8Runtime? = null
-    
 
     fun p(adx: String, callback: () -> Unit) {
         context.lifecycleScope.launch(Dispatchers.IO) {
@@ -169,15 +168,14 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
             // 直接解析为 List<Channel>
 
-            if(channels.size()==0){
-            channels = gson.fromJson(json, type)
-            withContext(Dispatchers.Main) {
-                        if (channels.size != 0) {
-                            play(0)
-                        }
-            }
+            if (channels.size() == 0) {
+                channels = gson.fromJson(json, type)
+                withContext(Dispatchers.Main) {
+                    if (channels.size != 0) {
+                        play(0)
+                    }
                 }
-            
+            }
         }
     }
     private val callback = object : IV8ValuePromise.IListener {
