@@ -21,4 +21,55 @@
     android:layout_height="0dp"
     android:visibility="gone"
   />
+
+  <!-- 2. 底部文字按钮区域（水平排列，无背景色） -->
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal"
+         android:gravity="center"
+         android:padding="12dp"
+         android:layout_marginTop="8dp"> <!-- 与播放器区留少量间距，避免重叠 -->
+         <!-- 上键：系统原生按钮，无额外样式 -->
+         <Button
+             android:id="@+id/btn_up"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginHorizontal="16dp"
+             android:paddingHorizontal="20dp"
+             android:paddingVertical="12dp"
+             android:text="上"
+             android:textSize="16sp" />
+         <!-- 确定键：加粗文字，突出核心操作 -->
+         <Button
+             android:id="@+id/btn_confirm"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginHorizontal="16dp"
+             android:paddingHorizontal="28dp"
+             android:paddingVertical="16dp"
+             android:text="确定"
+             android:textSize="18sp"
+             android:textStyle="bold" />
+         <!-- 下键：与上键样式一致 -->
+         <Button
+             android:id="@+id/btn_down"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginHorizontal="16dp"
+             android:paddingHorizontal="20dp"
+             android:paddingVertical="12dp"
+             android:text="下"
+             android:textSize="16sp" />
+         <!-- 菜单键：系统原生按钮样式 -->
+         <Button
+             android:id="@+id/btn_menu"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginHorizontal="16dp"
+             android:paddingHorizontal="20dp"
+             android:paddingVertical="12dp"
+             android:text="菜单"
+             android:textSize="16sp" />
+     </LinearLayout>
 </LinearLayout>
