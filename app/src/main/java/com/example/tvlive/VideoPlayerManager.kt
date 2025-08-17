@@ -133,7 +133,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         num = tar
         play(num)
     }
-    
+
     fun playNext() {
         if (num == null) {
             return
