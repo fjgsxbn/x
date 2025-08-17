@@ -11,13 +11,12 @@ import com.example.tvlive.model.Channel
 
 class ChannelListDialog(
     context: Context,
-    private val channels: List<Channel>,
-    private val currentPosition: Int,
-    private val onChannelSelected: (Int) -> Unit,
+    private val manager: VideoPlayerManager,
+    
 ) : Dialog(context) {
 
     private lateinit var listView: ListView
-    private var selectedPosition = currentPosition
+    
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,15 +33,15 @@ class ChannelListDialog(
         val adapter = ArrayAdapter(
             context,
             R.layout.item_channel,
-            channels.map { it.name },
+            manager.channels.map { it.name },
         )
         listView.adapter = adapter
-        listView.setSelection(selectedPosition)
+        listView.setSelection(manager.num)
         listView.requestFocus()
 
         // 列表项点击事件
         listView.setOnItemClickListener { _, _, position, _ ->
-            onChannelSelected(position)
+            manager.play(position)
             dismiss()
         }
 
