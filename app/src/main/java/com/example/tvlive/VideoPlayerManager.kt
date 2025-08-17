@@ -36,7 +36,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     private val v8Runtime: V8Runtime = V8Host.getNodeInstance().createV8Runtime()
 
     private var channels: List<Channel> = mutableListOf()
-    private var num: Int?=null
+    private var num: Int? = null
 
     fun p(adx: String, callback: () -> Unit) {
         context.lifecycleScope.launch(Dispatchers.IO) {
@@ -91,7 +91,6 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     suspend fun run(jsCode: String) {
         withContext(Dispatchers.IO) {
             try {
-                
                 val xtv = Xtv()
                 val v8ValueObject: V8ValueObject = v8Runtime!!.createV8ValueObject()
                 v8Runtime.globalObject!!.set("xtv", v8ValueObject)
