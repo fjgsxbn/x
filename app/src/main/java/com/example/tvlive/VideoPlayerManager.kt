@@ -126,7 +126,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         if (num == null) {
             return
         }
-        val tar = num - 1
+        var tar = num - 1
         if (tar < 0) {
             tar = channels.size - 1
         }
@@ -138,7 +138,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         if (num == null) {
             return
         }
-        val tar = num + 1
+        var tar = num + 1
         if (tar >= channels.size) {
             tar = 0
         }
