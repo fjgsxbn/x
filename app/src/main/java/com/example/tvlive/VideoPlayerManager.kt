@@ -21,7 +21,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 //import kotlinx.coroutines.delay
-//import kotlinx.coroutines.launch
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -117,7 +117,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                   //      delay(10000)
                 //    }
                 //}
-                v8Runtime!!.await()
+                //v8Runtime!!.await()
             } catch (e: Exception) {
                 Log.e("播放管理", "runjs", e)
             }
