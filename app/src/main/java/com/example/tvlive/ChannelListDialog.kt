@@ -30,7 +30,7 @@ class ChannelListDialog(
         val adapter = ArrayAdapter(
             context,
             R.layout.item_channel,
-            channels.map { it.name }
+            playManager.channels.map { it.name }
         )
         listView.adapter = adapter
         listView.setSelection(playManager.num)
