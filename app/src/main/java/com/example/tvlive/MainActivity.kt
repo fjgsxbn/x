@@ -81,12 +81,12 @@ class MainActivity : AppCompatActivity() {
             }
             // 上键切换上一个频道
             KeyEvent.KEYCODE_DPAD_UP -> {
-                playManager.playPrev()
+                playerManager.playPrev()
                 true
             }
             // 下键切换下一个频道
             KeyEvent.KEYCODE_DPAD_DOWN -> {
-                playManager.playNext()
+                playerManager.playNext()
                 true
             }
             KeyEvent.KEYCODE_BACK -> {
@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showChannelList() {
-        ChannelListDialog(this, playManager).show()
+        ChannelListDialog(this, playerManager).show()
     }
 
     // 显示自定义对话框
