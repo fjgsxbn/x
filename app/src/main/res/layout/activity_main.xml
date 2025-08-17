@@ -12,7 +12,7 @@
     android:layout_height="match_parent"
     app:use_controller="false"
     android:keepScreenOn="true"
-    android:background="@color/custom_black"
+    
   />
 
   <WebView
