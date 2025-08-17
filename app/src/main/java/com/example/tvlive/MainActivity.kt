@@ -52,25 +52,20 @@ class MainActivity : AppCompatActivity() {
         // 上键：示例逻辑——回到视频开头
         btnUp.setOnClickListener {
             playerManager.playPrev()
-            
         }
         // 确定键：示例逻辑——切换播放/暂停
         btnConfirm.setOnClickListener {
             showChannelList()
-            
         }
         // 下键：示例逻辑——快进10秒
         btnDown.setOnClickListener {
             playerManager.playNext()
-            
         }
         // 菜单键：示例逻辑——弹出功能菜单
         btnMenu.setOnClickListener {
             showCustomDialog()
         }
     }
-
-    
 
     // 按键监听
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
@@ -103,7 +98,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showChannelList() {
-        ChannelListDialog(this, playManager) .show()
+        ChannelListDialog(this, playManager).show()
     }
 
     // 显示自定义对话框
