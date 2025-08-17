@@ -33,9 +33,10 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     fun getPlayer() = exoPlayer
 
     data class Channel(val name: String, val url: String)
+    private val v8Runtime: V8Runtime = V8Host.getNodeInstance().createV8Runtime()
 
     private var channels: List<Channel> = mutableListOf()
-    private var num: Int?
+    private var num: Int?=null
 
     fun p(adx: String, callback: () -> Unit) {
         context.lifecycleScope.launch(Dispatchers.IO) {
@@ -90,7 +91,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     suspend fun run(jsCode: String) {
         withContext(Dispatchers.IO) {
             try {
-                val v8Runtime: V8Runtime = V8Host.getNodeInstance().createV8Runtime()
+                
                 val xtv = Xtv()
                 val v8ValueObject: V8ValueObject = v8Runtime!!.createV8ValueObject()
                 v8Runtime.globalObject!!.set("xtv", v8ValueObject)
@@ -126,24 +127,24 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         if (num == null) {
             return
         }
-        var tar = num - 1
+        var tar = num!! - 1
         if (tar < 0) {
             tar = channels.size - 1
         }
         num = tar
-        play(num)
+        play(num!!)
     }
 
     fun playNext() {
         if (num == null) {
             return
         }
-        var tar = num + 1
+        var tar = num!! + 1
         if (tar >= channels.size) {
             tar = 0
         }
         num = tar
-        play(num)
+        play(num!!)
     }
 
     fun release() {
