@@ -126,10 +126,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     }
 
     private suspend fun setupJsBridge() {
-        // 2. 配置转换器，支持 Kotlin 与 JS 互操作
-        // val converter = JavetProxyConverter()
-        // v8Runtime?.setConverter(converter)
-        // 3. 创建 Kotlin 接收者实例，并注入到 Node.js 全局对象
+        
         val xtv = Xtv()
         val v8ValueObject: V8ValueObject = v8Runtime!!.createV8ValueObject()
         v8Runtime!!.globalObject!!.set("xtv", v8ValueObject)
