@@ -12,7 +12,6 @@ import android.widget.EditText
 import android.widget.Switch
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.tvlive.model.Channel
 import com.github.pedrovgs.lynx.LynxShakeDetector
 import com.google.android.exoplayer2.ui.StyledPlayerView
 
@@ -21,7 +20,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var playerView: StyledPlayerView
     private lateinit var playerManager: VideoPlayerManager
-    
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
