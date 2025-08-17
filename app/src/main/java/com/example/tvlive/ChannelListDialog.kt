@@ -11,13 +11,11 @@ import com.example.tvlive.model.Channel
 
 class ChannelListDialog(
     context: Context,
-    private val channels: List<Channel>,
-    private val currentPosition: Int,
-    private val onChannelSelected: (Int) -> Unit
+    private val manager: VideoPlayerManager
 ) : Dialog(context) {
 
     private lateinit var listView: ListView
-    private var selectedPosition = currentPosition
+    
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
