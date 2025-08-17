@@ -43,7 +43,7 @@ class ChannelListDialog(
         }
 
         // 遥控器按键监听
-        var selectedPosition=playManager.num
+        var selectedPosition = playManager.num
         listView.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
                 when (keyCode) {
