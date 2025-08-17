@@ -41,12 +41,8 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     fun p(adx: String, callback: () -> Unit) {
         context.lifecycleScope.launch(Dispatchers.IO) {
             
-            val client = OkHttpClient.Builder()
-                .build()
-
-            val request = Request.Builder()
-                .url(adx)
-                .build()
+            val client = OkHttpClient.Builder().build()
+            val request = Request.Builder().url(adx).build()
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
             }
@@ -56,7 +52,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
                 }
-                // 响应成功且有内容时，返回字符串
+                
                 if (response.isSuccessful && response.body != null) {
                     var js = response.body!!.string()
                     Log.i("订阅", js)
@@ -76,19 +72,11 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                     withContext(Dispatchers.Main) {
                         Toast.makeText(context, "订阅地址请求失败", Toast.LENGTH_SHORT).show()
                     }
-
-                    withContext(Dispatchers.Main) {
-                        callback()
-                    }
                 }
             } catch (e: IOException) {
                 // 网络异常（如无网络、连接超时等）
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, e.message + e.javaClass.name, Toast.LENGTH_SHORT).show()
-                }
-
-                withContext(Dispatchers.Main) {
-                    callback()
                 }
             } catch (e: IllegalArgumentException) {
                 // 处理请求参数错误
