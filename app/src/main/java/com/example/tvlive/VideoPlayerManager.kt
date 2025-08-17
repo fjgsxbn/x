@@ -35,8 +35,8 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     data class Channel(val name: String, val url: String)
     private val v8Runtime: V8Runtime = V8Host.getNodeInstance().createV8Runtime()
 
-    private var channels: List<Channel> = mutableListOf()
-    private var num: Int? = null
+    var channels: List<Channel> = mutableListOf()
+    var num: Int? = null
 
     fun p(adx: String, callback: () -> Unit) {
         context.lifecycleScope.launch(Dispatchers.IO) {
@@ -131,7 +131,6 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         if (tar < 0) {
             tar = channels.size - 1
         }
-
         play(tar)
     }
 
@@ -143,7 +142,6 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         if (tar >= channels.size) {
             tar = 0
         }
-
         play(tar)
     }
 
