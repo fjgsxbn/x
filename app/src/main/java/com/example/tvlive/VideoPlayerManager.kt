@@ -122,15 +122,15 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     fun play(num: Int) {
         playUrl(channels[num].url)
     }
-    fun playPrev(){
-        if(num==null){
+    fun playPrev() {
+        if (num == null) {
             return
         }
-        val tar=num-1
-        if(tar<0){
-            tar=channels.size-1
+        val tar = num - 1
+        if (tar < 0) {
+            tar = channels.size - 1
         }
-        num=tar
+        num = tar
     }
 
     fun release() {
