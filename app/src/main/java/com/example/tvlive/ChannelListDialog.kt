@@ -7,16 +7,14 @@ import android.view.KeyEvent
 import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import com.example.tvlive.model.Channel
 
 class ChannelListDialog(
     context: Context,
     private val manager: VideoPlayerManager,
-    
+
 ) : Dialog(context) {
 
     private lateinit var listView: ListView
-    
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
