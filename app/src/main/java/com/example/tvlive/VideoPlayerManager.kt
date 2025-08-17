@@ -36,13 +36,11 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     data class Channel(val name: String, val url: String)
 
     private var channels: List<Channel> = mutableListOf()
-    private var v8Runtime: V8Runtime? = null
+    
 
     fun p(adx: String, callback: () -> Unit) {
         context.lifecycleScope.launch(Dispatchers.IO) {
-            // 1. 启动协程（默认在主线程，但会被 withContext 切换）
-
-            // 创建忽略证书验证的 OkHttpClient
+            
             val client = OkHttpClient.Builder()
                 .build()
 
@@ -106,9 +104,12 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     suspend fun run(jsCode: String) {
         withContext(Dispatchers.IO) {
             try {
-                // 初始化 Node.js 引擎（耗时操作，放后台）
-                v8Runtime = V8Host.getNodeInstance().createV8Runtime()
-                setupJsBridge()
+                
+                val V8Runtime: v8Runtime = V8Host.getNodeInstance().createV8Runtime()
+                val xtv = Xtv()
+        val v8ValueObject: V8ValueObject = v8Runtime!!.createV8ValueObject()
+        v8Runtime!!.globalObject!!.set("xtv", v8ValueObject)
+        v8ValueObject.bind(xtv)
                 // v8Runtime?.getExecutor(jsCode)?.executeVoid()
                 v8Runtime!!.getExecutor(jsCode).executeVoid()
                 //launch {
@@ -122,16 +123,10 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 Log.e("播放管理", "runjs", e)
             }
         }
-        // 在子线程初始化 QuickJS 和 fetch
+        
     }
 
-    private suspend fun setupJsBridge() {
-        
-        val xtv = Xtv()
-        val v8ValueObject: V8ValueObject = v8Runtime!!.createV8ValueObject()
-        v8Runtime!!.globalObject!!.set("xtv", v8ValueObject)
-        v8ValueObject.bind(xtv)
-    }
+    
 
     // 加载M3U8直播源
     fun playUrl(url: String) {
