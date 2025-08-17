@@ -150,7 +150,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         exoPlayer.release()
         context.lifecycleScope.launch(Dispatchers.IO) {
             v8Runtime?.close()
-            v8Runtime = null
+            
         }
     }
     inner class Xtv {
