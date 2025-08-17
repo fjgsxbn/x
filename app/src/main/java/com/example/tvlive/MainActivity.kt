@@ -52,31 +52,25 @@ class MainActivity : AppCompatActivity() {
         // 上键：示例逻辑——回到视频开头
         btnUp.setOnClickListener {
             playerManager.playPrev()
-            Toast.makeText(this, "回到视频开头", Toast.LENGTH_SHORT).show()
+            
         }
         // 确定键：示例逻辑——切换播放/暂停
         btnConfirm.setOnClickListener {
             showChannelList()
-            Toast.makeText(this, "", Toast.LENGTH_SHORT).show()
+            
         }
         // 下键：示例逻辑——快进10秒
         btnDown.setOnClickListener {
             playerManager.playNext()
-            Toast.makeText(this, "快进10秒", Toast.LENGTH_SHORT).show()
+            
         }
         // 菜单键：示例逻辑——弹出功能菜单
         btnMenu.setOnClickListener {
+            showCustomDialog()
         }
     }
 
-    private fun playCurrentChannel() {
-        playerManager.playUrl(channels[currentChannelIndex].url)
-    }
-
-    private fun switchToChannel(index: Int) {
-        currentChannelIndex = index.coerceIn(0, channels.size - 1)
-        playCurrentChannel()
-    }
+    
 
     // 按键监听
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
@@ -92,12 +86,12 @@ class MainActivity : AppCompatActivity() {
             }
             // 上键切换上一个频道
             KeyEvent.KEYCODE_DPAD_UP -> {
-                switchToChannel(if (currentChannelIndex == channels.size - 1) 0 else currentChannelIndex + 1)
+                playManager.playPrev()
                 true
             }
             // 下键切换下一个频道
             KeyEvent.KEYCODE_DPAD_DOWN -> {
-                switchToChannel(if (currentChannelIndex == 0) channels.size - 1 else currentChannelIndex - 1)
+                playManager.playNext()
                 true
             }
             KeyEvent.KEYCODE_BACK -> {
@@ -109,9 +103,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showChannelList() {
-        ChannelListDialog(this, channels, currentChannelIndex) { position ->
-            switchToChannel(position)
-        }.show()
+        ChannelListDialog(this, playManager) .show()
     }
 
     // 显示自定义对话框
