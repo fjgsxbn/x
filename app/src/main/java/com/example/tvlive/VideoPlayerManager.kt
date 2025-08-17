@@ -35,6 +35,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     data class Channel(val name: String, val url: String)
 
     private var channels: List<Channel> = mutableListOf()
+    private var num: Int?
 
     fun p(adx: String, callback: () -> Unit) {
         context.lifecycleScope.launch(Dispatchers.IO) {
@@ -120,6 +121,16 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     }
     fun play(num: Int) {
         playUrl(channels[num].url)
+    }
+    fun playPrev(){
+        if(num==null){
+            return
+        }
+        val tar=num-1
+        if(tar<0){
+            tar=channels.size-1
+        }
+        num=tar
     }
 
     fun release() {
