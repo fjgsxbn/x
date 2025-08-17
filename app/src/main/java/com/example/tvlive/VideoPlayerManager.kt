@@ -131,6 +131,19 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             tar = channels.size - 1
         }
         num = tar
+        play(num)
+    }
+    
+    fun playNext() {
+        if (num == null) {
+            return
+        }
+        val tar = num + 1
+        if (tar >= channels.size) {
+            tar = 0
+        }
+        num = tar
+        play(num)
     }
 
     fun release() {
