@@ -33,7 +33,7 @@ class ChannelListDialog(
             channels.map { it.name }
         )
         listView.adapter = adapter
-        listView.setSelection(selectedPosition)
+        listView.setSelection(playManager.num)
         listView.requestFocus()
 
         // 列表项点击事件
@@ -43,6 +43,7 @@ class ChannelListDialog(
         }
 
         // 遥控器按键监听
+        var selectedPosition=playManager.num
         listView.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
                 when (keyCode) {
@@ -52,7 +53,7 @@ class ChannelListDialog(
                         return@setOnKeyListener true
                     }
                     KeyEvent.KEYCODE_DPAD_DOWN -> {
-                        selectedPosition = (selectedPosition + 1).coerceAtMost(channels.size - 1)
+                        selectedPosition = (selectedPosition + 1).coerceAtMost(playManager.channels.size - 1)
                         listView.setSelection(selectedPosition)
                         return@setOnKeyListener true
                     }
