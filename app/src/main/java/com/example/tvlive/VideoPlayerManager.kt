@@ -35,11 +35,9 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     data class Channel(val name: String, val url: String)
 
     private var channels: List<Channel> = mutableListOf()
-    
 
     fun p(adx: String, callback: () -> Unit) {
         context.lifecycleScope.launch(Dispatchers.IO) {
-            
             val client = OkHttpClient.Builder().build()
             val request = Request.Builder().url(adx).build()
             withContext(Dispatchers.Main) {
@@ -51,7 +49,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
                 }
-                
+
                 if (response.isSuccessful && response.body != null) {
                     var js = response.body!!.string()
                     Log.i("订阅", js)
@@ -91,28 +89,24 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     suspend fun run(jsCode: String) {
         withContext(Dispatchers.IO) {
             try {
-                
                 val v8Runtime: V8Runtime = V8Host.getNodeInstance().createV8Runtime()
                 val xtv = Xtv()
-        val v8ValueObject: V8ValueObject = v8Runtime!!.createV8ValueObject()
-        v8Runtime.globalObject!!.set("xtv", v8ValueObject)
-        v8ValueObject.bind(xtv)
+                val v8ValueObject: V8ValueObject = v8Runtime!!.createV8ValueObject()
+                v8Runtime.globalObject!!.set("xtv", v8ValueObject)
+                v8ValueObject.bind(xtv)
                 v8Runtime.getExecutor(jsCode).executeVoid()
-                //launch {
-                 //   while (true) {
-                 //       v8Runtime!!.await()
-                  //      delay(10000)
+                // launch {
+                //   while (true) {
+                //       v8Runtime!!.await()
+                //      delay(10000)
                 //    }
-                //}
+                // }
                 v8Runtime.await()
             } catch (e: Exception) {
                 Log.e("播放管理", "runjs", e)
             }
         }
-        
     }
-
-    
 
     // 加载M3U8直播源
     fun playUrl(url: String) {
