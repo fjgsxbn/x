@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         // 2. 给获取到的按钮绑定点击事件（直接链式操作）
         // 上键：示例逻辑——回到视频开头
         btnUp.setOnClickListener {
+            playerManager.playPrev()
             Toast.makeText(this, "回到视频开头", Toast.LENGTH_SHORT).show()
         }
         // 确定键：示例逻辑——切换播放/暂停
@@ -68,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         }
         // 下键：示例逻辑——快进10秒
         btnDown.setOnClickListener {
+            playerManager.playNext()
             Toast.makeText(this, "快进10秒", Toast.LENGTH_SHORT).show()
         }
         // 菜单键：示例逻辑——弹出功能菜单
