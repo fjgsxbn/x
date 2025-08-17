@@ -10,7 +10,7 @@ import android.widget.ListView
 
 class ChannelListDialog(
     context: Context,
-    private val manager: VideoPlayerManager
+    private val playManager: VideoPlayerManager
 ) : Dialog(context) {
 
     private lateinit var listView: ListView
@@ -38,7 +38,7 @@ class ChannelListDialog(
 
         // 列表项点击事件
         listView.setOnItemClickListener { _, _, position, _ ->
-            onChannelSelected(position)
+            playManager.play(position)
             dismiss()
         }
 
@@ -58,7 +58,7 @@ class ChannelListDialog(
                         return@setOnKeyListener true
                     }
                     KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_DPAD_CENTER -> {
-                        onChannelSelected(selectedPosition)
+                        playManager.play(selectedPosition)
                         dismiss()
                         return@setOnKeyListener true
                     }
