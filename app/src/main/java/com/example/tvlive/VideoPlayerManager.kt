@@ -20,8 +20,8 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+//import kotlinx.coroutines.delay
+//import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -111,12 +111,12 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 setupJsBridge()
                 // v8Runtime?.getExecutor(jsCode)?.executeVoid()
                 v8Runtime!!.getExecutor(jsCode).executeVoid()
-                launch {
-                    while (true) {
-                        v8Runtime!!.await()
-                        delay(10000)
-                    }
-                }
+                //launch {
+                 //   while (true) {
+                 //       v8Runtime!!.await()
+                  //      delay(10000)
+                //    }
+                //}
                 v8Runtime!!.await()
             } catch (e: Exception) {
                 Log.e("播放管理", "runjs", e)
