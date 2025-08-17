@@ -51,6 +51,32 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "出错", Toast.LENGTH_SHORT).show()
             }
         }
+
+        // 1. 直接在方法内获取所有按钮（无需全局声明按钮变量）
+         val btnUp = findViewById<Button>(R.id.btn_up)
+         val btnConfirm = findViewById<Button>(R.id.btn_confirm)
+         val btnDown = findViewById<Button>(R.id.btn_down)
+         val btnMenu = findViewById<Button>(R.id.btn_menu)
+         // 2. 给获取到的按钮绑定点击事件（直接链式操作）
+         // 上键：示例逻辑——回到视频开头
+         btnUp.setOnClickListener {
+             
+             Toast.makeText(this, "回到视频开头", Toast.LENGTH_SHORT).show()
+         }
+         // 确定键：示例逻辑——切换播放/暂停
+         btnConfirm.setOnClickListener {
+             
+             Toast.makeText(this, "", Toast.LENGTH_SHORT).show()
+         }
+         // 下键：示例逻辑——快进10秒
+         btnDown.setOnClickListener {
+             
+             Toast.makeText(this, "快进10秒", Toast.LENGTH_SHORT).show()
+         }
+         // 菜单键：示例逻辑——弹出功能菜单
+         btnMenu.setOnClickListener {
+             
+         }
     }
 
     private fun playCurrentChannel() {
