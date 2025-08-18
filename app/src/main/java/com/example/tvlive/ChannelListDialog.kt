@@ -33,8 +33,7 @@ class ChannelListDialog(
             playManager.channels.map { it.name }
         )
         listView.adapter = adapter
-        if(playManager!=null){
-            
+        if (playManager != null) {
         }
         listView.setSelection(playManager.num)
         listView.requestFocus()
@@ -49,11 +48,11 @@ class ChannelListDialog(
         var selectedPosition = playManager.num
         listView.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
-                if(keyCode==KeyEvent.KEYCODE_BACK){
-                        dismiss()
-                        return true
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    dismiss()
+                    return true
                 }
-                if(selectedPosition==null){
+                if (selectedPosition == null) {
                     return false
                 }
                 when (keyCode) {
@@ -72,7 +71,6 @@ class ChannelListDialog(
                         dismiss()
                         return@setOnKeyListener true
                     }
-                    
                 }
             }
             false
