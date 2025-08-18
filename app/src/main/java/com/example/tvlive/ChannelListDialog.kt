@@ -36,7 +36,7 @@ class ChannelListDialog(
         if (playManager != null) {
             listView.setSelection(playManager.num)
         }
-        
+
         listView.requestFocus()
 
         // 列表项点击事件
