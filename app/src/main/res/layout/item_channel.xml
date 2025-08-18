@@ -6,4 +6,5 @@
   android:gravity="center"
   android:textSize="24sp"
   android:focusable="true"
+  android:clickable="true"
 />
