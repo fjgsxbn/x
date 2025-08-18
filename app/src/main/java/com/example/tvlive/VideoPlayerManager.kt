@@ -37,6 +37,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
     @Volatile
     var channels: List<Channel> = mutableListOf()
+
     @Volatile
     var num: Int? = null
 
