@@ -45,6 +45,7 @@ class ChannelListDialog(
 
         // 列表项点击事件
         listView.setOnItemClickListener { _, _, position, _ ->
+            Log.i("点击","测试")
             playManager.play(position)
             dismiss()
         }
