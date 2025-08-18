@@ -33,12 +33,12 @@ class ChannelListDialog(
             playManager.channels.map { it.name }
         )
         listView.adapter = adapter
-        if (playManager.num != null) {
-            listView.setSelection(playManager.num)
+        if (playManager.num == null) {
             return
         }
 
         var selectedPosition = playManager.num!!
+        listView.setSelection(playManager.num!!)
         listView.requestFocus()
 
         // 列表项点击事件
