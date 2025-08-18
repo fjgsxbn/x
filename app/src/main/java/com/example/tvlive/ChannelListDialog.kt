@@ -1,9 +1,9 @@
 package com.example.tvlive
 
-import android.util.Log
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.WindowManager
 import android.widget.ArrayAdapter
@@ -28,7 +28,7 @@ class ChannelListDialog(
         }
 
         listView = findViewById(R.id.lv_channels)
-        Log.i("长度",playManager.channels.size)
+        Log.i("长度", playManager.channels.size)
         val adapter = ArrayAdapter(
             context,
             R.layout.item_channel,
