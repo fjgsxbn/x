@@ -35,7 +35,9 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     data class Channel(val name: String, val url: String)
     private val v8Runtime: V8Runtime = V8Host.getNodeInstance().createV8Runtime()
 
+    @Volatile
     var channels: List<Channel> = mutableListOf()
+    @Volatile
     var num: Int? = null
 
     fun p(adx: String, callback: () -> Unit) {
