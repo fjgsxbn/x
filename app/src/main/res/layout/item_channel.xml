@@ -7,5 +7,4 @@
   android:textSize="24sp"
   android:focusable="true"
   android:focusableInTouchMode="true"
-  android:clickable="true"
 />
