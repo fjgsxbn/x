@@ -34,8 +34,9 @@ class ChannelListDialog(
         )
         listView.adapter = adapter
         if (playManager != null) {
+            listView.setSelection(playManager.num)
         }
-        listView.setSelection(playManager.num)
+        
         listView.requestFocus()
 
         // 列表项点击事件
