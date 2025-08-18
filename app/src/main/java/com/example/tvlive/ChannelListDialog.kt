@@ -28,7 +28,7 @@ class ChannelListDialog(
         }
 
         listView = findViewById(R.id.lv_channels)
-        Log.i("长度", playManager.channels.map{it.name}.toString())
+        Log.i("长度", playManager.channels.map { it.name }.toString())
         val adapter = ArrayAdapter(
             context,
             R.layout.item_channel,
