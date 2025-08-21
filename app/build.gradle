@@ -70,9 +70,6 @@ dependencies {
     implementation "com.google.android.exoplayer:exoplayer:$exoPlayerVersion"
     implementation "com.google.android.exoplayer:exoplayer-hls:$exoPlayerVersion"
     implementation "com.google.android.exoplayer:exoplayer-ui:$exoPlayerVersion"
-    implementation "com.google.android.exoplayer:exoplayer-hevc:$exoPlayerVersion" // HEVC 解码器核心
-    implementation "com.google.android.exoplayer:exoplayer-av1:$exoPlayerVersion"
-    // https://mvnrepository.com/artifact/com.google.android.exoplayer/exoplayer-core
     runtimeOnly 'com.google.android.exoplayer:exoplayer-core:$exoPlayerVersion'
 
     // 网络与数据解析
