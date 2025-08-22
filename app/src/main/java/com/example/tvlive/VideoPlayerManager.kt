@@ -50,8 +50,8 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             val TAG = "MediaParseError"
 
             // 仅重写播放错误回调，聚焦媒体解析失败场景
-            override fun onPlayerError(player: Player, error: PlaybackException) {
-                super.onPlayerError(player, error)
+            override fun onPlayerError(error: PlaybackException) {
+                super.onPlayerError(error)
                 // 仅判断并处理「媒体解析失败」相关错误码
                 when (error.errorCode) {
                     // 核心错误码1：媒体源读取/解析失败（地址无效、格式损坏、网络异常等）
