@@ -5,8 +5,8 @@ import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import androidx.media3.common.MediaItem
-import androidx.media3.datasource.DefaultHttpDataSource
+
+
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.hls.HlsMediaSource
 import com.caoccao.javet.annotations.V8Function
@@ -27,7 +27,7 @@ import okhttp3.Request
 import java.io.IOException
 import java.util.*
 import androidx.media3.common.*
- import androidx.media3.exoplayer.ExoPlayer
+ 
  import androidx.media3.exoplayer.source.MediaSource
  import androidx.media3.exoplayer.source.ProgressiveMediaSource
  import androidx.media3.upstream.DataSource
@@ -90,7 +90,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                  Log.d(TAG, "播放状态变化：$stateDesc")
                  // 当状态为「可播放」时，开始监测进度与画面是否同步
                  if (playbackState == Player.STATE_READY && exoPlayer?.isPlaying == true) {
-                     startPlaybackPositionMonitor()
+                     //startPlaybackPositionMonitor()
                  }
              }
              // 监听播放错误（核心：直接捕获 ExoPlayer 异常）
@@ -137,7 +137,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
              ) {
                  super.onPlaybackPositionChanged(positionMs, bufferedPositionMs, playWhenReady, playbackState)
                  // 更新最新播放进度（用于监测）
-                 lastPlaybackPositionMs = positionMs
+                 //lastPlaybackPositionMs = positionMs
              }
          })
          // 3. 可选：添加 ExoPlayer 内置日志工具（更详细的事件时序）
