@@ -45,7 +45,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     var num: Int? = null
     init{
 
-        var l = : Player.Listener {
+        var l =object : Player.Listener {
      // 日志标签，便于筛选解析失败相关日志
       val TAG = "MediaParseError"
      // 仅重写播放错误回调，聚焦媒体解析失败场景
