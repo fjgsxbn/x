@@ -8,7 +8,7 @@
 >
 
   <androidx.media3.ui.PlayerView
-         android:id="@+id/live_player_view"
+         android:id="@+id/player_view"
          android:layout_width="match_parent"
          android:layout_height="0dp"
          android:layout_weight="1"  <!-- 占满屏幕剩余高度，适配不同屏幕 -->
