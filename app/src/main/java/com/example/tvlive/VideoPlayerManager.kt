@@ -132,11 +132,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 )
         )
             .setAllowChunklessPreparation(true) // 无缓冲快速启动（直播首屏加载更快）
-            .setLivePlaybackProperties(
-                minLoadableRetryAfterMs = 3000, // 直播分片加载失败时，3 秒后重试
-                maxLoadableRetryAfterMs = 10000, // 最大重试延迟：10 秒
-                enablePreloading = true // 预加载下一个分片（减少卡顿）
-            )
+            
             .createMediaSource(mediaItem)
         exoPlayer.setMediaSource(hlsMediaSource)
         exoPlayer.prepare()
