@@ -47,7 +47,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
         var l = : Player.Listener {
      // 日志标签，便于筛选解析失败相关日志
-     private val TAG = "MediaParseError"
+      val TAG = "MediaParseError"
      // 仅重写播放错误回调，聚焦媒体解析失败场景
      override fun onPlayerError(player: Player, error: PlaybackException) {
          super.onPlayerError(player, error)
