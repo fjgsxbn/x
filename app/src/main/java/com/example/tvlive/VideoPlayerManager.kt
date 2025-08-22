@@ -28,7 +28,7 @@ import java.io.IOException
 import java.util.*
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
-    private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).setLowLatency(true).setHandleAudioBecomingNoisy(true).build()
+    private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
 
     fun getPlayer() = exoPlayer
 
