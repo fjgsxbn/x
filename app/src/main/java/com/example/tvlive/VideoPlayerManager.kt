@@ -114,11 +114,31 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
     // 加载M3U8直播源
     fun playUrl(url: String) {
-        val dataSourceFactory = DefaultHttpDataSource.Factory()
-            .setUserAgent("Android TV Live Player")
-        val mediaSource = HlsMediaSource.Factory(dataSourceFactory)
-            .createMediaSource(MediaItem.fromUri(url))
-        exoPlayer.setMediaSource(mediaSource)
+        // 1. 创建媒体项（MediaItem）：封装 M3U8 直播地址
+         val mediaItem = MediaItem.fromUri(url)
+         // 2. 创建 HLS 媒体源（专门解析 M3U8 格式，支持直播分段拉流）
+         val hlsMediaSource = HlsMediaSource.Factory(
+             // 配置网络数据源：支持 HTTP 请求头鉴权、超时设置
+             DefaultHttpDataSource.Factory()
+                 .setUserAgent("Media3-Live-Player/1.7.1")  // 设置 User-Agent（部分服务器校验）
+                 .setConnectTimeoutMs(10000)  // 连接超时：10 秒
+                 .setReadTimeoutMs(10000)     // 读取超时：10 秒
+                 .setDefaultRequestProperties(
+                     // 可选：添加直播鉴权请求头（如 Token、Cookie）
+                     mapOf(
+                         "Authorization" to "Bearer your-live-token",
+                         "X-Live-Id" to "123456"
+                     )
+                 )
+         )
+             .setAllowChunklessPreparation(true)  // 无缓冲快速启动（直播首屏加载更快）
+             .setLivePlaybackProperties(
+                 minLoadableRetryAfterMs = 3000,  // 直播分片加载失败时，3 秒后重试
+                 maxLoadableRetryAfterMs = 10000, // 最大重试延迟：10 秒
+                 enablePreloading = true          // 预加载下一个分片（减少卡顿）
+             )
+             .createMediaSource(mediaItem)
+        exoPlayer.setMediaSource(hlsMediaSource)
         exoPlayer.prepare()
         exoPlayer.playWhenReady = true
     }
