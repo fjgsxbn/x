@@ -29,42 +29,7 @@ import java.util.*
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context)
-        .setVideoRendererEventListener(object : VideoRendererEventListener {
-            // 监听视频渲染相关事件（直接关联画面状态）
-            override fun onFirstFrameRendered() {
-                Log.d(TAG, "画面首次渲染成功")
-            }
-            override fun onVideoSizeChanged(
-                videoSize: VideoSize,
-                rotationDegrees: Int,
-                pixelWidthHeightRatio: Float
-            ) {
-                Log.d(TAG, "视频尺寸变化：${videoSize.width}x${videoSize.height}")
-            }
-            override fun onRenderedFirstFrame(surface: Any) {
-                Log.d(TAG, "Surface 首次渲染画面")
-            }
-            override fun onVideoDecoderInitialized(
-                decoderName: String,
-                initializedTimestampMs: Long,
-                initializationDurationMs: Long
-            ) {
-                Log.d(TAG, "视频解码器初始化：$decoderName")
-            }
-            override fun onVideoDecoderReleased(decoderName: String) {
-                Log.d(TAG, "视频解码器释放：$decoderName")
-            }
-            override fun onVideoInputFormatChanged(format: Format) {
-                Log.d(TAG, "视频输入格式变化：${format.codecs}")
-            }
-            override fun onDroppedFrames(count: Int, elapsedMs: Long) {
-                // 关键：画面丢帧过多可能导致停滞，此处需重点关注
-                Log.e(TAG, "画面丢帧！丢帧数量：$count，耗时：$elapsedMs ms")
-                if (count > 10) { // 丢帧阈值可根据需求调整
-                    Log.e(TAG, "严重丢帧，可能导致画面停止")
-                }
-            }
-        }).build()
+        .build()
 
     init {
         // 2. 添加核心播放事件监听（捕获错误、进度异常）
