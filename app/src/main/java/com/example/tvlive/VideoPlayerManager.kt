@@ -30,8 +30,8 @@ import androidx.media3.common.*
  
  import androidx.media3.exoplayer.source.MediaSource
  import androidx.media3.exoplayer.source.ProgressiveMediaSource
- import androidx.media3.upstream.DataSource
- import androidx.media3.upstream.DefaultHttpDataSource
+ androidx.media3.datasource.DataSource
+ import androidx.media3.net.DefaultHttpDataSource
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context)
