@@ -246,7 +246,6 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                 )
         )
             .setAllowChunklessPreparation(true) // 无缓冲快速启动（直播首屏加载更快）
-            
             .createMediaSource(mediaItem)
         exoPlayer.setMediaSource(hlsMediaSource)
         exoPlayer.prepare()
