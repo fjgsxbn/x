@@ -17,12 +17,8 @@ import androidx.media3.exoplayer.analytics.EventLogger
 import androidx.media3.exoplayer.hls.HlsMediaSource
 import androidx.media3.net.DefaultHttpDataSource
 import androidx.media3.ui.VideoRendererEventListener
-import com.caoccao.javet.annotations.V8Function
 import com.caoccao.javet.interop.V8Host
 import com.caoccao.javet.interop.V8Runtime
-import com.caoccao.javet.values.reference.IV8ValuePromise
-import com.caoccao.javet.values.reference.V8ValueError
-import com.caoccao.javet.values.reference.V8ValueObject
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
@@ -155,7 +151,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         context.lifecycleScope.launch(Dispatchers.IO) {
             val client = OkHttpClient.Builder().build()
             val request = Request.Builder().url(adx).build()
-            
+
             // 主线程显示 Toast
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, adx, Toast.LENGTH_SHORT).show()
@@ -243,4 +239,3 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         exoPlayer.playWhenReady = true
     }
 }
-
