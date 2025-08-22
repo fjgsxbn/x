@@ -26,6 +26,8 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
 import java.util.*
+import androidx.media3.common.Player
+ import androidx.media3.common.PlaybackException
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context)
@@ -41,6 +43,35 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
     @Volatile
     var num: Int? = null
+    init{
+
+        var l = : Player.Listener {
+     // 日志标签，便于筛选解析失败相关日志
+     private val TAG = "MediaParseError"
+     // 仅重写播放错误回调，聚焦媒体解析失败场景
+     override fun onPlayerError(player: Player, error: PlaybackException) {
+         super.onPlayerError(player, error)
+         // 仅判断并处理「媒体解析失败」相关错误码
+         when (error.errorCode) {
+             // 核心错误码1：媒体源读取/解析失败（地址无效、格式损坏、网络异常等）
+             PlaybackException.ERROR_CODE_FAILED_TO_READ_SOURCE -> {
+                 Log.e(TAG, "=== 媒体解析失败 ===")
+                 Log.e(TAG, "错误原因：媒体源无法读取（可能是地址无效、文件损坏或网络异常）")
+                 Log.e(TAG, "错误详情：${error.message}")
+                 // 打印错误堆栈，便于定位具体问题（如网络请求异常根源）
+                 error.printStackTrace()
+             }
+             // 核心错误码2：媒体格式不支持（解析成功但格式无法识别）
+             PlaybackException.ERROR_CODE_UNSUPPORTED_MEDIA_FORMAT -> {
+                 Log.e(TAG, "=== 媒体解析失败 ===")
+                 Log.e(TAG, "错误原因：媒体格式不支持（解析完成但播放器无法识别该格式）")
+                 Log.e(TAG, "不支持的格式详情：${error.message}")
+             }
+         }
+     }
+        }
+        exoPlayer.addListener(l)
+    }
 
     fun p(adx: String, callback: () -> Unit) {
         context.lifecycleScope.launch(Dispatchers.IO) {
