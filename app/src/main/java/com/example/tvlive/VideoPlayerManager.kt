@@ -175,4 +175,72 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
                                 responseBody,
                                 object : TypeToken<List<Channel>>() {}.type
                             )
-            
+                        }.onFailure {
+                            Log.e(TAG, "JSON 解析失败", it)
+                            Toast.makeText(context, "数据解析失败", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(context, "请求失败：${response.code}", Toast.LENGTH_SHORT).show()
+                        Log.e(TAG, "请求失败，响应码：${response.code}")
+                    }
+                    // 执行回调（主线程）
+                    callback()
+                }
+            } catch (e: IOException) {
+                // 捕获网络异常
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "网络错误：${e.message}", Toast.LENGTH_SHORT).show()
+                    Log.e(TAG, "网络请求异常", e)
+                }
+            } finally {
+                // 关闭响应体，避免资源泄漏
+                client.dispatcher.executorService.shutdown()
+            }
+        }
+    }
+
+    // 6. 新增资源释放方法（避免内存泄漏，如 V8Runtime、ExoPlayer）
+    fun release() {
+        // 释放 ExoPlayer
+        exoPlayer.stop()
+        exoPlayer.release()
+        // 释放 V8Runtime
+        runCatching {
+            v8Runtime.close()
+        }.onFailure {
+            Log.e(TAG, "V8Runtime 释放失败", it)
+        }
+    }
+
+    // 7. 播放 M3U8 直播流的方法（基于之前的逻辑优化）
+    fun playUrl(url: String) {
+        // 避免空指针和状态冲突
+        if (exoPlayer.playbackState in listOf(Player.STATE_BUFFERING, Player.STATE_PREPARING)) {
+            exoPlayer.stop()
+        }
+
+        // 构建 HTTP 数据源（支持鉴权和超时配置）
+        val httpDataSourceFactory = DefaultHttpDataSource.Factory()
+            .setUserAgent("Media3-Live-Player/1.7.1")
+            .setConnectTimeoutMs(10000)
+            .setReadTimeoutMs(10000)
+            .setDefaultRequestProperties(
+                mapOf(
+                    "Authorization" to "Bearer your-live-token",
+                    "X-Live-Id" to "123456"
+                )
+            )
+
+        // 构建 HLS 媒体源（适配 M3U8 格式）
+        val mediaItem = MediaItem.fromUri(url)
+        val hlsMediaSource = HlsMediaSource.Factory(httpDataSourceFactory)
+            .setAllowChunklessPreparation(true) // 直播快速启动
+            .createMediaSource(mediaItem)
+
+        // 设置媒体源并播放
+        exoPlayer.setMediaSource(hlsMediaSource)
+        exoPlayer.prepare()
+        exoPlayer.playWhenReady = true
+    }
+}
+
