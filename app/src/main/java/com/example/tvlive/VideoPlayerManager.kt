@@ -281,6 +281,38 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             v8Runtime?.close()
         }
     }
+
+    /**
+      * 监测播放进度与画面是否同步：
+      * 逻辑：若声音正常（进度在增加），但画面长时间未更新（可通过 UI 观察或丢帧判断），则判定为异常
+      */
+     private fun startPlaybackPositionMonitor() {
+         // 用线程定时检查进度（避免主线程阻塞）
+         Thread {
+             while (exoPlayer?.isPlaying == true) {
+                 val currentTimeMs = System.currentTimeMillis()
+                 // 每 1 秒检查一次进度变化
+                 if (currentTimeMs - lastCheckTimeMs > 1000) {
+                     val currentPositionMs = exoPlayer?.currentPosition ?: 0
+                     // 若进度增加（说明声音在播放），但画面无更新（需结合 UI 观察或丢帧日志）
+                     if (currentPositionMs - lastPlaybackPositionMs > 500) { // 进度增加超过 500ms（说明在播放）
+                         Log.d(TAG, "进度正常增加：${lastPlaybackPositionMs}ms -> ${currentPositionMs}ms")
+                         // 此处可结合 UI 层判断：比如 ImageView 显示的画面是否与进度匹配
+                         // （若无法直接获取画面帧，可提示用户"进度正常但画面未更新，可能是渲染异常"）
+                     } else if (currentPositionMs == lastPlaybackPositionMs) {
+                         // 进度停滞但播放器状态为「播放中」，可能是缓冲或解码问题
+                         Log.e(TAG, "进度停滞！当前进度：${currentPositionMs}ms，可能是缓冲不足或画面渲染卡住")
+                     }
+                     lastPlaybackPositionMs = currentPositionMs
+                     lastCheckTimeMs = currentTimeMs
+                 }
+                 // 每次检查后休眠 500ms，降低资源占用
+                 Thread.sleep(500)
+             }
+         }.start()
+     }
+
+     
     inner class Xtv {
         @V8Function(name = "update")
         suspend fun update(json: String) {
