@@ -26,6 +26,12 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
 import java.util.*
+import androidx.media3.common.*
+ import androidx.media3.exoplayer.ExoPlayer
+ import androidx.media3.exoplayer.source.MediaSource
+ import androidx.media3.exoplayer.source.ProgressiveMediaSource
+ import androidx.media3.upstream.DataSource
+ import androidx.media3.upstream.DefaultHttpDataSource
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context)
