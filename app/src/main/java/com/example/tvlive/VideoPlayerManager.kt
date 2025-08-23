@@ -28,10 +28,19 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
 import java.util.*
+import androidx.media3.exoplayer.DecoderSelector
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
-    private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context)
+    private val lateinit exoPlayer: ExoPlayer 
+    init {
+        // 1. 创建“强制软件解码”的选择器
+         val softwareDecoderSelector = DecoderSelector.DEFAULT
+             .withRequiredCodecType(DecoderSelector.CODEC_TYPE_SOFTWARE)
+ // 2. 用该Factory创建Player
+        exoplayer= ExoPlayer.Builder(context)
+        .setVideoDecoderSelector(softwareDecoderSelector) // 关键：强制视频软件解码
         .build()
+    }
 
     fun getPlayer() = exoPlayer
 
