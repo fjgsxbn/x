@@ -8,9 +8,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.media3.common.*
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
+import androidx.media3.common.util.Logging
 import androidx.media3.datasource.DefaultHttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.hls.HlsMediaSource
+import androidx.media3.exoplayer.renderer.DefaultRenderersFactory
+import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import com.caoccao.javet.annotations.V8Function
 import com.caoccao.javet.interop.V8Host
 import com.caoccao.javet.interop.V8Runtime
@@ -19,9 +22,6 @@ import com.caoccao.javet.values.reference.IV8ValuePromise
 import com.caoccao.javet.values.reference.IV8ValuePromise.IListener
 import com.caoccao.javet.values.reference.V8ValueError
 import com.caoccao.javet.values.reference.V8ValueObject
-import androidx.media3.common.util.Logging
- import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
- import androidx.media3.exoplayer.renderer.DefaultRenderersFactory
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
