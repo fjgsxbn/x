@@ -19,9 +19,9 @@ import com.caoccao.javet.values.reference.IV8ValuePromise
 import com.caoccao.javet.values.reference.IV8ValuePromise.IListener
 import com.caoccao.javet.values.reference.V8ValueError
 import com.caoccao.javet.values.reference.V8ValueObject
-import com.google.android.exoplayer2.renderer.DefaultRenderersFactory
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.util.Logging
+import androidx.media3.common.util.Logging
+ import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
+ import androidx.media3.exoplayer.renderer.DefaultRenderersFactory
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
