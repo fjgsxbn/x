@@ -19,6 +19,9 @@ import com.caoccao.javet.values.reference.IV8ValuePromise
 import com.caoccao.javet.values.reference.IV8ValuePromise.IListener
 import com.caoccao.javet.values.reference.V8ValueError
 import com.caoccao.javet.values.reference.V8ValueObject
+import com.google.android.exoplayer2.renderer.DefaultRenderersFactory
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.util.Logging
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
@@ -28,9 +31,6 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
 import java.util.*
-import com.google.android.exoplayer2.util.Logging
- import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
- import com.google.android.exoplayer2.renderer.DefaultRenderersFactory
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context)
@@ -62,12 +62,12 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         }
         exoPlayer.addListener(l)
         Logging.setLogLevel(Logging.LEVEL_ALL)
-     
-     // 2. 开启轨道选择器（如视频清晰度切换）的详细日志
-     DefaultTrackSelector.Log.setLogLevel(DefaultTrackSelector.Log.LEVEL_ALL)
-     
-     // 3. 开启渲染器（视频/音频渲染）的实时状态日志（关键：抓画面不动的渲染问题）
-     DefaultRenderersFactory.Log.setLogLevel(DefaultRenderersFactory.Log.LEVEL_ALL)
+
+        // 2. 开启轨道选择器（如视频清晰度切换）的详细日志
+        DefaultTrackSelector.Log.setLogLevel(DefaultTrackSelector.Log.LEVEL_ALL)
+
+        // 3. 开启渲染器（视频/音频渲染）的实时状态日志（关键：抓画面不动的渲染问题）
+        DefaultRenderersFactory.Log.setLogLevel(DefaultRenderersFactory.Log.LEVEL_ALL)
     }
 
     fun p(adx: String, callback: () -> Unit) {
