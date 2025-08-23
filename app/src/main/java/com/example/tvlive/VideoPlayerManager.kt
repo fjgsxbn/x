@@ -53,12 +53,8 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             override fun onPlayerError(error: PlaybackException) {
                 super.onPlayerError(error)
                 // 仅判断并处理「媒体解析失败」相关错误码
-                
-                    
-                        
-                        Log.e(TAG, "不支持的格式详情：${error.message}")
-                    
-                
+
+                Log.e(TAG, "不支持的格式详情：${error.message}")
             }
         }
         exoPlayer.addListener(l)
