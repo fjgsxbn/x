@@ -37,7 +37,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
          val softwareDecoderSelector = DecoderSelector.DEFAULT
              .withRequiredCodecType(DecoderSelector.CODEC_TYPE_SOFTWARE)
  // 2. 用该Factory创建Player
-        exoplayer= ExoPlayer.Builder(context)
+        exoPlayer= ExoPlayer.Builder(context)
         .setVideoDecoderSelector(softwareDecoderSelector) // 关键：强制视频软件解码
         .build()
     }
