@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.media3.common.*
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
-import androidx.media3.common.util.Logging
 import androidx.media3.datasource.DefaultHttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.hls.HlsMediaSource
@@ -61,7 +60,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             }
         }
         exoPlayer.addListener(l)
-        Logging.setLogLevel(Logging.LEVEL_ALL)
+        androidx.media3.common.util.Log.setLogLevel(0)
 
         // 2. 开启轨道选择器（如视频清晰度切换）的详细日志
         DefaultTrackSelector.Log.setLogLevel(DefaultTrackSelector.Log.LEVEL_ALL)
