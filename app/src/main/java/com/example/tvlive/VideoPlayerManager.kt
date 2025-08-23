@@ -53,22 +53,12 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             override fun onPlayerError(error: PlaybackException) {
                 super.onPlayerError(error)
                 // 仅判断并处理「媒体解析失败」相关错误码
-                when (error.errorCode) {
-                    // 核心错误码1：媒体源读取/解析失败（地址无效、格式损坏、网络异常等）
-                    PlaybackException.ERROR_CODE_FAILED_TO_READ_SOURCE -> {
-                        Log.e(TAG, "=== 媒体解析失败 ===")
-                        Log.e(TAG, "错误原因：媒体源无法读取（可能是地址无效、文件损坏或网络异常）")
-                        Log.e(TAG, "错误详情：${error.message}")
-                        // 打印错误堆栈，便于定位具体问题（如网络请求异常根源）
-                        error.printStackTrace()
-                    }
-                    // 核心错误码2：媒体格式不支持（解析成功但格式无法识别）
-                    PlaybackException.ERROR_CODE_UNSUPPORTED_MEDIA_FORMAT -> {
-                        Log.e(TAG, "=== 媒体解析失败 ===")
-                        Log.e(TAG, "错误原因：媒体格式不支持（解析完成但播放器无法识别该格式）")
+                
+                    
+                        
                         Log.e(TAG, "不支持的格式详情：${error.message}")
-                    }
-                }
+                    
+                
             }
         }
         exoPlayer.addListener(l)
