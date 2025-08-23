@@ -60,13 +60,6 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             }
         }
         exoPlayer.addListener(l)
-        androidx.media3.common.util.Log.setLogLevel(0)
-
-        // 2. 开启轨道选择器（如视频清晰度切换）的详细日志
-        DefaultTrackSelector.Log.setLogLevel(DefaultTrackSelector.Log.LEVEL_ALL)
-
-        // 3. 开启渲染器（视频/音频渲染）的实时状态日志（关键：抓画面不动的渲染问题）
-        DefaultRenderersFactory.Log.setLogLevel(DefaultRenderersFactory.Log.LEVEL_ALL)
     }
 
     fun p(adx: String, callback: () -> Unit) {
