@@ -12,16 +12,16 @@ import android.widget.EditText
 import android.widget.Switch
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.media3.ui.PlayerView
 import com.github.pedrovgs.lynx.LynxShakeDetector
 
 class MainActivity : AppCompatActivity() {
     private val OVERLAY_PERMISSION_REQUEST_CODE = 1001
     private lateinit var sharedPreferences: SharedPreferences
+
     // 1. 核心对象：1个 View + 1个播放器实例（复用）
-     private lateinit var playerView: SurfaceView       // 唯一的视频渲染 View
-     private lateinit var surfaceHolder: SurfaceHolder
-     private lateinit var ijkPlayer: IjkMediaPlayer // 复用的播放器实例
+    private lateinit var playerView: SurfaceView // 唯一的视频渲染 View
+    private lateinit var surfaceHolder: SurfaceHolder
+    private lateinit var ijkPlayer: IjkMediaPlayer // 复用的播放器实例
     private lateinit var playerManager: VideoPlayerManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         playerManager = VideoPlayerManager(this, webView)
         playerView = findViewById(R.id.player_view)
         surfaceHolder = playerView.holder
-         surfaceHolder.addCallback(this)
+        surfaceHolder.addCallback(this)
         playerView.player = playerManager.getPlayer()
         // playCurrentChannel()
         val u = sharedPreferences.getString("circle_text", "")
@@ -145,26 +145,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     // View 就绪：绑定播放器与 View（仅1次）
-     override fun surfaceCreated(holder: SurfaceHolder) {
-         if (::ijkPlayer.isInitialized) {
-             ijkPlayer.setDisplay(holder) // 播放器画面渲染到这个 View
-             // 首次加载默认直播地址
-             try {
-                 ijkPlayer.dataSource = currentLiveUrl
-                 ijkPlayer.prepareAsync()
-             } catch (e: IOException) {
-                 e.printStackTrace()
-             }
-         }
-     }
-     // View 尺寸变化：调整画面比例
-     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
-         ijkPlayer.setVideoScalingMode(IjkMediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING)
-     }
-     // View 销毁：解绑播放器
-     override fun surfaceDestroyed(holder: SurfaceHolder) {
-         if (::ijkPlayer.isInitialized) {
-             ijkPlayer.setDisplay(null)
-         }
-     }
+    override fun surfaceCreated(holder: SurfaceHolder) {
+        if (::ijkPlayer.isInitialized) {
+            ijkPlayer.setDisplay(holder) // 播放器画面渲染到这个 View
+            // 首次加载默认直播地址
+            try {
+                ijkPlayer.dataSource = currentLiveUrl
+                ijkPlayer.prepareAsync()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    // View 尺寸变化：调整画面比例
+    override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
+        ijkPlayer.setVideoScalingMode(IjkMediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING)
+    }
+
+    // View 销毁：解绑播放器
+    override fun surfaceDestroyed(holder: SurfaceHolder) {
+        if (::ijkPlayer.isInitialized) {
+            ijkPlayer.setDisplay(null)
+        }
+    }
 }
