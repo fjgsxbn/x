@@ -29,9 +29,8 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
         IjkMediaPlayer.loadLibrariesOnce(null)
         IjkMediaPlayer.native_profileBegin("libijkplayer.so")
-        
     }
-    
+
     private var ijkPlayer: IjkMediaPlayer = IjkMediaPlayer()
 
     fun getPlayer() = ijkPlayer
