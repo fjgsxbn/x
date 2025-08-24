@@ -13,6 +13,9 @@ import android.widget.Switch
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.github.pedrovgs.lynx.LynxShakeDetector
+import android.view.SurfaceHolder
+ import android.view.SurfaceView
+import tv.danmaku.ijk.media.player.IjkMediaPlayer
 
 class MainActivity : AppCompatActivity() {
     private val OVERLAY_PERMISSION_REQUEST_CODE = 1001
@@ -37,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         playerView = findViewById(R.id.player_view)
         surfaceHolder = playerView.holder
         surfaceHolder.addCallback(this)
-        playerView.player = playerManager.getPlayer()
+        ijkPlayer = playerManager.getPlayer()
         // playCurrentChannel()
         val u = sharedPreferences.getString("circle_text", "")
         if ("" == u) {
