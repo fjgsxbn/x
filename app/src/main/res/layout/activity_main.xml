@@ -31,7 +31,7 @@
   > <!-- 与播放器区留少量间距，避免重叠 -->
          
          <!-- 确定键：加粗文字，突出核心操作 -->
-         <Button
+  <Button
       android:id="@+id/btn_confirm"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
