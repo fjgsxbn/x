@@ -31,16 +31,7 @@ import java.util.*
 import androidx.media3.exoplayer.DecoderSelector
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
-    private val lateinit exoPlayer: ExoPlayer 
-    init {
-        // 1. 创建“强制软件解码”的选择器
-         val softwareDecoderSelector = DecoderSelector.DEFAULT
-             .withRequiredCodecType(DecoderSelector.CODEC_TYPE_SOFTWARE)
- // 2. 用该Factory创建Player
-        exoPlayer= ExoPlayer.Builder(context)
-        .setVideoDecoderSelector(softwareDecoderSelector) // 关键：强制视频软件解码
-        .build()
-    }
+    private lateinit var ijkMediaPlayer: IjkMediaPlayer // IJKPlayer 核心实例
 
     fun getPlayer() = exoPlayer
 
@@ -54,19 +45,24 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     var num: Int? = null
     init {
 
-        var l = object : Player.Listener {
-            // 日志标签，便于筛选解析失败相关日志
-            val TAG = "MediaParseError"
-
-            // 仅重写播放错误回调，聚焦媒体解析失败场景
-            override fun onPlayerError(error: PlaybackException) {
-                super.onPlayerError(error)
-                // 仅判断并处理「媒体解析失败」相关错误码
-
-                Log.e(TAG, "不支持的格式详情：${error.message}")
-            }
-        }
-        exoPlayer.addListener(l)
+        IjkMediaPlayer.loadLibrariesOnce(null)
+         IjkMediaPlayer.native_profileBegin("libijkplayer.so")
+         // 创建 IjkMediaPlayer 实例
+         ijkMediaPlayer = IjkMediaPlayer()
+         // 配置播放参数（可选，按需调整）
+         with(ijkMediaPlayer) {
+             // 开启硬件解码（0=关闭，1=开启；如需软件解码，注释此行）
+             setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "mediacodec", 1)
+             // 硬件解码失败自动降级软件解码
+             setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "mediacodec-auto-rotate", 1)
+             // 直播流超时时间（10秒，单位：微秒）
+             setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "timeout", 10000000)
+             // 开启直播模式（优化 M3U8 缓冲）
+             setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "live_start", 1)
+             // 降低缓冲（减少直播延迟，按需调整）
+             setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "buffer_size", 1024 * 1024) // 1MB 缓冲
+             setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "max_buffer_size", 2 * 1024 * 1024) // 最大 2MB
+         }
     }
 
     fun p(adx: String, callback: () -> Unit) {
