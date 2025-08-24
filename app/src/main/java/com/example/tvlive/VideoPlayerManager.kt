@@ -20,7 +20,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import tv.danmaku.ijk.media.player.IjkMediaPlayer
+import com.shuyu.gsyvideoplayer.player.GSYVideoPlayer
+ import com.shuyu.gsyvideoplayer.player.IjkPlayerManager
+ import com.shuyu.gsyvideoplayer.utils.GSYVideoType
 import java.io.IOException
 import java.util.*
 
@@ -129,7 +131,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
     // 加载M3U8直播源
     fun playUrl(url: String) {
-        // if (!::ijkPlayer.isInitialized) return
+        
         if (player.isPlaying) {
              player.onVideoPause()
          }
