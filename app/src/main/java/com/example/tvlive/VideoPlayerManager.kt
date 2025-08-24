@@ -28,7 +28,7 @@ import java.util.*
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
 
-    private var player: GSYVideoPlayer = findViewById(R.id.player)
+    private var player: GSYVideoPlayer = context.findViewById(R.id.player)
 
     init {
         player = findViewById(R.id.player_view)
@@ -130,7 +130,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             player.onVideoPause()
         }
         // 2. 设置新的直播地址和标题
-        player.setUp(liveUrl, false, "当前直播：${if (liveUrl == liveUrl1) "直播1" else "直播2"}")
+        player.setUp(url, false, "当前直播")
         // 3. 开始播放（自动播放，也可改为手动点击播放）
         player.startPlayLogic()
     }
