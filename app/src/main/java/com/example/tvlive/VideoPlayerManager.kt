@@ -15,7 +15,7 @@ import com.caoccao.javet.values.reference.V8ValueError
 import com.caoccao.javet.values.reference.V8ValueObject
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.shuyu.gsyvideoplayer.player.GSYVideoPlayer
+import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer
 import com.shuyu.gsyvideoplayer.player.IjkPlayerManager
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType
 import kotlinx.coroutines.Dispatchers
@@ -28,10 +28,10 @@ import java.util.*
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
 
-    private var player: GSYVideoPlayer = context.findViewById(R.id.player)
+    private var player: GSYVideoPlayer = context.findViewById(R.id.player_view)
 
     init {
-        player = findViewById(R.id.player_view)
+        
         // 关键：设置为直播模式（禁用进度条拖动、自动续播等）
         player.setLive(true)
         // 选择 IJK 内核（对 M3U8 直播兼容性更好，也可切换为 Exo 内核）
