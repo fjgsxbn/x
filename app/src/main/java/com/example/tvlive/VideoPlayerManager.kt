@@ -20,9 +20,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import tv.danmaku.ijk.media.player.IjkMediaPlayer
 import java.io.IOException
 import java.util.*
-import tv.danmaku.ijk.media.player.IjkMediaPlayer
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
     private lateinit var ijkMediaPlayer: IjkMediaPlayer // IJKPlayer 核心实例
