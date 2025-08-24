@@ -11,6 +11,7 @@
     android:supportsRtl="true"
     android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
     android:usesCleartextTraffic="true"
+    android:allowNativeHeapPointerTagging="false"
   >
     <activity android:name=".MainActivity" android:exported="true">
       <intent-filter>
