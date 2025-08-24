@@ -151,13 +151,6 @@ class MainActivity : AppCompatActivity() {
     override fun surfaceCreated(holder: SurfaceHolder) {
         if (::ijkPlayer.isInitialized) {
             ijkPlayer.setDisplay(holder) // 播放器画面渲染到这个 View
-            // 首次加载默认直播地址
-            try {
-                ijkPlayer.dataSource = currentLiveUrl
-                ijkPlayer.prepareAsync()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
         }
     }
 
