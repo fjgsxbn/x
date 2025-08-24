@@ -17,14 +17,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.pedrovgs.lynx.LynxShakeDetector
 import tv.danmaku.ijk.media.player.IjkMediaPlayer
 
-class MainActivity : AppCompatActivity(), SurfaceHolder.Callback {
-    private val OVERLAY_PERMISSION_REQUEST_CODE = 1001
+class MainActivity : AppCompatActivity() {
+    
     private lateinit var sharedPreferences: SharedPreferences
 
-    // 1. 核心对象：1个 View + 1个播放器实例（复用）
-    private lateinit var playerView: SurfaceView // 唯一的视频渲染 View
-    private lateinit var surfaceHolder: SurfaceHolder
-    private lateinit var ijkPlayer: IjkMediaPlayer // 复用的播放器实例
+    
     private lateinit var playerManager: VideoPlayerManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,11 +34,7 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback {
         // 初始化播放器
         val webView: WebView = findViewById(R.id.webView)
         playerManager = VideoPlayerManager(this, webView)
-        playerView = findViewById(R.id.player_view)
-        surfaceHolder = playerView.holder
-        surfaceHolder.addCallback(this)
-        ijkPlayer = playerManager.getPlayer()
-        // playCurrentChannel()
+        
         val u = sharedPreferences.getString("circle_text", "")
         if ("" == u) {
             showCustomDialog()
@@ -147,22 +140,5 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback {
         playerManager.release()
     }
 
-    // View 就绪：绑定播放器与 View（仅1次）
-    override fun surfaceCreated(holder: SurfaceHolder) {
-        if (::ijkPlayer.isInitialized) {
-            ijkPlayer.setDisplay(holder) // 播放器画面渲染到这个 View
-        }
-    }
-
-    // View 尺寸变化：调整画面比例
-    override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
-        // ijkPlayer.setVideoScalingMode(IjkMediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING)
-    }
-
-    // View 销毁：解绑播放器
-    override fun surfaceDestroyed(holder: SurfaceHolder) {
-        if (::ijkPlayer.isInitialized) {
-            ijkPlayer.setDisplay(null)
-        }
-    }
+    
 }
