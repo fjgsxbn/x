@@ -42,7 +42,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         IjkMediaPlayer.loadLibrariesOnce(null)
         IjkMediaPlayer.native_profileBegin("libijkplayer.so")
         // 创建 IjkMediaPlayer 实例
-        ijkMediaPlayer = IjkMediaPlayer()
+        ijkPlayer = IjkMediaPlayer()
         // 配置播放参数（可选，按需调整）
     }
 
@@ -161,7 +161,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     }
 
     fun release() {
-        exoPlayer.release()
+        ijkPlayer.release()
         context.lifecycleScope.launch(Dispatchers.IO) {
             v8Runtime?.close()
         }
