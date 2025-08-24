@@ -15,8 +15,6 @@ import com.caoccao.javet.values.reference.V8ValueError
 import com.caoccao.javet.values.reference.V8ValueObject
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.shuyu.gsyvideoplayer.player.IjkPlayerManager
-import com.shuyu.gsyvideoplayer.utils.GSYVideoType
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,7 +27,6 @@ import java.util.*
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
 
     private var player: StandardGSYVideoPlayer = context.findViewById(R.id.player_view)
-    
 
     data class Channel(val name: String, val url: String)
     private val v8Runtime: V8Runtime = V8Host.getNodeInstance().createV8Runtime()
