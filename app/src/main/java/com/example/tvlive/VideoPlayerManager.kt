@@ -6,8 +6,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.media3.common.*
-import androidx.media3.datasource.DefaultHttpDataSource
-import androidx.media3.exoplayer.hls.HlsMediaSource
 import com.caoccao.javet.annotations.V8Function
 import com.caoccao.javet.interop.V8Host
 import com.caoccao.javet.interop.V8Runtime
@@ -135,19 +133,19 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     // 加载M3U8直播源
     fun playUrl(url: String) {
         if (!::ijkPlayer.isInitialized) return
-         try {
-             // 1. 停止当前播放并重置状态
-             ijkPlayer.stop()
-             ijkPlayer.reset()
-             // 2. 更新当前直播地址 + 设置新数据源
-             currentLiveUrl = newUrl
-             ijkPlayer.dataSource = newUrl
-             // 3. 重新准备（异步，避免阻塞主线程）
-             ijkPlayer.prepareAsync()
-         } catch (e: IOException) {
-             e.printStackTrace()
-             Toast.makeText(context, "切换直播失败", Toast.LENGTH_SHORT).show()
-         }
+        try {
+            // 1. 停止当前播放并重置状态
+            ijkPlayer.stop()
+            ijkPlayer.reset()
+            // 2. 更新当前直播地址 + 设置新数据源
+            currentLiveUrl = newUrl
+            ijkPlayer.dataSource = newUrl
+            // 3. 重新准备（异步，避免阻塞主线程）
+            ijkPlayer.prepareAsync()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Toast.makeText(context, "切换直播失败", Toast.LENGTH_SHORT).show()
+        }
     }
     fun play(num: Int) {
         playUrl(channels[num].url)
