@@ -5,7 +5,6 @@ import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import androidx.media3.common.*
 import com.caoccao.javet.annotations.V8Function
 import com.caoccao.javet.interop.V8Host
 import com.caoccao.javet.interop.V8Runtime
@@ -23,11 +22,12 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
 import java.util.*
+import tv.danmaku.ijk.media.player.IjkMediaPlayer
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
     private lateinit var ijkMediaPlayer: IjkMediaPlayer // IJKPlayer 核心实例
 
-    fun getPlayer() = exoPlayer
+    fun getPlayer() = ijkMediaPlayer
 
     data class Channel(val name: String, val url: String)
     private val v8Runtime: V8Runtime = V8Host.getNodeInstance().createV8Runtime()
