@@ -5,8 +5,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.KeyEvent
-import android.view.SurfaceHolder
-import android.view.SurfaceView
 import android.view.View
 import android.webkit.WebView
 import android.widget.Button
@@ -15,13 +13,11 @@ import android.widget.Switch
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.github.pedrovgs.lynx.LynxShakeDetector
-import tv.danmaku.ijk.media.player.IjkMediaPlayer
 
 class MainActivity : AppCompatActivity() {
-    
+
     private lateinit var sharedPreferences: SharedPreferences
 
-    
     private lateinit var playerManager: VideoPlayerManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         // 初始化播放器
         val webView: WebView = findViewById(R.id.webView)
         playerManager = VideoPlayerManager(this, webView)
-        
+
         val u = sharedPreferences.getString("circle_text", "")
         if ("" == u) {
             showCustomDialog()
@@ -139,6 +135,4 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         playerManager.release()
     }
-
-    
 }

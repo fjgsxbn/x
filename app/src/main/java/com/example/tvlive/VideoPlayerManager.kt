@@ -15,39 +15,34 @@ import com.caoccao.javet.values.reference.V8ValueError
 import com.caoccao.javet.values.reference.V8ValueObject
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.shuyu.gsyvideoplayer.player.GSYVideoPlayer
+import com.shuyu.gsyvideoplayer.player.IjkPlayerManager
+import com.shuyu.gsyvideoplayer.utils.GSYVideoType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import com.shuyu.gsyvideoplayer.player.GSYVideoPlayer
- import com.shuyu.gsyvideoplayer.player.IjkPlayerManager
- import com.shuyu.gsyvideoplayer.utils.GSYVideoType
 import java.io.IOException
 import java.util.*
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
 
     private var player: GSYVideoPlayer = findViewById(R.id.player)
-    
-    
-    init{
-         player = findViewById(R.id.player_view)
-         // 关键：设置为直播模式（禁用进度条拖动、自动续播等）
-         player.setLive(true)
-         // 选择 IJK 内核（对 M3U8 直播兼容性更好，也可切换为 Exo 内核）
-         player.setPlayerManager(IjkPlayerManager())
-         // 配置视频类型：直播建议用 16:9 或自适应（根据实际需求调整）
-         GSYVideoType.setShowType(GSYVideoType.SCREEN_MATCH_FULL)
-         // 禁用缓存（直播无需缓存，避免占用存储空间）
-         player.setCacheWithPlay(false)
-         // 开启硬件加速（可选，部分设备可提升直播流畅度）
-         player.setEnableHardwareDecode(true)
-         
+
+    init {
+        player = findViewById(R.id.player_view)
+        // 关键：设置为直播模式（禁用进度条拖动、自动续播等）
+        player.setLive(true)
+        // 选择 IJK 内核（对 M3U8 直播兼容性更好，也可切换为 Exo 内核）
+        player.setPlayerManager(IjkPlayerManager())
+        // 配置视频类型：直播建议用 16:9 或自适应（根据实际需求调整）
+        GSYVideoType.setShowType(GSYVideoType.SCREEN_MATCH_FULL)
+        // 禁用缓存（直播无需缓存，避免占用存储空间）
+        player.setCacheWithPlay(false)
+        // 开启硬件加速（可选，部分设备可提升直播流畅度）
+        player.setEnableHardwareDecode(true)
     }
-
-    
-
 
     data class Channel(val name: String, val url: String)
     private val v8Runtime: V8Runtime = V8Host.getNodeInstance().createV8Runtime()
@@ -131,14 +126,13 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
     // 加载M3U8直播源
     fun playUrl(url: String) {
-        
         if (player.isPlaying) {
-             player.onVideoPause()
-         }
-         // 2. 设置新的直播地址和标题
-         player.setUp(liveUrl, false, "当前直播：${if (liveUrl == liveUrl1) "直播1" else "直播2"}")
-         // 3. 开始播放（自动播放，也可改为手动点击播放）
-         player.startPlayLogic()
+            player.onVideoPause()
+        }
+        // 2. 设置新的直播地址和标题
+        player.setUp(liveUrl, false, "当前直播：${if (liveUrl == liveUrl1) "直播1" else "直播2"}")
+        // 3. 开始播放（自动播放，也可改为手动点击播放）
+        player.startPlayLogic()
     }
     fun play(num: Int) {
         playUrl(channels[num].url)
