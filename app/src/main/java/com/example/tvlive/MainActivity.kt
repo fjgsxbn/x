@@ -156,7 +156,7 @@ class MainActivity : AppCompatActivity(), SurfaceHolder.Callback {
 
     // View 尺寸变化：调整画面比例
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
-        //ijkPlayer.setVideoScalingMode(IjkMediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING)
+        // ijkPlayer.setVideoScalingMode(IjkMediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING)
     }
 
     // View 销毁：解绑播放器
