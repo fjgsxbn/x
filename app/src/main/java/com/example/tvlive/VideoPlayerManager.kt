@@ -25,9 +25,9 @@ import java.io.IOException
 import java.util.*
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
-    private lateinit var ijkMediaPlayer: IjkMediaPlayer // IJKPlayer 核心实例
+    private lateinit var ijkPlayer: IjkMediaPlayer // IJKPlayer 核心实例
 
-    fun getPlayer() = ijkMediaPlayer
+    fun getPlayer() = ijkPlayer
 
     data class Channel(val name: String, val url: String)
     private val v8Runtime: V8Runtime = V8Host.getNodeInstance().createV8Runtime()
@@ -44,19 +44,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         // 创建 IjkMediaPlayer 实例
         ijkMediaPlayer = IjkMediaPlayer()
         // 配置播放参数（可选，按需调整）
-        with(ijkMediaPlayer) {
-            // 开启硬件解码（0=关闭，1=开启；如需软件解码，注释此行）
-            setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "mediacodec", 1)
-            // 硬件解码失败自动降级软件解码
-            setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "mediacodec-auto-rotate", 1)
-            // 直播流超时时间（10秒，单位：微秒）
-            setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "timeout", 10000000)
-            // 开启直播模式（优化 M3U8 缓冲）
-            setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "live_start", 1)
-            // 降低缓冲（减少直播延迟，按需调整）
-            setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "buffer_size", 1024 * 1024) // 1MB 缓冲
-            setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "max_buffer_size", 2 * 1024 * 1024) // 最大 2MB
-        }
+        
     }
 
     fun p(adx: String, callback: () -> Unit) {
@@ -138,8 +126,8 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             ijkPlayer.stop()
             ijkPlayer.reset()
             // 2. 更新当前直播地址 + 设置新数据源
-            currentLiveUrl = newUrl
-            ijkPlayer.dataSource = newUrl
+            
+            ijkPlayer.dataSource = url
             // 3. 重新准备（异步，避免阻塞主线程）
             ijkPlayer.prepareAsync()
         } catch (e: IOException) {
