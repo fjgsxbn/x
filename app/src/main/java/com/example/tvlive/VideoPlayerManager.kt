@@ -16,6 +16,7 @@ import com.caoccao.javet.values.reference.V8ValueObject
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -110,9 +111,9 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
     // 加载M3U8直播源
     fun playUrl(url: String) {
-        if (player.isPlaying) {
+        
             player.onVideoPause()
-        }
+        
         // 2. 设置新的直播地址和标题
         player.setUp(url, false, "当前直播")
         // 3. 开始播放（自动播放，也可改为手动点击播放）
@@ -145,7 +146,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     }
 
     fun release() {
-        GSYVideoPlayer.releaseAllVideos()
+        GSYVideoManager.releaseAllVideos()
         context.lifecycleScope.launch(Dispatchers.IO) {
             v8Runtime?.close()
         }
