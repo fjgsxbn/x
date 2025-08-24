@@ -25,7 +25,7 @@ import java.io.IOException
 import java.util.*
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
-    private  var ijkPlayer: IjkMediaPlayer =IjkMediaPlayer()
+    private var ijkPlayer: IjkMediaPlayer = IjkMediaPlayer()
 
     fun getPlayer() = ijkPlayer
 
