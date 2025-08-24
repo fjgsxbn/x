@@ -32,7 +32,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     
     
     init{
-         player = findViewById(R.id.player)
+         player = findViewById(R.id.player_view)
          // 关键：设置为直播模式（禁用进度条拖动、自动续播等）
          player.setLive(true)
          // 选择 IJK 内核（对 M3U8 直播兼容性更好，也可切换为 Exo 内核）
@@ -42,7 +42,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
          // 禁用缓存（直播无需缓存，避免占用存储空间）
          player.setCacheWithPlay(false)
          // 开启硬件加速（可选，部分设备可提升直播流畅度）
-         player.setEnableHardwareDecode(true)x
+         player.setEnableHardwareDecode(true)
          
     }
 
