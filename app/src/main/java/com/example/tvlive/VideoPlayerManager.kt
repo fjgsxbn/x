@@ -25,6 +25,13 @@ import java.io.IOException
 import java.util.*
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
+    init {
+
+        IjkMediaPlayer.loadLibrariesOnce(null)
+        IjkMediaPlayer.native_profileBegin("libijkplayer.so")
+        
+    }
+    
     private var ijkPlayer: IjkMediaPlayer = IjkMediaPlayer()
 
     fun getPlayer() = ijkPlayer
@@ -37,14 +44,6 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
     @Volatile
     var num: Int? = null
-    init {
-
-        IjkMediaPlayer.loadLibrariesOnce(null)
-        IjkMediaPlayer.native_profileBegin("libijkplayer.so")
-        // 创建 IjkMediaPlayer 实例
-        ijkPlayer = IjkMediaPlayer()
-        // 配置播放参数（可选，按需调整）
-    }
 
     fun p(adx: String, callback: () -> Unit) {
         context.lifecycleScope.launch(Dispatchers.IO) {
