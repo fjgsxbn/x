@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.KeyEvent
+import android.view.SurfaceHolder
+import android.view.SurfaceView
 import android.view.View
 import android.webkit.WebView
 import android.widget.Button
@@ -13,8 +15,6 @@ import android.widget.Switch
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.github.pedrovgs.lynx.LynxShakeDetector
-import android.view.SurfaceHolder
- import android.view.SurfaceView
 import tv.danmaku.ijk.media.player.IjkMediaPlayer
 
 class MainActivity : AppCompatActivity() {
