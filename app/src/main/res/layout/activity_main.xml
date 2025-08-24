@@ -6,7 +6,7 @@
   android:orientation="vertical"
 >
 
-  <tv.danmaku.ijk.media.widget.IjkVideoView
+  <com.shuyu.gsyvideoplayer.player.GSYVideoPlayer
     android:id="@+id/player_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
