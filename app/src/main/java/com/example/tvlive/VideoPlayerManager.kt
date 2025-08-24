@@ -6,10 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.media3.common.*
-import androidx.media3.common.PlaybackException
-import androidx.media3.common.Player
 import androidx.media3.datasource.DefaultHttpDataSource
-import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.hls.HlsMediaSource
 import com.caoccao.javet.annotations.V8Function
 import com.caoccao.javet.interop.V8Host
@@ -28,7 +25,6 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
 import java.util.*
-import androidx.media3.exoplayer.DecoderSelector
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
     private lateinit var ijkMediaPlayer: IjkMediaPlayer // IJKPlayer 核心实例
@@ -46,23 +42,23 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     init {
 
         IjkMediaPlayer.loadLibrariesOnce(null)
-         IjkMediaPlayer.native_profileBegin("libijkplayer.so")
-         // 创建 IjkMediaPlayer 实例
-         ijkMediaPlayer = IjkMediaPlayer()
-         // 配置播放参数（可选，按需调整）
-         with(ijkMediaPlayer) {
-             // 开启硬件解码（0=关闭，1=开启；如需软件解码，注释此行）
-             setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "mediacodec", 1)
-             // 硬件解码失败自动降级软件解码
-             setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "mediacodec-auto-rotate", 1)
-             // 直播流超时时间（10秒，单位：微秒）
-             setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "timeout", 10000000)
-             // 开启直播模式（优化 M3U8 缓冲）
-             setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "live_start", 1)
-             // 降低缓冲（减少直播延迟，按需调整）
-             setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "buffer_size", 1024 * 1024) // 1MB 缓冲
-             setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "max_buffer_size", 2 * 1024 * 1024) // 最大 2MB
-         }
+        IjkMediaPlayer.native_profileBegin("libijkplayer.so")
+        // 创建 IjkMediaPlayer 实例
+        ijkMediaPlayer = IjkMediaPlayer()
+        // 配置播放参数（可选，按需调整）
+        with(ijkMediaPlayer) {
+            // 开启硬件解码（0=关闭，1=开启；如需软件解码，注释此行）
+            setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "mediacodec", 1)
+            // 硬件解码失败自动降级软件解码
+            setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "mediacodec-auto-rotate", 1)
+            // 直播流超时时间（10秒，单位：微秒）
+            setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "timeout", 10000000)
+            // 开启直播模式（优化 M3U8 缓冲）
+            setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "live_start", 1)
+            // 降低缓冲（减少直播延迟，按需调整）
+            setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "buffer_size", 1024 * 1024) // 1MB 缓冲
+            setOption(IjkMediaPlayer.DEFAULT_DOMAIN, "max_buffer_size", 2 * 1024 * 1024) // 最大 2MB
+        }
     }
 
     fun p(adx: String, callback: () -> Unit) {
