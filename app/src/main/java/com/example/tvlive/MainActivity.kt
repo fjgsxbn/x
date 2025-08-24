@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.pedrovgs.lynx.LynxShakeDetector
 import tv.danmaku.ijk.media.player.IjkMediaPlayer
 
-class MainActivity : AppCompatActivity(),SurfaceHolder.Callback {
+class MainActivity : AppCompatActivity(), SurfaceHolder.Callback {
     private val OVERLAY_PERMISSION_REQUEST_CODE = 1001
     private lateinit var sharedPreferences: SharedPreferences
 
