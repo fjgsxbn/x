@@ -17,7 +17,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.shuyu.gsyvideoplayer.player.IjkPlayerManager
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType
-import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer
+com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -28,7 +28,7 @@ import java.util.*
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
 
-    private var player: GSYVideoPlayer = context.findViewById(R.id.player_view)
+    private var player: StandardGSYVideoPlayer = context.findViewById(R.id.player_view)
 
     init {
 
