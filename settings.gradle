@@ -4,7 +4,7 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
-        jcenter()
+        
     }
     // 统一声明插件版本（模块中无需重复写 version）
     plugins {
@@ -19,7 +19,7 @@ dependencyResolutionManagement {
         // 依赖仓库（用于下载 AndroidX、第三方库等）
         google()
         mavenCentral()
-        jcenter()
+        maven{url 'https://maven.aliyun.com/repository/jcenter'}
         maven { url 'https://jitpack.io' }
     }
 }
