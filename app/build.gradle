@@ -70,7 +70,7 @@ dependencies {
      implementation "tv.danmaku.ijk.media:ijkplayer-java:0.8.8"  // 版本号可替换为最新（如1.3.0）
     // Media3 基础组件（含 Player 接口）
      implementation "tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8"
-     // 2. UI 组件（播放控
+     implementation "tv.danmaku.ijk.media:ijkplayer-arm64:0.8.8"
 
     // 网络与数据解析
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
