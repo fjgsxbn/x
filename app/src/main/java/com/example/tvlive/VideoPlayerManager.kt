@@ -44,7 +44,6 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
         // 创建 IjkMediaPlayer 实例
         ijkMediaPlayer = IjkMediaPlayer()
         // 配置播放参数（可选，按需调整）
-        
     }
 
     fun p(adx: String, callback: () -> Unit) {
@@ -126,7 +125,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
             ijkPlayer.stop()
             ijkPlayer.reset()
             // 2. 更新当前直播地址 + 设置新数据源
-            
+
             ijkPlayer.dataSource = url
             // 3. 重新准备（异步，避免阻塞主线程）
             ijkPlayer.prepareAsync()
