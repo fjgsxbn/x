@@ -36,7 +36,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
          // 禁用缓存（直播无需缓存，避免占用存储空间）
          player.setCacheWithPlay(false)
          // 开启硬件加速（可选，部分设备可提升直播流畅度）
-         player.setEnableHardwareDecode(true)
+         player.setEnableHardwareDecode(true)x
          
     }
 
