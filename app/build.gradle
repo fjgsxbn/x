@@ -67,15 +67,10 @@ dependencies {
 
     // ExoPlayer（M3U8 播放支持）
     // 1. 核心播放模块（Player + 基础组件）
-     implementation "androidx.media3:media3-exoplayer:1.8.0"  // 版本号可替换为最新（如1.3.0）
+     implementation "tv.danmaku.ijk.media:ijkplayer-java:0.8.8"  // 版本号可替换为最新（如1.3.0）
     // Media3 基础组件（含 Player 接口）
-     implementation "androidx.media3:media3-common:1.8.0"
-     // 2. UI 组件（播放控制 View，如 PlayerView）
-     implementation "androidx.media3:media3-ui:1.8.0"
-     // 3. 媒体源支持（本地/网络视频，如 MP4、M3U8）
-     implementation "androidx.media3:media3-datasource:1.8.0"
-     // 4. 扩展媒体源（如需支持 HLS/DASH 等流媒体，可选）
-     implementation "androidx.media3:media3-exoplayer-hls:1.8.0"
+     implementation "tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8"
+     // 2. UI 组件（播放控
 
     // 网络与数据解析
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
