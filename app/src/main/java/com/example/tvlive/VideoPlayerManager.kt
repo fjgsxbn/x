@@ -117,7 +117,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
 
     // 加载M3U8直播源
     fun playUrl(url: String) {
-        //if (!::ijkPlayer.isInitialized) return
+        // if (!::ijkPlayer.isInitialized) return
         try {
             // 1. 停止当前播放并重置状态
             ijkPlayer.stop()
