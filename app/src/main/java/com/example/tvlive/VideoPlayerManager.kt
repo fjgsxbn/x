@@ -25,6 +25,10 @@ import java.io.IOException
 import java.util.*
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
+
+    private var player: GSYVideoPlayer = findViewById(R.id.player)
+    
+    
     init{
          player = findViewById(R.id.player)
          // 关键：设置为直播模式（禁用进度条拖动、自动续播等）
@@ -126,19 +130,13 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     // 加载M3U8直播源
     fun playUrl(url: String) {
         // if (!::ijkPlayer.isInitialized) return
-        try {
-            // 1. 停止当前播放并重置状态
-            ijkPlayer.stop()
-            ijkPlayer.reset()
-            // 2. 更新当前直播地址 + 设置新数据源
-
-            ijkPlayer.dataSource = url
-            // 3. 重新准备（异步，避免阻塞主线程）
-            ijkPlayer.prepareAsync()
-        } catch (e: IOException) {
-            e.printStackTrace()
-            Toast.makeText(context, "切换直播失败", Toast.LENGTH_SHORT).show()
-        }
+        if (player.isPlaying) {
+             player.onVideoPause()
+         }
+         // 2. 设置新的直播地址和标题
+         player.setUp(liveUrl, false, "当前直播：${if (liveUrl == liveUrl1) "直播1" else "直播2"}")
+         // 3. 开始播放（自动播放，也可改为手动点击播放）
+         player.startPlayLogic()
     }
     fun play(num: Int) {
         playUrl(channels[num].url)
@@ -167,7 +165,7 @@ class VideoPlayerManager(private val context: AppCompatActivity, private val web
     }
 
     fun release() {
-        ijkPlayer.release()
+        GSYVideoPlayer.releaseAllVideos()
         context.lifecycleScope.launch(Dispatchers.IO) {
             v8Runtime?.close()
         }
