@@ -6,7 +6,7 @@
   android:orientation="vertical"
 >
 
-  <com.shuyu.gsyvideoplayer.player.GSYVideoPlayer
+  <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
     android:id="@+id/player_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
