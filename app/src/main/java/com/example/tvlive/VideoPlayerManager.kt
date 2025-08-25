@@ -29,6 +29,8 @@ import java.util.*
 
 class VideoPlayerManager(private val context: AppCompatActivity, private val webView: WebView) {
     private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
+    private val MAX_CACHE_SIZE = 1024 * 1024 * 50L // 50 MB
+    private var simpleCache: SimpleCache? = null
 
     fun getPlayer() = exoPlayer
 
