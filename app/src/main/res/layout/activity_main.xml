@@ -10,9 +10,9 @@
   <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
     android:id="@+id/player_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="200dp"
     android:keepScreenOn="true"
-    app:gsy_video_ratio="16:9"
+    
   />
 
   <WebView
